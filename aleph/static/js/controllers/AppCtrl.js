@@ -6,6 +6,7 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$location', '$route', '$ht
   $scope.query = Query;
   $scope.routeLoaded = false;
   $scope.routeFailed = false;
+  $scope.$route = $route;
 
   Metadata.get().then(function(context) {
     $scope.metadata = context;

@@ -1,129 +1,94 @@
 <div class="row search-bar">
   <div class="col-md-8">
     <search-box></search-box>
-  </div>
-  <div class="col-md-4">
-    <div class="btn-group btn-group-justified" role="group">
-      <div class="btn-group" uib-dropdown dropdown-append-to-body>
-        <button type="button" class="btn btn-primary dropdown-toggle"
-          uib-dropdown-toggle>
-          <i class="fa fa-list-alt"></i>
-          Explore by...
-          <!-- span class="caret"></span -->
-        </button>
-        <ul class="uib-dropdown-menu" role="menu">
-          <li ng-repeat="(field, label) in metadata.fields" ng-show="showFieldFacet(field)">
-            <a ng-click="query.toggleFilter('facet', field)" ng-bind="label"></a>
-          </li>
-        </ul>
+    <div class="search-actions-bar">
+      <div class="total" ng-if="result.limit > 0 && !result.total">
+        No results were found
       </div>
-      <div class="btn-group" uib-dropdown dropdown-append-to-body>
-        <a href="/#/search" class="btn btn-primary">
-          <i class="fa fa-times"></i>
-          Clear search
-        </a>
+      <div class="total" ng-if="result.limit > 0 && result.total">
+        {{result.total | number}} documents found
       </div>
-      <div class="btn-group">
-        <button type="button" class="btn" ng-click="toggleAlert()"
-          ng-disabled="!canCreateAlert()"
-          ng-class="{'btn-success': hasAlert(), 'btn-primary': !hasAlert()}">
-          <i class="fa fa-bell"></i>
-          <span ng-show="hasAlert()">
-            Disable alert
-          </span>
-          <span ng-hide="hasAlert()">
-            Set alert
-          </span>
-        </button>
+      <div class="btn-group search-actions" role="group">
+        <div class="btn-group" uib-dropdown dropdown-append-to-body>
+          <a class="dropdown-toggle"
+            uib-dropdown-toggle>
+            <i class="material-icons">sort</i>
+            Explore by
+          </a>
+          <ul class="uib-dropdown-menu" role="menu">
+            <li ng-repeat="(field, label) in metadata.fields" ng-show="showFieldFacet(field)">
+              <a ng-click="query.toggleFilter('facet', field)" ng-bind="label"></a>
+            </li>
+          </ul>
+        </div>
+        <div class="btn-group" uib-dropdown dropdown-append-to-body>
+          <a href="/#/search">
+            <i class="material-icons">close</i>
+            Clear search
+          </a>
+        </div>
+        <div class="btn-group">
+          <a ng-click="toggleAlert()"
+            ng-disabled="!canCreateAlert()">
+            <i class="material-icons">notifications</i>
+            <span ng-show="hasAlert()">
+              Disable alert
+            </span>
+            <span ng-hide="hasAlert()">
+              Set alert
+            </span>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-8">
-    <div class="alert alert-danger" role="alert" ng-if="error">
-      <strong>An error occurred while running your search.</strong>
-      {{error.info.reason || error.message}}
-    </div>
-    <div>
-      <div ng-repeat="doc in result.results">
-        <search-result doc="doc" result="result"></search-result>
-      </div>
-      <div class="bottom-pager">
-        <div class="pull-right">
-          <response-pager response="result" load="loadOffset(offset)"></response-pager>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="alert alert-danger" role="alert" ng-if="error">
+          <strong>An error occurred while running your search.</strong>
+          {{error.info.reason || error.message}}
         </div>
-        <div class="total" ng-if="result.limit > 0 && !result.total">
-          No results were found.
-        </div>
-        <div class="total" ng-if="result.limit > 0 && result.total">
-          Found {{result.total | number}} documents.
+        <div>
+          <div ng-repeat="doc in result.results">
+            <search-result doc="doc" result="result"></search-result>
+          </div>
+          <div class="bottom-pager">
+            <div class="pull-right">
+              <response-pager response="result" load="loadOffset(offset)"></response-pager>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="col-md-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <span class="pull-right">
-          <a ng-click="selectCollections($event)">
+  <div class="col-md-4 right-panel">
+    <div class="title">
+      Document sources
+    </div>
+    <p>{{result.sources.values.length | number}} document sources are included in
+    searches at the moment. Please feel free to contact us with any other suggested document
+    and data sets.</p>
+    <div ng-repeat="(category, lst) in sources | orderBy:category">
+      <div class="heading">
+        <strong>{{category | sourceCategory}}</strong>
+      </div>
+      <div class="row">
+        <div class="col-md-6 source" ng-repeat="source in lst">
+          <a href="#/search?filter:source_id={{source.id}}" class="mainlink">{{source.label}}</a>
+          <span class="count">{{source.count | number}}</span>
+          <a ng-click="editSource(source, $event)" ng-show="canEditSource(source)">
             <i class="fa fa-cog"></i>
           </a>
-        </span>
-        <strong><i class="fa fa-male"></i> Persons and Companies</strong>
-        <small ng-show="query.state.collection.length">
-          (from {{query.state.collection.length | number}} watchlists)
-        </small>
+        </div>
       </div>
-      <ul class="list-group facet-list">
-        <li class="list-group-item facet empty" ng-if="!result.entities.length">
-          <span ng-hide="query.state.collection.length">
-            <a ng-click="selectCollections($event)"><i class="fa fa-cog"></i> Select watchlists</a> to see tagged entities.
-          </span>
-          <span ng-show="query.state.collection.length">
-            The selected watchlists don't match any documents.
-          </span>
-        </li>
-        <li class="list-group-item facet animate toggle"
-          ng-repeat="entity in entityFacets track by entity.id"
-          ng-class="{'active': query.hasFilter('entity', entity.id)}"
-          ng-click="query.toggleFilter('entity', entity.id)">
-          <span class="badge">{{entity.count | number}}</span>
-          <entity-icon schema="entity.$schema"></entity-icon>
-          <span class="lbl" uib-tooltip="{{metadata.collections[entity.collection_id].label}}"
-            tooltip-append-to-body="true" tooltip-placement="right">
-            {{entity.name}}
-          </span>
-        </li>
-      </ul>
     </div>
-
-    <div class="panel panel-default" ng-repeat="(field, values) in facets">
-      <div class="panel-heading">
-        <span class="pull-right">
-          <a ng-click="query.toggleFilter('facet', field)">
-            <i class="fa fa-close"></i>
-          </a>
-        </span>
-        <strong>{{fields[field]}}</strong>
-      </div>
-      <ul class="list-group facet-list">
-        <li class="list-group-item facet empty" ng-if="!values.length">
-          no matching documents
-        </li>
-        <li class="list-group-item facet animate toggle"
-          ng-repeat="val in values"
-          ng-class="{'active': query.hasFilter('filter:' + field, val.id)}"
-          ng-click="query.toggleFilter('filter:' + field, val.id)">
-          <span class="badge">{{val.count | number}}</span>
-          <span class="lbl" uib-tooltip="{{val.label}}" tooltip-append-to-body="true" tooltip-placement="left">
-            {{val.label | limitTo:35 }}
-          </span>
-        </li>
-      </ul>
+    <div class="title">
+      Help
     </div>
-
+    <div class="title">
+      Demo
+    </div>
+  </div>
+  <!-- <div class="col-md-4">
     <div class="panel panel-default">
       <div class="panel-heading">
         <strong>Document sources</strong> <small>{{sourceFacets.length}}</small>
@@ -143,47 +108,5 @@
         </li>
       </ul>
     </div>
-
-    <div class="panel panel-default" ng-if="result.total < 9500">
-      <div class="panel-heading">
-        <strong>Work with the result list</strong>
-      </div>
-      <div class="panel-body">
-        <p>
-          Download links and metadata for all documents
-          matching your search criteria to go through them
-          in detail.
-        </p>
-        <a class="btn btn-primary"
-          ng-href="/api/1/query/export?{{query.queryString()}}"
-          download target="_self">
-          <i class="fa fa-file-excel-o"></i>
-          Excel file ({{result.total | number}} results)
-        </a>
-      </div>
-    </div>
-
-    <div class="panel panel-default" ng-if="result.total < 9500">
-      <div class="panel-heading">
-        <strong>Analyze watchlist matches</strong>
-      </div>
-      <div class="panel-body">
-        <p>
-          Get data to further analyze the connections between
-          watchlist entities. Links connect entities occuring
-          in the same document.
-        </p>
-        <p class="help-block">
-          This data format is suited for import into <a href="http://gephi.org">Gephi</a>, an open source network analysis tool. 
-        </p>
-        <a ng-href="/api/1/graph?format=gexf&limit=2000&{{query.queryString()}}" class="btn btn-primary" target="_self"
-        download="actors.gexf">
-          <i class="fa fa-cloud-download"></i>
-          Download Graph Exchange XML (GEXF)
-        </a>
-      </div>
-    </div>
-
-  </div>
+  </div> -->
 </div>
-

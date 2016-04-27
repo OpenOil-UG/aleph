@@ -3,7 +3,10 @@
 // Style tiles, Colours
 $border-color: #d7d7d7;
 $boxed-color: #fafafa;
-$default-radius: 3px;
+$default-radius: 0;
+$border-radius-base: 0;
+$border-radius-large: 0;
+$border-radius-small: 0;
 
 $color-person: $col-2;
 $color-company: $col-7;
@@ -11,19 +14,22 @@ $color-organization: $col-10;
 $color-other: $col-20;
 
 // override bootstrap defaults
-$brand-primary: $occrp-red;
+$brand-primary: #0049e6;
 // $brand-success: $occrp-green;
 $text-color: #333;
 $text-muted: #999;
 $gray-subtle: #f0f0f0;
-$page-bg: #fff;
+$page-bg: #f2f2f2;
+$body-bg: #e6e6e6;
 $spacing: 0.5em;
+$navbar-height: 40px;
 
 // Style tiles, Fonts
-$font-default: 'Open Sans', sans-serif;
-$font-family-sans-serif: 'Open Sans', sans-serif;
-$input-border-focus: $brand-primary;
+$font-family-sans-serif: 'Noto Sans', sans-serif;
+$font-family-serif: 'PT Serif', serif;
 
+$input-border-focus: $brand-primary;
+$border-radius-base: 0;
 @import "../vendor/bootstrap-sass/assets/stylesheets/_bootstrap";
 @import "mixins";
 
@@ -33,7 +39,7 @@ html {
 
 body {
     height: 100%;
-    background-color: $text-muted;
+    background-color: $body-bg;
     /*
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -41,20 +47,39 @@ body {
 }
 
 #page {
-    position: relative;
-    background-color: white;
-    padding-bottom: 2em;
+  background-color: $page-bg;
+  padding-bottom: 40px;
+  .navbar, .row {
+    padding: 0 1%;
+  }
 }
 
 footer {
     padding-top: 1em;
     padding-bottom: 1em;
-    color: white;
-
-    a {
-        color: white;
-        text-decoration: underline;
-    }    
+    .partners {
+      position: relative;
+      top: -9px;
+      img {
+        padding-right: 10px;
+      }
+    }
+    .licence {font-size: .9em;}
+    .social i {
+      background-color: $text-color;
+      color: #e6e6e6;
+      border-radius: 30px;
+      padding: 10px;
+      font-size: 1.5em;
+      margin-left: 10px;
+      margin-bottom: 10px;
+      &:hover {
+        background-color: lighten($text-color, 20%);
+      }
+    }
+    a:hover {
+      text-decoration: none;
+    }
 }
 
 @import "common";
@@ -68,16 +93,8 @@ footer {
 @import "entities";
 
 .navbar.navbar-default {
-    background-color: $page-bg;
+    background-color: $body-bg;
     border-bottom: 0;
-    @include drop-shadow;
-
-    // .input-group-addon.brand-field {
-    //     background-color: $page-bg;
-    //     a {
-    //         color: $occrp-red;    
-    //     }
-    // }
 }
 
 .intro-text {
@@ -98,7 +115,7 @@ footer {
 
     .table {
         .first-row td {
-            border-top: none;   
+            border-top: none;
         }
     }
 }

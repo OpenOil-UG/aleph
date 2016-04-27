@@ -2,6 +2,21 @@
 aleph.controller('HomeCtrl', ['$scope', '$location', '$route', '$uibModal', 'Query', 'Authz', 'Metadata', 'Title', 'data',
     function($scope, $location, $route, $uibModal, Query, Authz, Metadata, Title, data) {
 
+  $scope.suggestions = [
+    {
+      label: 'Nigeria incorporated',
+      href: 'https://search.openoil.net/#/search?q=Nigeria incorporated'
+    },
+    {
+      label: 'Doubt going concern',
+      href: 'https://search.openoil.net/#/search?q="doubt going concern"~10'
+    },
+    {
+      label: 'Statement of reserves',
+      href: 'https://search.openoil.net/#/search?q=reserve%20statement'
+    }
+  ];
+
   $scope.result = data.result;
   $scope.sources = data.sources;
   $scope.session = data.metadata.session;
@@ -11,8 +26,6 @@ aleph.controller('HomeCtrl', ['$scope', '$location', '$route', '$uibModal', 'Que
   });
   $scope.query = Query.load();
   $scope.title = Title.getSiteTitle();
-
-  Title.set("Welcome");
 
   $scope.canEditSource = function(source) {
     if (!source || !source.id) {
@@ -24,8 +37,9 @@ aleph.controller('HomeCtrl', ['$scope', '$location', '$route', '$uibModal', 'Que
   $scope.submitSearch = function(form) {
     var search = Query.load();
     search.q = $scope.query.q;
-    $location.search(search);
-    $location.path('/search');
+    window.location.href="https://search.openoil.net/#/search?q=" + $scope.query.q
+    //$location.search(search);
+    //$location.path('/search');
   };
 
   $scope.editSource = function(source, $event) {

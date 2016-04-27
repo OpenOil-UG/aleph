@@ -1,5 +1,5 @@
 
-// Angular ugliness fix 
+// Angular ugliness fix
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
@@ -8,6 +8,9 @@ a, .click {
     cursor: pointer;
 }
 
+.material-icons {
+  vertical-align: bottom;
+}
 .modal-backdrop {
     bottom: 0;
 }
@@ -33,12 +36,12 @@ em {
 }
 
 a {
-    // color: $occrp-red;
+    color: $text-color;
     &:hover {
-        color: darken($occrp-red, 10%);
+        color: darken($text-color, 10%);
     }
 
-    &.btn:hover, &.btn.btn-primary:hover, 
+    &.btn:hover, &.btn.btn-primary:hover,
     &.btn:visited, &.btn.btn-primary:visited {
         color: white;
     }

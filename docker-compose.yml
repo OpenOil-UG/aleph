@@ -18,8 +18,8 @@ elasticsearch:
     - "/srv/logs/elasticsearch:/var/log"
   ports:
     - "127.0.0.1:9201:9209"
-  environment:
-    ES_HEAP_SIZE: 4g
+  #environment:
+  #  ES_HEAP_SIZE: 4g
 
 worker:
     build: .
@@ -31,26 +31,30 @@ worker:
       - "/:/host"
       - "/srv/logs/worker:/var/log"
     environment:
-      C_FORCE_ROOT: true
+      C_FORCE_ROOT: "true"
       ALEPH_ELASTICSEARCH_URI: http://elasticsearch:9200/
-      ALEPH_DATABASE_URI: postgresql://aleph:aleph@postgres/aleph
+      #ALEPH_DATABASE_URI: postgresql://aleph:aleph@postgres/aleph
+      ALEPH_DATABASE_URI: postgresql://aleph:kiepai3ZaeS1thah@slate.cvjtcnwyxngz.eu-west-1.rds.amazonaws.com/aleph
       EXTRACTORS_CACHE_DIR: /srv/data/extractors
       TESSDATA_PREFIX: /usr/share/tesseract-ocr
     env_file:
       - aleph.env
 
+
 web:
     build: .
     command: gunicorn -w 5 -b 0.0.0.0:8000 --log-level info --log-file /var/log/gunicorn.log aleph.manage:app
     ports:
-      - "13376:8000"
+      - "80:8000"
     links:
       - postgres
       - elasticsearch
     volumes:
       - "/srv/logs/web:/var/log"
+      #- ./:/aleph
     environment:
       ALEPH_ELASTICSEARCH_URI: http://elasticsearch:9200/
-      ALEPH_DATABASE_URI: postgresql://aleph:aleph@postgres/aleph
+      ALEPH_DATABASE_URI: postgresql://aleph:kiepai3ZaeS1thah@slate.cvjtcnwyxngz.eu-west-1.rds.amazonaws.com/aleph
+      #ALEPH_DATABASE_URI: postgresql://aleph:aleph@postgres/aleph
     env_file:
       - aleph.env

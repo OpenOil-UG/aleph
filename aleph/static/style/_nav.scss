@@ -1,16 +1,31 @@
 
 .navbar {
-
     .navbar-header {
         .navbar-brand {
-            img {
-                margin-top: -0.6em;
-                max-width: 2.2em;
-                max-height: 2.2em;
-            }
-
-            // color: $brand-primary;
-            // font-weight: 900;
+          font-size: 1em;
+          position: relative;
+          padding-left: 110px;
+          color: $text-color;
+          padding-top: 15px;
+          &:before {
+            position: absolute;
+            content: '';
+            width: 88px;
+            height: 23px;
+            top: 14px;
+            left: 10px;
+            background-image: url('../images/OO_logoNav_black.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+          }
+        }
+        .navbar-description {
+            color: #5e5e5e;
+            white-space: nowrap;
+            float: left;
+            padding: 15px 0;
+            line-height: 18px;
+            font-family: $font-family-serif;
         }
     }
 }
