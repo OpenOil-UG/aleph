@@ -49,6 +49,7 @@ web:
       - elasticsearch
     volumes:
       - "/srv/logs/web:/var/log"
+      - ./:/aleph
     environment:
       ALEPH_ELASTICSEARCH_URI: http://elasticsearch:9200/
       ALEPH_DATABASE_URI: postgresql://aleph:aleph@postgres/aleph

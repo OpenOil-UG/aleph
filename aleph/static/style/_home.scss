@@ -1,85 +1,97 @@
-.home {
-    .jumbotron {
-        margin-top: -20px;
-        background-color: white;
-        background-image: url(/static/images/europe_asia.png);
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: 50% 50%;
-
-        text-align: center;
-        padding-bottom: 3em;
-
-        h1 {
-            // text-transform: uppercase;
-            font-size: 4em;
-            font-weight: bold;
-        }
-
-        p.teaser {
-            // text-transform: uppercase;
-            font-size: 2em;   
-            margin-bottom: 0;
-            font-weight: bold;
-            padding-bottom: 0;
-        }
-
-        .search-area {
-            max-width: 500px;
-            margin: 3em auto 0 auto;
+.aleph--home #page {
+    // header
+    .navbar.navbar-default {
+        background-color: transparent;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 20px;
+        color: white;
+        a { color: white;}
+        .navbar-header {
+            .navbar-brand {
+                padding-left: 120px;
+                font-size: 1.2em;
+                &:before {
+                  height: 54px;
+                  left: 40px;
+                  top: 20px;
+                  background-size: auto 100%;
+                  background-image: url('../images/OO_logoLanding_white.png');
+              }
+            }
+            .navbar-description {
+                display: block;
+                clear: both;
+                top: -7px;
+                left: 105px;
+                margin: 0;
+                padding: 0;
+                position: relative;
+                color: white;
+            }
         }
     }
-
-    .feature {
-        margin-top: 1em;
-
-        h2 {
-            // text-align: center;
-            text-transform: uppercase;
+    .search-panel {
+        background-image: url('../images/earth.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin: 0 -15px; // remove page margin from bootstrap
+        padding: 230px 20px 20px 20px; // leave the place for the absolute header
+        color: white;
+        .search-area {
+            input, button {
+                box-shadow: none;
+                border-color: white;
+            }
+            button {color: $brand-primary}
+        }
+        .number-of-investigations {
             font-weight: bold;
-            font-size: 1.5em;
-
-            i {
-                color: $brand-primary;
+            font-style: italic;
+            font-size: 1.4em;
+            text-align: center;
+            font-family: $font-family-serif;
+        }
+        .new-documents {
+            text-align: center;
+            margin: 20px 0;
+            .new-documents__body {
+                font-weight: bold;
             }
         }
-
-        h3 {
-            text-transform: uppercase;
+    }
+    .presentation-panel {
+        a {
+            text-decoration: underline;
+            font-style: italic;
+        }
+        margin-top: 20px;
+        .intro, .suggestions, .feature {
+            padding-left: 25px;
+            margin-right: -25px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .intro {
+            color: $brand-primary;
             font-weight: bold;
             font-size: 1.2em;
         }
-
-        p {
-            font-size: 1.2em;
-            line-height: 1.5em;   
-            color: $text-muted;
-        }
-
-        .count {
-            color: $text-muted;
-        }
-
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            li {
-                padding-bottom: 0.5em;
-                line-height: 1.6em;
+        .feature__title {font-weight: bold;}
+        .suggestions {
+            background-color: white;
+            .suggestions__title {margin-bottom: 10px;}
+            a {
+              margin-right: 10px;
+              font-style: normal;
+              font-weight: bold;
+              text-decoration: none;
+              color: $brand-primary;
+              &:hover {
+                text-decoration: underline;
+              }
             }
-        }
-
-        .heading {
-            text-transform: uppercase;
-            font-weight: bold;
-            font-size: 1.1em;
-            padding-top: 1em;
-            padding-bottom: 0.5em;
-        }
-  
-        .source {
-            min-height: 2em;   
         }
     }
 }

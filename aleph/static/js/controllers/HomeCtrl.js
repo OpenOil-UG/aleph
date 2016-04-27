@@ -2,6 +2,21 @@
 aleph.controller('HomeCtrl', ['$scope', '$location', '$route', '$uibModal', 'Query', 'Authz', 'Metadata', 'Title', 'data',
     function($scope, $location, $route, $uibModal, Query, Authz, Metadata, Title, data) {
 
+  $scope.suggestions = [
+    {
+      label: 'COUNTRY incorporated',
+      href: '/#/search?q=COUNTRY incorporated'
+    },
+    {
+      label: 'COMPANY NAME owned',
+      href: '/#/search?q=COUNTRY incorporated'
+    },
+    {
+      label: 'DIRECTOR NAME',
+      href: '/#/search?q=COUNTRY incorporated'
+    }
+  ];
+
   $scope.result = data.result;
   $scope.sources = data.sources;
   $scope.session = data.metadata.session;
@@ -11,8 +26,6 @@ aleph.controller('HomeCtrl', ['$scope', '$location', '$route', '$uibModal', 'Que
   });
   $scope.query = Query.load();
   $scope.title = Title.getSiteTitle();
-
-  Title.set("Welcome");
 
   $scope.canEditSource = function(source) {
     if (!source || !source.id) {
