@@ -20,6 +20,7 @@ $text-color: #333;
 $text-muted: #999;
 $gray-subtle: #f0f0f0;
 $page-bg: #f2f2f2;
+$body-bg: #e6e6e6;
 $spacing: 0.5em;
 
 // Style tiles, Fonts
@@ -37,7 +38,7 @@ html {
 
 body {
     height: 100%;
-    background-color: #e6e6e6;
+    background-color: $body-bg;
     /*
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -46,6 +47,7 @@ body {
 
 #page {
   background-color: $page-bg;
+  padding-bottom: 40px;
 }
 
 footer {
@@ -62,6 +64,12 @@ footer {
       padding: 10px;
       font-size: 1.5em;
       margin-left: 10px;
+      &:hover {
+        background-color: lighten($text-color, 20%);
+      }
+    }
+    a:hover {
+      text-decoration: none;
     }
 }
 
@@ -76,7 +84,7 @@ footer {
 @import "entities";
 
 .navbar.navbar-default {
-    background-color: $page-bg;
+    background-color: $body-bg;
     border-bottom: 0;
 }
 
