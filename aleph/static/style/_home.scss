@@ -21,6 +21,7 @@
               }
             }
             .navbar-description {
+                opacity: 0.6;
                 display: block;
                 clear: both;
                 top: -7px;
@@ -36,10 +37,12 @@
         background-image: url('../images/earth.jpg');
         background-size: cover;
         background-repeat: no-repeat;
-        margin: 0 -15px; // remove page margin from bootstrap
-        padding: 230px 20px 20px 20px; // leave the place for the absolute header
+        padding: 230px 20px 55px 20px; // leave the place for the absolute header
         color: white;
         .search-area {
+            input {
+                font-size: 1em; font-style: italic;
+            }
             input, button {
                 box-shadow: none;
                 border-color: white;
@@ -49,7 +52,7 @@
         .number-of-investigations {
             font-weight: bold;
             font-style: italic;
-            font-size: 1.4em;
+            font-size: 2.4em;
             text-align: center;
             font-family: $font-family-serif;
         }
@@ -69,7 +72,6 @@
         margin-top: 20px;
         .intro, .suggestions, .feature {
             padding-left: 25px;
-            margin-right: -25px;
             padding-top: 20px;
             padding-bottom: 20px;
         }
@@ -77,6 +79,7 @@
             color: $brand-primary;
             font-weight: bold;
             font-size: 1.2em;
+            line-height: 1.5em;
         }
         .feature__title {font-weight: bold;}
         .suggestions {

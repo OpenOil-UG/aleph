@@ -22,6 +22,7 @@ $gray-subtle: #f0f0f0;
 $page-bg: #f2f2f2;
 $body-bg: #e6e6e6;
 $spacing: 0.5em;
+$navbar-height: 40px;
 
 // Style tiles, Fonts
 $font-family-sans-serif: 'Noto Sans', sans-serif;
@@ -48,13 +49,20 @@ body {
 #page {
   background-color: $page-bg;
   padding-bottom: 40px;
+  .navbar, .row {
+    padding: 0 1%;
+  }
 }
 
 footer {
     padding-top: 1em;
     padding-bottom: 1em;
-    .partners img {
-      padding-right: 10px;
+    .partners {
+      position: relative;
+      top: -9px;
+      img {
+        padding-right: 10px;
+      }
     }
     .licence {font-size: .9em;}
     .social i {
@@ -64,6 +72,7 @@ footer {
       padding: 10px;
       font-size: 1.5em;
       margin-left: 10px;
+      margin-bottom: 10px;
       &:hover {
         background-color: lighten($text-color, 20%);
       }

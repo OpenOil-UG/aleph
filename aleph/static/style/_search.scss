@@ -51,11 +51,12 @@
   margin-top: 20px;
   .total {
     font-weight: bold;
+    margin-right: 20px;
     float: left;
   }
   .search-actions {
     .btn-group {
-      margin-left: 20px;
+      margin-right: 20px;
     }
     i {
       font-size: 1.5em;
@@ -132,4 +133,13 @@
             padding-bottom: 0.2em;
         }
     }
+}
+
+#page .right-panel {
+  .title {
+    font-weight: bold;
+    &:not(:first-child) {
+      margin-top: 20px;
+    }
+  }
 }

@@ -6,6 +6,7 @@
           position: relative;
           padding-left: 110px;
           color: $text-color;
+          padding-top: 15px;
           &:before {
             position: absolute;
             content: '';
@@ -25,8 +26,6 @@
             padding: 15px 0;
             line-height: 18px;
             font-family: $font-family-serif;
-        }
-        .navbar-brand {
         }
     }
 }
