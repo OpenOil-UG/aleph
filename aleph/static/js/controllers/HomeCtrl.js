@@ -37,8 +37,9 @@ aleph.controller('HomeCtrl', ['$scope', '$location', '$route', '$uibModal', 'Que
   $scope.submitSearch = function(form) {
     var search = Query.load();
     search.q = $scope.query.q;
-    $location.search(search);
-    $location.path('/search');
+    window.location.href="https://search.openoil.net/#/search?q=" + $scope.query.q
+    //$location.search(search);
+    //$location.path('/search');
   };
 
   $scope.editSource = function(source, $event) {
