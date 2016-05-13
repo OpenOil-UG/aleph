@@ -4,16 +4,16 @@ aleph.controller('HomeCtrl', ['$scope', '$location', '$route', '$uibModal', 'Que
 
   $scope.suggestions = [
     {
-      label: 'COUNTRY incorporated',
-      href: '/#/search?q=COUNTRY incorporated'
+      label: 'Nigeria incorporated',
+      href: 'https://search.openoil.net/#/search?q=Nigeria incorporated'
     },
     {
-      label: 'COMPANY NAME owned',
-      href: '/#/search?q=COUNTRY incorporated'
+      label: 'Doubt going concern',
+      href: 'https://search.openoil.net/#/search?q="doubt going concern"~10'
     },
     {
-      label: 'DIRECTOR NAME',
-      href: '/#/search?q=COUNTRY incorporated'
+      label: 'Statement of reserves',
+      href: 'https://search.openoil.net/#/search?q=reserve%20statement'
     }
   ];
 

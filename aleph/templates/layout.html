@@ -21,14 +21,14 @@
       <nav class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container-fluid">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/#/"><strong>Aleph</strong> Search Engine</a>
+	    <a href="/#" class="navbar-brand" href="https://openoil.net"><strong>Aleph</strong> Search Engine</a>
             <div class="navbar-description">
                 Everything extractive industries tell investors, in one place.
             </div>
           </div>
 
           <div id="navbar" class="collapse navbar-collapse navbar-right">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav" ng-show="false">
               <li ng-show="!session.logged_in">
                 <a href="{{url_for('sessions_api.login')}}" target="_self">
                   <i class="material-icons">person</i> Sign in
@@ -82,17 +82,16 @@
             </a>
           </div>
           <div class="col-xs-4 col-md-4 col-md-offset-1 licence">
-            <strong>Creative Commons License</strong>&nbsp;-&nbsp;CC-BY-SA&nbsp;4.0<br/>
-            <a class="visible-md visible-sm visible-lg" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
-              http://creativecommons.org/licenses/by-sa/4.0/
-            </a>
+	    Content <strong><a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons License &nbsp;-&nbsp;CC-BY-SA&nbsp;4.0</a></strong><br/>
+            Code <strong><a href="https://github.com/OpenOil-UG/aleph/blob/master/LICENSE">MIT License</a></strong><br/>
+	    Based on <a href="https://github.com/pudo/aleph">Aleph</a> by <a href="http://pudo.org/">Friedrich Lindenberg</a><br/>
           </div>
           <div class="col-xs-3 col-md-2 social">
             <p class="pull-right">
               <a href="https://twitter.com/open_oil" target="_blank">
                 <i class="fa fa-twitter" aria-hidden="true"></i>
               </a>
-              <a href="https://github.com/pudo/aleph" target="_blank">
+              <a href="https://github.com/OpenOil-UG/aleph" target="_blank">
                 <i class="fa fa-github-alt" aria-hidden="true"></i>
               </a>
             </p>
