@@ -1,6 +1,6 @@
  <div>
     <span class="close" ng-click="cancel()">x</span>
-    <p>Set up email alert</p>
+    <p>Set up email alert for <b>{{searchTerm}}</b></p>
 
     <form novalidate class="simple-form" name="alertForm" ng-submit="emailAlertSubmit(alertForm)">
     Label: <input name="alert_label" type="text" ng-class="alert_label"/><br />

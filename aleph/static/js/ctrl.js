@@ -183,9 +183,12 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 
     $scope.emailAlertButton = function(){
 	var emailModal = $modal.open({
-        templateUrl: 'alert_create_form.html',
-        controller: 'AlertCtrl',
-        backdrop: true
+            templateUrl: 'alert_create_form.html',
+            controller: 'AlertCtrl',
+            backdrop: true,
+	    resolve: {
+		searchTerm: function () { return $scope.query.state.q[0];}
+	    }
     });
 	emailModal.result.then(
 	    function (formdata) {
@@ -222,7 +225,6 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
       $location.path('/search');
     }
   };
-
 }]);
 
 
@@ -252,12 +254,10 @@ aleph.controller('ProfileCtrl', ['$scope', '$location', '$modalInstance', '$http
 }]);
 
 
-aleph.controller('AlertCtrl', ['$scope', '$location', '$modalInstance', '$http', 'Session',
-  function($scope, $location, $modalInstance, $http, Session) {
-//aleph.controller('AlertCtrl', ['$scope', '$modalInstance',  function($scope, $modalInstance){
-    var doodah = $scope;
-    $scope.wtf = 'gah';
-    
+aleph.controller('AlertCtrl', ['$scope', '$location', '$modalInstance', '$http', 'Session', 'searchTerm',
+			       function($scope, $location, $modalInstance, $http, Session, searchTerm) {
+
+    $scope.searchTerm = searchTerm;
     $scope.cancel = function(){
 	$modalInstance.dismiss('cancel');
 	};
