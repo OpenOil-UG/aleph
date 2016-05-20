@@ -14,6 +14,13 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 
   window.scp = $scope;
 
+  // super-hacky temp redirect, to be removed soon
+  if(['', '/'].indexOf($location.path()) > -1){
+      $window.location.href="http://aleph.openoil.net";
+  }
+			
+
+
   source_labels = {
 	'sec-edgar': 'US stock exchange filings',
 	'edgar-partial-content': 'US stock exchange filings',
@@ -163,6 +170,7 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 		}).success(function(data){
 		    Flash.message('Registered', 'success');		    
 		    window.scp.session.logged_in = true;
+		    $window.location.reload();
 		}).error(function(data){
 		    Flash.message('bad registration details', 'error');
 		    });

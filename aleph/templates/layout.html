@@ -79,7 +79,7 @@ API of world's oil concessions</a> </li><li> <a href="http://openoil.net/corpora
                   <i class="fa fa-refresh"></i> Go</button>
               </span>
 
-	      <button type="button" class="btn btn-default" ng-click="emailAlertButton()">Create an email alert</button>
+	      <button type="button" id="oo_email_alert_button" class="btn btn-default" ng-click="emailAlertButton()">Create an email alert</button>
 	      
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default oo_resetbutton" ng-click="clearSearch()">
@@ -97,7 +97,7 @@ API of world's oil concessions</a> </li><li> <a href="http://openoil.net/corpora
 
 	    <li ng-show="!session.logged_in" ng-cloak>
               {% raw %}
-                <a href='#' ng-click='show_register_modal()' target='_self'>
+                <a href='#' id='oo_register' ng-click='show_register_modal()' target='_self'>
                   Register
                 </a>
               {% endraw %}
@@ -107,7 +107,7 @@ API of world's oil concessions</a> </li><li> <a href="http://openoil.net/corpora
 	    </li>
             <li ng-show="!session.logged_in && session.logins.ooemail" ng-cloak>
               {% raw %}
-                <a href='#' ng-click='show_login_modal()' target='_self'>
+                <a href='#' id='oo_signin_email' ng-click='show_login_modal()' target='_self'>
                   Sign in with email
                 </a>
               {% endraw %}
@@ -117,7 +117,7 @@ API of world's oil concessions</a> </li><li> <a href="http://openoil.net/corpora
 
             <li ng-show="!session.logged_in && session.logins.twitter" ng-cloak>
               {% raw %}
-                <a href='{{session.logins.twitter}}' target='_self'>
+                <a href='{{session.logins.twitter}}' id='oo_signin_twitter' target='_self'>
                   Sign in with twitter
                 </a>
               {% endraw %}
@@ -168,6 +168,18 @@ API of world's oil concessions</a> </li><li> <a href="http://openoil.net/corpora
 
       <script src="https://code.angularjs.org/1.2.14/angular-sanitize.min.js"></script>
       <script src="/static/vendor/angular-tooltips/dist/angular-tooltips.min.js"></script>
-      
+
+
+<!-- Start of LiveChat (www.livechatinc.com) code -->
+<script type="text/javascript">
+window.__lc = window.__lc || {};
+window.__lc.license = 7518291;
+(function() {
+ var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+ lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+})();
+   </script>
+<!-- End of LiveChat code -->   
   </body>
 </html>

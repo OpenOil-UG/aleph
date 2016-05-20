@@ -7,6 +7,7 @@ from aleph import authz
 from aleph.providers import PROVIDERS, Stub
 from aleph.core import db, url_for
 from aleph.model import User
+from aleph.contrib.openoil import alerts
 
 
 blueprint = Blueprint('sessions', __name__)
@@ -70,6 +71,7 @@ def ooemail_authorized():
 @blueprint.route('/api/1/sessions/register/ooemail')
 def ooemail_register():
     user = User.create_by_email(request.args.get('email'), request.args.get('pw'))
+    alerts.mail_welcome_email(user)
     login_user(user)
     return 'created oo email'
 
