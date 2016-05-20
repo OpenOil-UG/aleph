@@ -18,6 +18,7 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
   if(['', '/'].indexOf($location.path()) > -1){
       $window.location.href="http://aleph.openoil.net";
   }
+
 			
 
 
@@ -98,44 +99,6 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
     }
   };
 
-      $scope.show_login_modal = function(){
-	  var login_modal = $modal.open({
-	      templateUrl: 'user/login_modal.html',
-	      backdrop: true,
-	      controller: function($scope, $modalInstance){
-		  $scope.cancel = function(){
-		      $modalInstance.dismiss('cancel');
-		  };
-
-		  $scope.handle_login = function(){
-		      $modalInstance.close($('#login_modal'));
-		  };
-	      }
-
-});
-	  login_modal.result.then(
-	      function(mdl){
-		  var email = $(mdl).find('[name=email]').val();
-		  var pw =  $(mdl).find('[name=password]').val();
-		$http({
-		    url: '/api/1/sessions/callback/ooemail',
-		    method: 'GET', // XXX
-		    params: {
-			'email': email,
-			'password': pw}
-		}).success(function(data){
-		    Flash.message('logged in', 'success');		    
-		    window.scp.session.logged_in = true;
-		}).error(function(data){
-		    Flash.message('bad login', 'error');
-		    });
-
-},
-	      function(){});
-	  };
-	      
-
-
       $scope.show_register_modal = function(){
 	  var register_modal = $modal.open({
 	      templateUrl: 'user/register_modal.html',
@@ -148,6 +111,12 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 		  $scope.handle_register = function(){
 		      $modalInstance.close($('#register_modal'));
 		  };
+
+		  $scope.switch_to_login = function(){
+		      $modalInstance.dismiss('cancel');
+		      window.scp.show_login_modal();
+		      };
+
 	      }
 
 });
@@ -179,6 +148,53 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 	      function(){});
 	  };
 	      
+
+
+     
+
+      $scope.show_login_modal = function(){
+	  var login_modal = $modal.open({
+	      templateUrl: 'user/login_modal.html',
+	      backdrop: true,
+	      controller: function($scope, $modalInstance){
+		  $scope.cancel = function(){
+		      $modalInstance.dismiss('cancel');
+		  };
+
+		  $scope.handle_login = function(){
+		      $modalInstance.close($('#login_modal'));
+		  };
+
+		  $scope.switch_to_register = function(){
+		      $modalInstance.dismiss('cancel');
+		      window.scp.show_register_modal();
+		      };
+
+	      }
+
+});
+	  login_modal.result.then(
+	      function(mdl){
+		  var email = $(mdl).find('[name=email]').val();
+		  var pw =  $(mdl).find('[name=password]').val();
+		$http({
+		    url: '/api/1/sessions/callback/ooemail',
+		    method: 'GET', // XXX
+		    params: {
+			'email': email,
+			'password': pw}
+		}).success(function(data){
+		    Flash.message('logged in', 'success');		    
+		    window.scp.session.logged_in = true;
+		}).error(function(data){
+		    Flash.message('bad login', 'error');
+		    });
+
+},
+	      function(){});
+	  };
+	      
+
 
 
     $scope.emailAlertButton = function(){
@@ -225,6 +241,15 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
       $location.path('/search');
     }
   };
+
+      if($location.search().intaction == 'login'){
+	  $scope.show_login_modal();
+      }
+      if($location.search().intaction == 'register'){
+	  $scope.show_register_modal();
+      }
+
+
 }]);
 
 

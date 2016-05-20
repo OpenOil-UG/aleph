@@ -1,7 +1,8 @@
  <div id="register_modal">
     <span class="close" ng-click="cancel()">x</span>
-    <p>Log in</p>
+    <h2>Register</h2>
 
+    <b>Already have an account? <a href="" ng-click="switch_to_login()">Log in</a></b>
     <form novalidate class="simple-form" name="registerform" ng-submit="handle_register(registerform)">
     Email: <input name="email" type="text"/><br />
     Password: <input name="password1" type="password"/><br />
