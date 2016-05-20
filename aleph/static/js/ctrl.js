@@ -99,11 +99,11 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
     }
   };
 
-      $scope.show_register_modal = function(){
+      $scope.show_register_modal = function(message){
 	  var register_modal = $modal.open({
 	      templateUrl: 'user/register_modal.html',
 	      backdrop: true,
-	      controller: function($scope, $modalInstance){
+	      controller: function($scope, $modalInstance, message){
 		  $scope.cancel = function(){
 		      $modalInstance.dismiss('cancel');
 		  };
@@ -117,9 +117,10 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 		      window.scp.show_login_modal();
 		      };
 
-	      }
-
-});
+		  $scope.message = message;
+	      },
+	      resolve: {message: function(){return message;}},
+	  });
 	  register_modal.result.then(
 	      function(mdl){
 		  var email = $(mdl).find('[name=email]').val();
@@ -198,35 +199,43 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 
 
     $scope.emailAlertButton = function(){
-	var emailModal = $modal.open({
-            templateUrl: 'alert_create_form.html',
-            controller: 'AlertCtrl',
-            backdrop: true,
-	    resolve: {
-		searchTerm: function () { return $scope.query.state.q[0];}
+	Session.get(function(session) {
+	    $scope.user = session.user;
+	    $scope.session = session;
+	});
+	if(!$scope.session.logged_in){
+	    $scope.show_register_modal('You need an account to create email alerts');
 	    }
-    });
-	emailModal.result.then(
-	    function (formdata) {
-		postdata = {
-		    query: $scope.query.state.q[0],
-		    custom_label: formdata['alert_label'],
-		    checking_interval: formdata['alert_frequency'],
+	else{
+	    var emailModal = $modal.open({
+		templateUrl: 'alert_create_form.html',
+		controller: 'AlertCtrl',
+		backdrop: true,
+		resolve: {
+		    searchTerm: function () { return $scope.query.state.q;}
+		}
+	    });
+	    emailModal.result.then(
+		function (formdata) {
+		    postdata = {
+			query: $scope.query.state.q[0],
+			custom_label: formdata['alert_label'],
+			checking_interval: formdata['alert_frequency'],
 		    }
-		$http({
-		    url: '/api/1/alerts',
-		    method: 'POST',
-		    headers: {'Content-Type': 'application/json'},
-		    data: JSON.stringify(postdata)
-		}).success(function(data){
-		    Flash.message('added email alert', 'success');
-		})
+		    $http({
+			url: '/api/1/alerts',
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			data: JSON.stringify(postdata)
+		    }).success(function(data){
+			Flash.message('added email alert', 'success');
+		    })
 
-	    },
-	    function (result) {
-	    }
-	);
-
+		},
+		function (result) {
+		}
+	    );
+	}
     };
 
 
