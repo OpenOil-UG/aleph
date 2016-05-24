@@ -1,7 +1,7 @@
 
 aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', '$location', '$route', '$http', '$modal', '$q',
-                             'Flash', 'Session', 'Query', 'QueryContext', '$sce',
-			     function($scope, $rootScope, $routeParams, $window, $location, $route, $http, $modal, $q, Flash, Session, Query, QueryContext) {
+                             'Flash', 'Session', 'Query', 'Alert', 'QueryContext', '$sce',
+			     function($scope, $rootScope, $routeParams, $window, $location, $route, $http, $modal, $q, Flash, Session, Query, Alert, QueryContext) {
   $scope.session = {logged_in: false};
   $scope.query = Query;
   $scope.flash = Flash;
@@ -14,6 +14,7 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 
   window.scp = $scope;
 
+				 
   // super-hacky temp redirect, to be removed soon
   if(['', '/'].indexOf($location.path()) > -1){
       $window.location.href="http://aleph.openoil.net";
@@ -89,6 +90,20 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
         backdrop: true
     });
   };
+
+  $scope.alertsCRUD = function() {
+    var d = $modal.open({
+        templateUrl: 'alertscrud.html',
+        controller: 'AlertsManageCtrl',
+        backdrop: true,
+	resolve: {
+	    alerts: Alert.index()
+	}
+    });
+  };
+
+				 
+
 
   $scope.submitSearch = function(form) {
     $location.search($scope.query.state);
@@ -212,13 +227,15 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 		controller: 'AlertCtrl',
 		backdrop: true,
 		resolve: {
-		    searchTerm: function () { return $scope.query.state.q;}
+		    searchTerm: function () {
+			return  $scope.query.state.q;
+		    }
 		}
 	    });
 	    emailModal.result.then(
 		function (formdata) {
 		    postdata = {
-			query: $scope.query.state.q[0],
+			query: formdata['alert_query'],
 			custom_label: formdata['alert_label'],
 			checking_interval: formdata['alert_frequency'],
 		    }
@@ -258,7 +275,6 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 	  $scope.show_register_modal();
       }
 
-
 }]);
 
 
@@ -285,7 +301,106 @@ aleph.controller('ProfileCtrl', ['$scope', '$location', '$modalInstance', '$http
       $modalInstance.dismiss('ok');
     });
   };
+  }]);
+
+aleph.controller('AlertsManageCtrl', ['$scope', '$modalInstance', '$location', '$route', 'alerts', 'Alert', '$modal', '$http', 'Flash',
+				      function($scope, $modalInstance, $location, $route, alerts, Alert, $modal, $http, Flash) {
+	Alert.index().then(function(data){
+	    $scope.alerts = data.results}
+			 );
+
+  $scope.openQuery = function(alert) {
+    $location.path('/search');
+    $location.search(alert.query);
+    $modalInstance.close();
+  };
+
+	$scope.addAlert = function(){
+	    var emailModal = $modal.open({
+		templateUrl: 'alert_create_form.html',
+		controller: 'AlertCtrl',
+		backdrop: true,
+		resolve: {
+		    searchTerm: function () { return "";}
+		}
+	    });
+	    emailModal.result.then(
+		function (formdata) {
+		    postdata = {
+			query: formdata['alert_query'],
+			custom_label: formdata['alert_label'],
+			checking_interval: formdata['alert_frequency'],
+		    }
+		    $http({
+			url: '/api/1/alerts',
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			data: JSON.stringify(postdata)
+		    }).success(function(data){
+			Flash.message('added email alert', 'success');
+		    })
+
+		},
+		function (result) {
+		}
+	    );
+
+	};
+
+  $scope.removeAlert = function(alert) {
+    Alert.delete(alert.id).then(function() {
+      $scope.alerts.splice($scope.alerts.indexOf(alert), 1)
+    });
+  };
+
+  $scope.cancel = function() {
+    $modalInstance.dismiss('cancel');
+  };
+
+  $scope.close = function(form) {
+    $modalInstance.close();
+    $route.reload();
+  };
+
 }]);
+
+
+
+aleph.controller('AlertProfileCtrl', ['$scope', '$location', '$modalInstance', '$http', 'Session',
+  function($scope, $location, $modalInstance, $http, Session) {
+  $scope.user = {};
+  $scope.session = {};
+
+  Session.get(function(session) {
+    $scope.user = session.user;
+    $scope.session = session;
+  });
+
+  $scope.cancel = function() {
+    $modalInstance.dismiss('cancel');
+  };
+
+      $scope.addInterface = function(form){
+	  console.log("creating new alert -- modal window");
+      };
+      
+      
+      $scope.addSubmit = function(form){
+	  console.log("creating new alert");
+      };
+
+      $scope.remove = function(alertid){
+	  console.log("deleting an alert");
+      }
+
+      $scope.updateSubmit = function(form){
+	  console.log("updating an alert");
+      }
+
+    }]);  
+
+
+
 
 
 aleph.controller('AlertCtrl', ['$scope', '$location', '$modalInstance', '$http', 'Session', 'searchTerm',
@@ -303,3 +418,4 @@ aleph.controller('AlertCtrl', ['$scope', '$location', '$modalInstance', '$http',
 	$modalInstance.close(formdata);
 	};
 }]); 
+

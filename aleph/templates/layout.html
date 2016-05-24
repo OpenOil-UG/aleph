@@ -105,6 +105,11 @@ API of world's oil concessions</a> </li><li> <a href="http://openoil.net/corpora
 	    </li>
 
 	    </li>
+            <li ng-show="session.logged_in" ng-cloak>
+              <a ng-click="alertsCRUD()">Alerts</a>
+            </li>
+
+	    
             <li ng-show="!session.logged_in && session.logins.ooemail" ng-cloak>
               {% raw %}
                 <a href='#' id='oo_signin_email' ng-click='show_login_modal()' target='_self'>
@@ -130,7 +135,7 @@ API of world's oil concessions</a> </li><li> <a href="http://openoil.net/corpora
               {% endraw %}
             </li>
             <li ng-show="session.logged_in" ng-cloak>
-              <a ng-clickg="editProfile()" ng-bind="session.user.display_name"></a>
+              <a ng-clickg="editProfile()" ng-bind="session.user.display_name">Profile</a>
             </li>
             <li ng-show="session.logged_in" ng-cloak>
               <a href="{{url_for('sessions.logout')}}" target="_self">

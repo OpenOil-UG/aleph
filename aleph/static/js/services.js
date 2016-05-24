@@ -76,3 +76,49 @@ aleph.factory('Validation', ['Flash', function(Flash) {
   };
 }]);
 
+
+aleph.factory('Alert', ['$http', '$q', '$location', '$sce', 'Session',
+    function($http, $q, $location, $sce, Session) {
+
+	return {
+	    nindex: function(id){
+		return $http.get('/api/1/alerts').then(function(response) {    
+		    return response.data;
+		});
+	    },
+      index: function(id) {
+
+	  
+	  var defer = $q.defer();
+	  $http.get('/api/1/alerts').then(function(response){
+	      defer.resolve(response.data);});
+	  return defer.promise;
+	  /*
+      var dfd = $q.defer(),
+          url = '/api/1/alerts';
+	
+      Session.get(function(session) {
+        $http.get(url).then(function(res) {
+	    console.log('got some data from the backend');
+	    console.log(res.data);
+          dfd.resolve(res.data);
+        }, function(err) {
+          dfd.reject(err);
+        });
+      });
+      return dfd.promise;*/
+    },
+    delete: function(id) {
+      return $http.delete('/api/1/alerts/' + id);
+    },
+    create: function(query) {
+      var dfd = $q.defer();
+      $http.post('/api/1/alerts', {'query': query}).then(function(res) {
+        dfd.resolve(res.data);
+      }, function(err) {
+        dfd.reject(err);
+      });
+      return dfd.promise;
+    }
+  };
+}]);

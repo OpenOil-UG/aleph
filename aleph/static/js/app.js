@@ -7,6 +7,8 @@ aleph.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider',
     function($routeProvider, $locationProvider, cfpLoadingBarProvider) {
 
 	cfpLoadingBarProvider.includeSpinner = false;
+
+
 	
   $routeProvider.when('/search', {
     templateUrl: 'search_table.html',
@@ -98,6 +100,8 @@ aleph.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider',
   });
 
   $locationProvider.html5Mode(false);
+
+	
 }]);
 
 
