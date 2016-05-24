@@ -65,13 +65,13 @@
 <hr><h3>Your other searches</h3>
 <ul>
   {% for al in other_searches %}
-  <li><a href="{{ al.search_url}}">{{al.label}}</a></li>
+  <li><a href="{{ al.search_url}}">{{al.query}}</a></li>
   {% endfor %}
 </ul>
     <hr>
     <p class="footer">
       You will receive notifications like this whenever {{app_title}} adds documents that
       match your search criteria. If you would like to stop receiving them, click
-      <a href="{{app_url}}/api/1/alerts/delete/{{alert.id}}">{{app_url}}/api/1/alerts/delete/{{alert.id}}</a> to unsubscribe.
+      <a href="https://search.openoil.net/api/1/alerts/delete/{{alert.id}}">{{app_url}}/api/1/alerts/delete/{{alert.id}}</a> to unsubscribe.
   </body>
 </html>

@@ -116,9 +116,7 @@ def preprocess_data(data):
                     result['top_attribs'], result['bottom_attribs'] = result['attribs_to_show'][:2], result['attribs_to_show'][2:]
                     break
         original_url = find_original_url(result) or ''
-        print(original_url)
         result['redirect_url'] = "https://search.openoil.net/api/1/exit?u=%s" % urllib.parse.quote(original_url.encode('utf8'))
-
     return data
 
 def _query():
