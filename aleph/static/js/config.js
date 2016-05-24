@@ -39,6 +39,13 @@ aleph.config(['$routeProvider', '$locationProvider', '$analyticsProvider', 'cfpL
     }
   });
 
+  $routeProvider.when('/signup', {
+    templateUrl: 'openoil/signup.html',
+    controller: 'SignupCtrl',
+    reloadOnSearch: false,
+    loginRequired: false,
+  });
+
   $routeProvider.when('/', {
     templateUrl: 'home.html',
     controller: 'HomeCtrl',
@@ -49,6 +56,7 @@ aleph.config(['$routeProvider', '$locationProvider', '$analyticsProvider', 'cfpL
     }
   });
 
+	
   $routeProvider.otherwise({
     redirectTo: '/',
     loginRequired: false
