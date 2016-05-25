@@ -227,8 +227,9 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 		controller: 'AlertCtrl',
 		backdrop: true,
 		resolve: {
-		    searchTerm: function () {
-			return  $scope.query.state.q;
+		    formvalues: function () {
+			return  {
+			    searchTerm: $scope.query.state.q}
 		    }
 		}
 	    });
@@ -309,24 +310,63 @@ aleph.controller('AlertsManageCtrl', ['$scope', '$modalInstance', '$location', '
 	    $scope.alerts = data.results}
 			 );
 
-  $scope.openQuery = function(alert) {
-    $location.path('/search');
-    $location.search(alert.query);
-    $modalInstance.close();
-  };
+	$scope.editAlert = function(alert){
+	    var emailModal = $modal.open({
+		templateUrl: 'alert_create_form.html',
+		controller: 'AlertCtrl',
+		backdrop: true,
+		resolve: {
+		    formvalues: function(){
+			return {
+			    searchTerm: alert.query,
+			    label: alert.label,
+			    alert_id: alert.id,
+			    frequency: alert.checking_interval
+			}}
+		}
+	    });
+	    emailModal.result.then(
+		function (formdata) {
+		    postdata = {
+			alert_id: formdata['alert_id'],
+			query: formdata['alert_query'],
+			custom_label: formdata['alert_label'],
+			checking_interval: formdata['alert_frequency'],
+		    }
+		    $http({
+			url: '/api/1/alerts',
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			data: JSON.stringify(postdata)
+		    }).success(function(data){
+			Flash.message('added email alert', 'success');
+			Alert.index().then(function(data){
+			    $scope.alerts = data.results}
+			 );
 
+		    })
+
+		},
+		function (result) {
+		}
+	    );
+
+	};
+
+					  
 	$scope.addAlert = function(){
 	    var emailModal = $modal.open({
 		templateUrl: 'alert_create_form.html',
 		controller: 'AlertCtrl',
 		backdrop: true,
 		resolve: {
-		    searchTerm: function () { return "";}
+		    formvalues: function(){ return {}}
 		}
 	    });
 	    emailModal.result.then(
 		function (formdata) {
 		    postdata = {
+			alert_id: formdata['alert_id'],
 			query: formdata['alert_query'],
 			custom_label: formdata['alert_label'],
 			checking_interval: formdata['alert_frequency'],
@@ -403,10 +443,18 @@ aleph.controller('AlertProfileCtrl', ['$scope', '$location', '$modalInstance', '
 
 
 
-aleph.controller('AlertCtrl', ['$scope', '$location', '$modalInstance', '$http', 'Session', 'searchTerm',
-			       function($scope, $location, $modalInstance, $http, Session, searchTerm) {
+aleph.controller('AlertCtrl', ['$scope', '$location', '$modalInstance', '$http', 'Session', 'formvalues',
+			       function($scope, $location, $modalInstance, $http, Session, formvalues)
+{
+    defaults = {
+	searchTerm: "",
+	frequency: 7,
+	alert_id: null,
+	label: "",
+    }
+    $scope.formvalues = jQuery.extend({}, defaults, formvalues);
 
-    $scope.searchTerm = searchTerm;
+				   
     $scope.cancel = function(){
 	$modalInstance.dismiss('cancel');
 	};
