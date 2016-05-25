@@ -457,6 +457,19 @@ aleph.controller('AlertProfileCtrl', ['$scope', '$location', '$modalInstance', '
     }]);  
 
 
+aleph.controller('SignupCtrl', ['$scope', '$location', '$http', 'Session',
+			       function($scope, $location, $http, Session)
+{
+    $scope.rf = {}
+    $scope.submitSignup = function(data){
+	console.log('submitted')
+	console.log($scope.rf)
+	// create an account and login
+	// error --> display error messages
+
+	// success --> create an alert
+    }
+}]);
 
 
 

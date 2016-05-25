@@ -54,6 +54,13 @@ aleph.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider',
     loginRequired: false
   });
 
+  $routeProvider.when('/signup', {
+    templateUrl: 'signup.html',
+    controller: 'SignupCtrl',
+    loginRequired: false
+  });
+
+	
 	
   $routeProvider.when('/sources/new', {
     templateUrl: 'sources_new.html',
