@@ -4,16 +4,17 @@
     <p><b>Already have an account? Go <a href="/#/search?intaction=profile">here</a> to manage your alerts</b></p>
 
     <form novalidate class="simple-form" name="signupform" ng-submit="submitSignup(signupform)">
-    Email: <input name="email" type="text" ng-model="rf.email"/><br />
-    Password: <input name="password1" type="password" ng-model="rf.password1"/><br />
-    Password (repeated): <input name="password2" type="password" ng-model="rf.password2"/><br />
+    Email: <input name="email" type="email" ng-model="rf.email" required/><br />
+    Password: <input name="password1" type="password" ng-model="rf.password1" required /><br />
+    Password (repeated): <input name="password2" type="password" ng-model="rf.password2" required/><br />
 
     <input type="text" ng-show="false" name="alert_id" ng-class="alert_id" ng-model="rf.alert_id"/>
-    Query: <input name="alert_query" type="text" ng-class="alert_query" ng-model="rf.searchTerm"/><br />
+    Query: <input name="alert_query" type="text" ng-class="alert_query" ng-model="rf.searchTerm" required/><br />
     Check: <input name="alert_frequency" type="radio" value="1" ng-class="alert_frequency" ng-model="rf.frequency" />daily
     <input type="radio" name="alert_frequency" value="7" ng-class="alert_frequency" ng-model="rf.frequency" />weekly<br />
-    <!--<button ng-click="emailAlertSubmit(alertForm)">Submit</button> -->
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="warning" ng-show="rf.password1 && rf.password1 != rf.password2">Passwords do not match</div>
+    <div class="warning" ng-show="rf.invalid">{{rf.invalid}}</div>
+    <button type="submit" class="btn btn-primary" ng-disabled="signupform.$invalid">Submit</button>
   </form>
 
 </div>

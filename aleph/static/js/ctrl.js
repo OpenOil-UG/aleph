@@ -1,7 +1,7 @@
 
 aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', '$location', '$route', '$http', '$modal', '$q',
-                             'Flash', 'Session', 'Query', 'Alert', 'QueryContext', '$sce',
-			     function($scope, $rootScope, $routeParams, $window, $location, $route, $http, $modal, $q, Flash, Session, Query, Alert, QueryContext) {
+                             'Flash', 'Session', 'Query', 'Alert', 'QueryContext', 'AlephUser', 
+			     function($scope, $rootScope, $routeParams, $window, $location, $route, $http, $modal, $q, Flash, Session, Query, Alert, QueryContext, AlephUser) {
   $scope.session = {logged_in: false};
   $scope.query = Query;
   $scope.flash = Flash;
@@ -153,20 +153,15 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 		  if(pw1 != pw2){
 		      Flash.message('passwords do not match', 'error');
 		      return;
-		      }
-		$http({
-		    url: '/api/1/sessions/register/ooemail',
-		    method: 'GET', // XXX
-		    params: {
-			'email': email,
-			'pw': pw1}
-		}).success(function(data){
+		  }
+		  AlephUser.createAccount({email: email, pw: pw1}).success(function(data){
 		    Flash.message('Registered', 'success');		    
 		    window.scp.session.logged_in = true;
 		    $window.location.reload();
 		}).error(function(data){
 		    Flash.message('bad registration details', 'error');
 		    });
+
 
 },
 	      function(){});
@@ -244,19 +239,16 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 	    });
 	    emailModal.result.then(
 		function (formdata) {
-		    postdata = {
+		    params = {
 			alert_id: formdata['alert_id'],
 			query: formdata['alert_query'],
 			custom_label: formdata['alert_label'],
 			checking_interval: formdata['alert_frequency'],
 		    }
-		    $http({
-			url: '/api/1/alerts',
-			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
-			data: JSON.stringify(postdata)
-		    }).success(function(data){
+		    Alert.create(params).then(function(data){
 			Flash.message('added email alert', 'success');
+		    }, function(data){
+			Flash.message('something went wrong', 'error');
 		    })
 
 		},
@@ -344,23 +336,19 @@ aleph.controller('AlertsManageCtrl', ['$scope', '$modalInstance', '$location', '
 	    });
 	    emailModal.result.then(
 		function (formdata) {
-		    postdata = {
+		    params = {
 			alert_id: formdata['alert_id'],
 			query: formdata['alert_query'],
 			custom_label: formdata['alert_label'],
 			checking_interval: formdata['alert_frequency'],
 		    }
-		    $http({
-			url: '/api/1/alerts',
-			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
-			data: JSON.stringify(postdata)
-		    }).success(function(data){
+		    Alert.create(params).then(function(data){
 			Flash.message('added email alert', 'success');
 			Alert.index().then(function(data){
 			    $scope.alerts = data.results}
 			 );
-
+		    }, function(data){
+			Flash.message('something went wrong', 'error');
 		    })
 
 		},
@@ -382,21 +370,17 @@ aleph.controller('AlertsManageCtrl', ['$scope', '$modalInstance', '$location', '
 	    });
 	    emailModal.result.then(
 		function (formdata) {
-		    postdata = {
+		    params = {
 			alert_id: formdata['alert_id'],
 			query: formdata['alert_query'],
 			custom_label: formdata['alert_label'],
 			checking_interval: formdata['alert_frequency'],
 		    }
-		    $http({
-			url: '/api/1/alerts',
-			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
-			data: JSON.stringify(postdata)
-		    }).success(function(data){
+		    Alert.create(params).then(function(data){
 			Flash.message('added email alert', 'success');
+		    }, function(data){
+			Flash.message('Something went wrong', 'error');
 		    })
-
 		},
 		function (result) {
 		}
@@ -457,13 +441,31 @@ aleph.controller('AlertProfileCtrl', ['$scope', '$location', '$modalInstance', '
     }]);  
 
 
-aleph.controller('SignupCtrl', ['$scope', '$location', '$http', 'Session',
-			       function($scope, $location, $http, Session)
+aleph.controller('SignupCtrl', ['$scope', '$location', '$http', 'Session', 'AlephUser', 'Alert', 'Flash',
+				function($scope, $location, $http, Session, AlephUser, Alert, Flash)
 {
+    submitRegistration = function(success, failure){
+    }
     $scope.rf = {}
     $scope.submitSignup = function(data){
-	console.log('submitted')
-	console.log($scope.rf)
+	params = {'email': $scope.rf.email,
+		  'pw': $scope.rf.password1}
+	AlephUser.createAccount(params).success(function(data){
+	    $scope.rf.invalid = null;
+	    //create the alert
+	    Alert.create({
+		alert_id: null,
+		query: $scope.rf.searchTerm,
+		checking_interval: $scope.rf.frequency,
+	    }).then(function(data){
+					Flash.message('added email alert', 'success');
+	    }, function(data){
+		$scope.rf.invalid = 'Could not create an alert';
+				    })
+
+	    console.log(data)}).error(function(data){
+		$scope.rf.invalid = 'Could not create this acocunt';
+		});
 	// create an account and login
 	// error --> display error messages
 
