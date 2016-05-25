@@ -458,7 +458,8 @@ aleph.controller('SignupCtrl', ['$scope', '$location', '$http', 'Session', 'Alep
 		query: $scope.rf.searchTerm,
 		checking_interval: $scope.rf.frequency,
 	    }).then(function(data){
-					Flash.message('added email alert', 'success');
+		$location.path("/signup_complete");
+		Flash.message('added email alert', 'success');
 	    }, function(data){
 		$scope.rf.invalid = 'Could not create an alert';
 				    })
