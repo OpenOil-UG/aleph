@@ -141,7 +141,6 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 		  var email = $(mdl).find('[name=email]').val();
 		  var pw1 =  $(mdl).find('[name=password1]').val();
 		  var pw2 =  $(mdl).find('[name=password2]').val();
-		  console.log(email, pw1, pw2);
 		  if(pw1 != pw2){
 		      Flash.message('passwords do not match', 'error');
 		      return;
@@ -236,6 +235,7 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 	    emailModal.result.then(
 		function (formdata) {
 		    postdata = {
+			alert_id: formdata['alert_id'],
 			query: formdata['alert_query'],
 			custom_label: formdata['alert_label'],
 			checking_interval: formdata['alert_frequency'],
@@ -269,10 +269,10 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
     }
   };
 
-      if($location.search().intaction == 'login'){
+      if($location.search().intaction == 'login' && !session.logged_in){
 	  $scope.show_login_modal();
       }
-      if($location.search().intaction == 'register'){
+      if($location.search().intaction == 'register' && !session.logged_in){
 	  $scope.show_register_modal();
       }
 
