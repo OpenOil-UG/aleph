@@ -441,36 +441,36 @@ aleph.controller('AlertProfileCtrl', ['$scope', '$location', '$modalInstance', '
     }]);  
 
 
-aleph.controller('SignupCtrl', ['$scope', '$location', '$http', 'Session', 'AlephUser', 'Alert', 'Flash',
-				function($scope, $location, $http, Session, AlephUser, Alert, Flash)
+aleph.controller('SignupCtrl', ['$scope', '$location', '$http', 'Session', 'AlephUser', 'Alert', 'Flash', '$window',
+				function($scope, $location, $http, Session, AlephUser, Alert, Flash, $window)
 {
-    submitRegistration = function(success, failure){
-    }
+    Session.get(function(session) {
+	$scope.session = session;
+    });
+
+    $scope.$watch($scope.session.logged_in, function(){
+	console.log('logged in status changed');
+    });
+
     $scope.rf = {}
     $scope.submitSignup = function(data){
 	params = {'email': $scope.rf.email,
 		  'pw': $scope.rf.password1}
 	AlephUser.createAccount(params).success(function(data){
 	    $scope.rf.invalid = null;
-	    //create the alert
 	    Alert.create({
 		alert_id: null,
 		query: $scope.rf.searchTerm,
 		checking_interval: $scope.rf.frequency,
 	    }).then(function(data){
+		$window.location.reload();
 		$location.path("/signup_complete");
-		Flash.message('added email alert', 'success');
 	    }, function(data){
 		$scope.rf.invalid = 'Could not create an alert';
 				    })
-
 	    console.log(data)}).error(function(data){
 		$scope.rf.invalid = 'Could not create this acocunt';
 		});
-	// create an account and login
-	// error --> display error messages
-
-	// success --> create an alert
     }
 }]);
 
