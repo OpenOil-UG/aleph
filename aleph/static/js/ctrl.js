@@ -7,10 +7,10 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
   $scope.flash = Flash;
   $scope.sortorder = $scope.query.sort || ["best"];
 
-  $scope.$watch('sortorder', function(){
+  /*$scope.$watch('sortorder', function(){
       $scope.query.state.sort = $scope.sortorder;
       $scope.submitSearch();
-      });
+      });*/
 
   window.scp = $scope;
 
@@ -92,6 +92,14 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
   };
 
   $scope.alertsCRUD = function() {
+      if(!$scope.session.logged_in){
+	  $scope.show_login_modal('', function(data){
+	      Flash.message('logged in', 'success');		    
+	      window.scp.session.logged_in = true;
+	      $scope.alertsCRUD();
+	  });
+      }
+      else {
     var d = $modal.open({
         templateUrl: 'alertscrud.html',
         controller: 'AlertsManageCtrl',
@@ -100,6 +108,7 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 	    alerts: Alert.index()
 	}
     });
+      }
   };
 
 				 
@@ -167,8 +176,12 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 
      
 
-      $scope.show_login_modal = function(){
-	  var login_modal = $modal.open({
+ $scope.show_login_modal = function(message, onsuccess){
+     onsuccess = onsuccess || function(data){
+		    Flash.message('logged in', 'success');		    
+		    window.scp.session.logged_in = true;
+		}
+     var login_modal = $modal.open({
 	      templateUrl: 'user/login_modal.html',
 	      backdrop: true,
 	      controller: function($scope, $modalInstance){
@@ -198,10 +211,7 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 		    params: {
 			'email': email,
 			'password': pw}
-		}).success(function(data){
-		    Flash.message('logged in', 'success');		    
-		    window.scp.session.logged_in = true;
-		}).error(function(data){
+		}).success(onsuccess).error(function(data){
 		    Flash.message('bad login', 'error');
 		    });
 
@@ -269,12 +279,19 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
     }
   };
 
+				 Session.get(function(session){ 
+     if($location.search().intaction == 'profile'){
+	 $scope.alertsCRUD();
+      }
+	 
       if($location.search().intaction == 'login' && !session.logged_in){
 	  $scope.show_login_modal();
       }
       if($location.search().intaction == 'register' && !session.logged_in){
 	  $scope.show_register_modal();
       }
+				     $location.search('intaction', null);				     
+				 });
 
 }]);
 
