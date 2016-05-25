@@ -7,10 +7,10 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
   $scope.flash = Flash;
   $scope.sortorder = $scope.query.sort || ["best"];
 
-  $scope.$watch('sortorder', function(){
+  /*$scope.$watch('sortorder', function(){
       $scope.query.state.sort = $scope.sortorder;
       $scope.submitSearch();
-      });
+      });*/
 
   window.scp = $scope;
 
