@@ -91,12 +91,12 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
     });
   };
 
-  $scope.alertsCRUD = function() {
+  $scope.alertsCRUD = function(message) {
       if(!$scope.session.logged_in){
 	  $scope.show_login_modal('', function(data){
 	      Flash.message('logged in', 'success');		    
 	      window.scp.session.logged_in = true;
-	      $scope.alertsCRUD();
+	      $scope.alertsCRUD('Thank you for logging in');
 	  });
       }
       else {
@@ -105,8 +105,12 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
         controller: 'AlertsManageCtrl',
         backdrop: true,
 	resolve: {
-	    alerts: Alert.index()
+	    userMessage: function () {
+		return  {
+		    message: message}
+	    }
 	}
+
     });
       }
   };
@@ -249,7 +253,7 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 			checking_interval: formdata['alert_frequency'],
 		    }
 		    Alert.create(params).then(function(data){
-			Flash.message('added email alert', 'success');
+			$scope.alertsCRUD('Added your email alert');
 		    }, function(data){
 			Flash.message('something went wrong', 'error');
 		    })
@@ -316,12 +320,14 @@ aleph.controller('ProfileCtrl', ['$scope', '$location', '$modalInstance', '$http
   };
   }]);
 
-aleph.controller('AlertsManageCtrl', ['$scope', '$modalInstance', '$location', '$route', 'alerts', 'Alert', '$modal', '$http', 'Flash',
-				      function($scope, $modalInstance, $location, $route, alerts, Alert, $modal, $http, Flash) {
-	Alert.index().then(function(data){
+aleph.controller('AlertsManageCtrl', ['userMessage', '$scope', '$modalInstance', '$location', '$route', 'Alert', '$modal', '$http', 'Flash',
+				      function(userMessage, $scope, $modalInstance, $location, $route, Alert, $modal, $http, Flash)
+{
+    $scope.message = userMessage.message;      
+    Alert.index().then(function(data){
 	    $scope.alerts = data.results}
-			 );
-
+			  );
+					  
 	$scope.editAlert = function(alert){
 	    var emailModal = $modal.open({
 		templateUrl: 'alert_create_form.html',
@@ -346,7 +352,7 @@ aleph.controller('AlertsManageCtrl', ['$scope', '$modalInstance', '$location', '
 			checking_interval: formdata['alert_frequency'],
 		    }
 		    Alert.create(params).then(function(data){
-			Flash.message('added email alert', 'success');
+			$scope.message = 'Edited your email alert';
 			Alert.index().then(function(data){
 			    $scope.alerts = data.results}
 			 );
@@ -380,7 +386,10 @@ aleph.controller('AlertsManageCtrl', ['$scope', '$modalInstance', '$location', '
 			checking_interval: formdata['alert_frequency'],
 		    }
 		    Alert.create(params).then(function(data){
-			Flash.message('added email alert', 'success');
+			$scope.message = 'Added your email alert';
+			Alert.index().then(function(data){
+			    $scope.alerts = data.results;}
+					  );
 		    }, function(data){
 			Flash.message('Something went wrong', 'error');
 		    })
@@ -450,7 +459,7 @@ aleph.controller('AlertCtrl', ['$scope', '$location', '$modalInstance', '$http',
 			       function($scope, $location, $modalInstance, $http, Session, formvalues)
 {
     defaults = {
-	searchTerm: "",
+	searchTerm: "Your search here",
 	frequency: 7,
 	alert_id: null,
 	label: "",

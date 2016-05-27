@@ -1,10 +1,11 @@
  <div>
     <span class="close" ng-click="cancel()">x</span>
-    <p>Set up email alert
+    <p>Set up email alert <span ng-show="alertForm.alert_query.$pristine">pristine</span>
+									     
 
       <form novalidate class="simple-form" name="alertForm" ng-submit="emailAlertSubmit(alertForm)">
 	<input type="text" ng-show="false" name="alert_id" ng-class="alert_id" ng-model="formvalues.alert_id"/>
-    Query: <input name="alert_query" type="text" ng-class="alert_query" ng-model="formvalues.searchTerm"/><br />
+    Query: <input name="alert_query" type="text" id="alert_query" ng-class="alert_query" ng-model="formvalues.searchTerm"/><br />
     <span ng-show="false"> Label: <input name="alert_label" type="text" ng-class="alert_label"/><br /></span>
     Check: <input name="alert_frequency" type="radio" value="1" ng-class="alert_frequency" ng-model="formvalues.frequency" />daily
     <input type="radio" name="alert_frequency" value="7" ng-class="alert_frequency" ng-model="formvalues.frequency" />weekly<br />

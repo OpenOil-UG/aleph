@@ -1,6 +1,10 @@
 <div class="modal-header">
   <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
   <h4 class="modal-title">Manage your e-mail alerts</h4>
+        <div class="alert alert-success" ng-show="message">
+        <p>{{message}}</p>
+      </div>
+
 </div>
 
 <form class="form-horizontal" role="form" ng-submit="close()">
