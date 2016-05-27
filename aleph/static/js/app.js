@@ -66,6 +66,13 @@ aleph.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider',
     loginRequired: false
   });	
 	
+  $routeProvider.when('/register_complete', {
+    templateUrl: 'user/register_completed.html',
+    controller: 'SignupCtrl',
+    loginRequired: false
+  });	
+	
+
 	
   $routeProvider.when('/sources/new', {
     templateUrl: 'sources_new.html',

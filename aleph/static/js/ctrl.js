@@ -155,9 +155,9 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 		      return;
 		  }
 		  AlephUser.createAccount({email: email, pw: pw1}).success(function(data){
-		    Flash.message('Registered', 'success');		    
-		    window.scp.session.logged_in = true;
-		    $window.location.reload();
+		      Flash.message('Registered', 'success');		    
+		      window.scp.session.logged_in = true;
+		      $location.path("/register_complete");
 		}).error(function(data){
 		    Flash.message('bad registration details', 'error');
 		    });
@@ -406,39 +406,6 @@ aleph.controller('AlertsManageCtrl', ['$scope', '$modalInstance', '$location', '
 }]);
 
 
-
-aleph.controller('AlertProfileCtrl', ['$scope', '$location', '$modalInstance', '$http', 'Session',
-  function($scope, $location, $modalInstance, $http, Session) {
-  $scope.user = {};
-  $scope.session = {};
-
-  Session.get(function(session) {
-    $scope.user = session.user;
-    $scope.session = session;
-  });
-
-  $scope.cancel = function() {
-    $modalInstance.dismiss('cancel');
-  };
-
-      $scope.addInterface = function(form){
-	  console.log("creating new alert -- modal window");
-      };
-      
-      
-      $scope.addSubmit = function(form){
-	  console.log("creating new alert");
-      };
-
-      $scope.remove = function(alertid){
-	  console.log("deleting an alert");
-      }
-
-      $scope.updateSubmit = function(form){
-	  console.log("updating an alert");
-      }
-
-    }]);  
 
 
 aleph.controller('SignupCtrl', ['$scope', '$location', '$http', 'Session', 'AlephUser', 'Alert', 'Flash', '$window',
