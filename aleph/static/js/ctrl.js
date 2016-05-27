@@ -127,7 +127,7 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
     }
   };
 
-      $scope.show_register_modal = function(message){
+ $scope.show_register_modal = function(message, destination){
 	  var register_modal = $modal.open({
 	      templateUrl: 'user/register_modal.html',
 	      backdrop: true,
@@ -159,12 +159,18 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 		      return;
 		  }
 		  AlephUser.createAccount({email: email, pw: pw1}).success(function(data){
-		      var d = $modal.open({
-			  templateUrl: 'user/register_completed.html',
-			  controller: 'ProfileCtrl',
-			  backdrop: true
-		      });
 		      window.scp.session.logged_in = true;
+		      if(destination == 'create_alert'){
+			  $scope.makeAlertModal($scope, "Thank you for registering for Aleph");
+		      }
+		      else{
+			  var d = $modal.open({
+			      templateUrl: 'user/register_completed.html',
+			      controller: 'ProfileCtrl',
+			      backdrop: true
+			  });
+		      }
+		      
 		}).error(function(data){
 		    Flash.message('bad registration details', 'error');
 		    });
@@ -175,7 +181,39 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 	  };
 	      
 
+$scope.makeAlertModal = function($scope, message){
+	    var emailModal = $modal.open({
+		templateUrl: 'alert_create_form.html',
+		controller: 'AlertCtrl',
+		backdrop: true,
+		resolve: {
+		    formvalues: function () {
+			return  {
+			    searchTerm: $scope.query.state.q,
+			    message: message}
+		    }
+		}
+	    });
+	    emailModal.result.then(
+		function (formdata) {
+		    params = {
+			alert_id: formdata['alert_id'],
+			query: formdata['alert_query'],
+			custom_label: formdata['alert_label'],
+			checking_interval: formdata['alert_frequency'],
+		    }
+		    Alert.create(params).then(function(data){
+			$scope.alertsCRUD('Added your email alert');
+		    }, function(data){
+			Flash.message('something went wrong', 'error');
+		    })
 
+		},
+		function (result) {
+		}
+	    );
+	    }
+				 
      
 
  $scope.show_login_modal = function(message, onsuccess){
@@ -230,38 +268,10 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 	    $scope.session = session;
 	});
 	if(!$scope.session.logged_in){
-	    $scope.show_register_modal('You need an account to create email alerts');
+	    $scope.show_register_modal('You need an account to create email alerts', 'create_alert');
 	    }
 	else{
-	    var emailModal = $modal.open({
-		templateUrl: 'alert_create_form.html',
-		controller: 'AlertCtrl',
-		backdrop: true,
-		resolve: {
-		    formvalues: function () {
-			return  {
-			    searchTerm: $scope.query.state.q}
-		    }
-		}
-	    });
-	    emailModal.result.then(
-		function (formdata) {
-		    params = {
-			alert_id: formdata['alert_id'],
-			query: formdata['alert_query'],
-			custom_label: formdata['alert_label'],
-			checking_interval: formdata['alert_frequency'],
-		    }
-		    Alert.create(params).then(function(data){
-			$scope.alertsCRUD('Added your email alert');
-		    }, function(data){
-			Flash.message('something went wrong', 'error');
-		    })
-
-		},
-		function (result) {
-		}
-	    );
+	    $scope.makeAlertModal($scope);
 	}
     };
 
@@ -459,10 +469,11 @@ aleph.controller('AlertCtrl', ['$scope', '$location', '$modalInstance', '$http',
 			       function($scope, $location, $modalInstance, $http, Session, formvalues)
 {
     defaults = {
-	searchTerm: "Your search here",
+	searchTerm: "Enter a search here",
 	frequency: 7,
 	alert_id: null,
 	label: "",
+	message: "",
     }
     $scope.formvalues = jQuery.extend({}, defaults, formvalues);
 

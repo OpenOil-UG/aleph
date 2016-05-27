@@ -1,6 +1,11 @@
  <div>
     <span class="close" ng-click="cancel()">x</span>
-    <p>Set up email alert <span ng-show="alertForm.alert_query.$pristine">pristine</span>
+
+    <div class="alert alert-success" ng-show="formvalues.message">
+        <p>{{formvalues.message}}</p>
+      </div>
+
+    <p>Set up email alert</p>
 									     
 
       <form novalidate class="simple-form" name="alertForm" ng-submit="emailAlertSubmit(alertForm)">
