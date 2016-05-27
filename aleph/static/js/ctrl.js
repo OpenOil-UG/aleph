@@ -1,6 +1,6 @@
 
 aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', '$location', '$route', '$http', '$modal', '$q',
-                             'Flash', 'Session', 'Query', 'Alert', 'QueryContext', 'AlephUser', 
+                             'Flash', 'Session', 'Query', 'Alert', 'QueryContext', 'AlephUser',
 			     function($scope, $rootScope, $routeParams, $window, $location, $route, $http, $modal, $q, Flash, Session, Query, Alert, QueryContext, AlephUser) {
   $scope.session = {logged_in: false};
   $scope.query = Query;
@@ -155,9 +155,12 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 		      return;
 		  }
 		  AlephUser.createAccount({email: email, pw: pw1}).success(function(data){
-		      Flash.message('Registered', 'success');		    
+		      var d = $modal.open({
+			  templateUrl: 'user/register_completed.html',
+			  controller: 'ProfileCtrl',
+			  backdrop: true
+		      });
 		      window.scp.session.logged_in = true;
-		      $location.path("/register_complete");
 		}).error(function(data){
 		    Flash.message('bad registration details', 'error');
 		    });

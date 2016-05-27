@@ -13,7 +13,7 @@ aleph.factory('Session', ['$http', '$q', function($http, $q) {
             dfd = $http.get('/api/1/sessions', config);
         }
         dfd.success(function(data) {
-          data.cbq = data.logged_in ? data.user.id : 'anon';
+            data.cbq = (data.logged_in && data.user) ? data.user.id : 'anon';
           cb(data);
         });
     };
@@ -90,8 +90,9 @@ aleph.factory('AlephUser', ['$http', '$q', 'Session',
 	  }
       }
   }]);
+
 aleph.factory('Alert', ['$http', '$q', '$location', '$sce', 'Session',
-    function($http, $q, $location, $sce, Session) {
+    function($http, $q, $loation, $sce, Session) {
 
 	return {
       index: function(id) {
