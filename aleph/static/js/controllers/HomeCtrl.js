@@ -2,6 +2,22 @@
 aleph.controller('HomeCtrl', ['$scope', '$location', '$route', 'Source', 'Collection', 'Authz', 'Role', 'Title', 'data', 'metadata',
     function($scope, $location, $route, Source, Collection, Authz, Role, Title, data, metadata) {
 
+ 
+  $scope.suggestions = [
+    {
+      label: 'Nigeria incorporated',
+      href: 'https://search.openoil.net/#/search?q=Nigeria incorporated'
+    },
+    {
+      label: 'Doubt going concern',
+      href: 'https://search.openoil.net/#/search?q="doubt going concern"~10'
+    },
+    {
+      label: 'Statement of reserves',
+      href: 'https://search.openoil.net/#/search?q=reserve%20statement'
+    }
+  ];
+	
   $scope.result = data.result;
   $scope.sources = data.sources;
   $scope.session = metadata.session;
@@ -13,7 +29,6 @@ aleph.controller('HomeCtrl', ['$scope', '$location', '$route', 'Source', 'Collec
   $scope.query = {q: ''};
   $scope.authz = Authz;
 
-  Title.set("Welcome");
 
   $scope.submitSearch = function(form) {
     $location.path('/search');

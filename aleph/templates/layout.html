@@ -16,24 +16,53 @@
     <link rel="shortcut icon" href="{{ config.APP_FAVICON }}">
     <base href="{{url_for('.ui')}}">
   </head>
-  <body ng-controller="AppCtrl as app" ng-class="'aleph--' + $route.current.templateUrl.replace('.html', '')">
-    <div id="page" ng-show="session.roles" ng-cloak>
+  <body ng-controller="AppCtrl as app" ng-keyup="keyDownNotify($event)" ng-class="'aleph--' + $route.current.templateUrl.replace('.html', '')">
+    <div id="page" ng-show="session.roles">
       <nav class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container-fluid">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/#/">Aleph Search Engine</a>
+	    <a href="/#" class="navbar-brand" href="https://openoil.net"><strong>Aleph</strong> Search Engine</a>
             <div class="navbar-description">
                 Everything extractive industries tell investors, in one place.
             </div>
           </div>
 
           <div id="navbar" class="collapse navbar-collapse navbar-right">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav" ng-show="false">
               <li ng-show="!session.logged_in">
                 <a href="{{url_for('sessions_api.login')}}" target="_self">
                   <i class="material-icons">person</i> Sign in
                 </a>
               </li>
+              <li ng-show="session.logged_in && session.role.is_admin"
+                 ng-class="{'active': navSection =='admin'}" uib-dropdown>
+                <a href="#" uib-dropdown-toggle>
+                  <i class="fa fa-warning"></i> Admin
+                </a>
+                <ul uib-dropdown-menu role="menu">
+                  <li role="menuitem">
+                    <a href="/crawlers" class="click">
+                      <i class="fa fa-sitemap" aria-hidden="true"></i>
+                      Crawler Manager
+                    </a>
+                  </li>
+                  <li role="menuitem">
+                    <a href="/entities/review" class="click">
+                      <i class="fa fa-link" aria-hidden="true"></i>
+                      Entity Review
+                    </a>
+                  </li>
+                  <li class="divider"></li>
+                  <li role="menuitem">
+                   <a href="https://github.com/pudo/aleph/issues" class="click">
+                      <i class="fa fa-github-square"></i>
+                      GitHub Issues
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+	      
               <li ng-show="session.logged_in">
                 <a ng-click="editProfile($event)">
                   <i class="fa fa-cog"></i> Settings
@@ -54,36 +83,55 @@
         </div>
       </nav>
 
-      <div id="spinner-overlay" ng-hide="routeLoaded">
-        <div class="spinner" ng-hide="routeFailed">
-          <i class="fa fa-circle-o-notch fa-spin"></i>
-        </div>
-        <div class="spinner failed" ng-show="routeFailed">
-          <i class="fa fa-exclamation-triangle"></i>
-          <div class="failure-note">
-            He's dead, Jim.
+      <div id="spinner-wrapper">
+        <div id="spinner-overlay" ng-hide="routeLoaded">
+          <div class="spinner" ng-hide="routeFailed">
+            <i class="fa fa-circle-o-notch fa-spin"></i>
           </div>
-        </div>
-      </div>
-      <div id="view" class="container-fluid">
-        <div ng-view autoscroll="true"></div>
+          <div class="spinner failed" ng-show="routeFailed" ng-cloak>
+            <i class="fa fa-exclamation-triangle"></i>
+            <div class="failure-note">
+              He's dead, Jim.
+            </div>
+
+	
+
+     <div id="view" class="container-fluid">
+     <div ng-view autoscroll="true"></div>
+     </div<
+	
       </div>
     </div>
 
-    <!-- <footer>
+    <footer>
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-xs-5 col-md-5 partners">
+            <a href="https://opendataincubator.eu" target="_blank">
+              <img src="{{ url_for('static', filename='images/odin_funded_footer.png') }}"/>
+            </a>
+            <a href="https://www.shuttleworthfoundation.org" target="_blank">
+              <img src="{{ url_for('static', filename='images/shuttleworth-funded_footer.png') }}"/>
+            </a>
+          </div>
+          <div class="col-xs-4 col-md-4 col-md-offset-1 licence">
+	    Content <strong><a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons License &nbsp;-&nbsp;CC-BY-SA&nbsp;4.0</a></strong><br/>
+            Code <strong><a href="https://github.com/OpenOil-UG/aleph/blob/master/LICENSE">MIT License</a></strong><br/>
+	    Based on <a href="https://github.com/pudo/aleph">Aleph</a> by <a href="http://pudo.org/">Friedrich Lindenberg</a><br/>
+          </div>
+          <div class="col-xs-3 col-md-2 social">
             <p class="pull-right">
-              <strong>&alefsym;</strong>
-              aleph search engine &middot;
-              <i class="fa fa-github-square"></i>
-              <a href="https://github.com/pudo/aleph">source code</a>
+              <a href="https://twitter.com/open_oil" target="_blank">
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+              </a>
+              <a href="https://github.com/OpenOil-UG/aleph" target="_blank">
+                <i class="fa fa-github-alt" aria-hidden="true"></i>
+              </a>
             </p>
           </div>
         </div>
       </div>
-    </footer> -->
+    </footer>
 
     {% include "analytics.html" %}
 
