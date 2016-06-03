@@ -1,6 +1,6 @@
 
 aleph.factory('Title', ['$rootScope', function($rootScope) {
-  var element = angular.element('title')[0],
+    var element = angular.element(document).find('title')[0],
       originalTitle = element.innerHTML;
       
   return {

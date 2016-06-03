@@ -27,16 +27,12 @@
         cursor: pointer;
         white-space: nowrap;
         text-overflow: hidden;
-<<<<<<< HEAD
-        overflow-x: hidden;      
-=======
         overflow-x: hidden;
 
-        .badge {
+	&.badge {
             background-color: $page-bg;
             color: $text-muted;
         }
->>>>>>> 4f206f0819d3255607b671817573b252ea728b1c
 
         &.empty {
             color: $text-muted;
@@ -55,7 +51,6 @@
 .search-bar {
     margin-bottom: 1em;
 }
-<<<<<<< HEAD
 
 .alert.alert-suggest {
     background-color: $gray-subtle;
@@ -81,7 +76,6 @@
 }
 
 // Search results 
-=======
 #page .search-actions-bar {
   margin-top: 20px;
   .total {
@@ -98,8 +92,7 @@
     }
   }
 }
-// Search results
->>>>>>> 4f206f0819d3255607b671817573b252ea728b1c
+
 .search-result {
     padding: 1em 0 1.5em 0;
     border-bottom: 1px solid $gray-subtle;
