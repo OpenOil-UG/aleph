@@ -46,7 +46,7 @@ def mail_welcome_email(user):
     env = Environment(loader=FileSystemLoader(templatedir))
 
 
-    html_body = env.get_template('welcome_mail.html').render(**{
+    html_body = env.get_template('comingsoon_mail.html').render(**{
         'user': user,
         })
     text_body = html2text.html2text(html_body)
