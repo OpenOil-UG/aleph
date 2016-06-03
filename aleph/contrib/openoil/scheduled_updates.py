@@ -27,9 +27,9 @@ def schedule_updates():
     # upload
     schedule.every(1).days.at("08:00").do(_crawler('sedar-partial-content'))
 
-    schedule.every(1).days.at("16:00").do(check_alerts)
+    #schedule.every(1).days.at("16:00").do(check_alerts)
 
-    schedule.run_all()
+    #schedule.run_all()
     
     while(1):
         schedule.run_pending()
