@@ -7,15 +7,9 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
   $scope.flash = Flash;
   $scope.sortorder = $scope.query.sort || ["best"];
 
-  /*$scope.$watch('sortorder', function(){
-      $scope.query.state.sort = $scope.sortorder;
-      $scope.submitSearch();
-      });*/
 
   window.scp = $scope;
-
 				 
-  // super-hacky temp redirect, to be removed soon
   if(['', '/'].indexOf($location.path()) > -1){
       $window.location.href="http://aleph.openoil.net";
   }
@@ -42,9 +36,6 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
 	    return source_labels[key]}
 	return key;
     }
-				 
-
-				 
 				 
   Session.get(function(session) {
     $scope.session = session;
@@ -114,9 +105,6 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 
     });
       }
   };
-
-				 
-
 
   $scope.submitSearch = function(form) {
     $location.search($scope.query.state);
@@ -274,9 +262,6 @@ $scope.makeAlertModal = function($scope, message){
 	    $scope.makeAlertModal($scope);
 	}
     };
-
-
-
  								 
   $scope.clearSearch = function(form) {
     var mode = Query.mode();
