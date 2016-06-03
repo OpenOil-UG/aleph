@@ -5,77 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google" content="notranslate" />
     <title>{{config.APP_TITLE}}</title>
-    
+
     {% assets "css" %}
       <link type="text/css" href="{{ ASSET_URL }}" rel="stylesheet">
     {% endassets %}
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,400italic,700,700italic|PT+Serif' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="shortcut icon" href="{{ config.APP_FAVICON }}">
     <base href="{{url_for('.ui')}}">
   </head>
-  <body ng-controller="AppCtrl" ng-keyup="keyDownNotify($event)">
-    <div id="page" ng-show="session.roles">
+  <body ng-controller="AppCtrl as app" ng-class="'aleph--' + $route.current.templateUrl.replace('.html', '')">
+    <div id="page" ng-show="session.roles" ng-cloak>
       <nav class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container-fluid">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/"><img alt="{{config.APP_TITLE}}" src="{{config.APP_LOGO}}"></a>
-            <a class="navbar-brand" href="/">{{config.APP_TITLE}}</a>
-          </div>
-
-          <div id="navbar" class="collapse navbar-collapse navbar-left">
-            <ul class="nav navbar-nav">
-              <li ng-class="{'active': navSection =='documents'}">
-                <a href="/search">
-                  Document Search
-                </a>
-              </li>
-              <li ng-class="{'active': navSection =='entities'}">
-                <a href="/entities">
-                  People and Companies
-                </a>
-              </li>
-              <li ng-class="{'active': navSection =='help'}">
-                <a href="/help">
-                  Help
-                </a>
-              </li>
-            </ul>
+            <a class="navbar-brand" href="/#/">Aleph Search Engine</a>
+            <div class="navbar-description">
+                Everything extractive industries tell investors, in one place.
+            </div>
           </div>
 
           <div id="navbar" class="collapse navbar-collapse navbar-right">
-            <ul class="nav navbar-nav" ng-cloak>
+            <ul class="nav navbar-nav">
               <li ng-show="!session.logged_in">
                 <a href="{{url_for('sessions_api.login')}}" target="_self">
-                  <i class="fa fa-sign-in"></i> Sign in
+                  <i class="material-icons">person</i> Sign in
                 </a>
-              </li>
-              <li ng-show="session.logged_in && session.role.is_admin"
-                 ng-class="{'active': navSection =='admin'}" uib-dropdown>
-                <a href="#" uib-dropdown-toggle>
-                  <i class="fa fa-warning"></i> Admin
-                </a>
-                <ul uib-dropdown-menu role="menu">
-                  <li role="menuitem">
-                    <a href="/crawlers" class="click">
-                      <i class="fa fa-sitemap" aria-hidden="true"></i>
-                      Crawler Manager
-                    </a>
-                  </li>
-                  <li role="menuitem">
-                    <a href="/entities/review" class="click">
-                      <i class="fa fa-link" aria-hidden="true"></i>
-                      Entity Review
-                    </a>
-                  </li>
-                  <li class="divider"></li>
-                  <li role="menuitem">
-                    <a href="https://github.com/pudo/aleph/issues" class="click">
-                      <i class="fa fa-github-square"></i>
-                      GitHub Issues
-                    </a>
-                  </li>
-                </ul>
               </li>
               <li ng-show="session.logged_in">
                 <a ng-click="editProfile($event)">
@@ -97,25 +54,23 @@
         </div>
       </nav>
 
-      <div id="spinner-wrapper">
-        <div id="spinner-overlay" ng-hide="routeLoaded">
-          <div class="spinner" ng-hide="routeFailed">
-            <i class="fa fa-circle-o-notch fa-spin"></i>
-          </div>
-          <div class="spinner failed" ng-show="routeFailed" ng-cloak>
-            <i class="fa fa-exclamation-triangle"></i>
-            <div class="failure-note">
-              He's dead, Jim.
-            </div>
+      <div id="spinner-overlay" ng-hide="routeLoaded">
+        <div class="spinner" ng-hide="routeFailed">
+          <i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+        <div class="spinner failed" ng-show="routeFailed">
+          <i class="fa fa-exclamation-triangle"></i>
+          <div class="failure-note">
+            He's dead, Jim.
           </div>
         </div>
-        <div id="view" class="container-fluid">
-          <div ng-view autoscroll="true"></div>
-        </div>
+      </div>
+      <div id="view" class="container-fluid">
+        <div ng-view autoscroll="true"></div>
       </div>
     </div>
 
-    <footer>
+    <!-- <footer>
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
@@ -124,19 +79,18 @@
               aleph search engine &middot;
               <i class="fa fa-github-square"></i>
               <a href="https://github.com/pudo/aleph">source code</a>
-              &middot;
-              <a href="/help/api">api documentation</a>
             </p>
           </div>
         </div>
       </div>
-    </footer>
+    </footer> -->
+
+    {% include "analytics.html" %}
 
     {% for path, tmpl in templates %}
       <script id="{{path}}" type="text/ng-template">{{ tmpl | safe }}</script>
     {% endfor %}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     {% assets "base" %}
       <script src="{{ ASSET_URL }}"></script>
     {% endassets %}

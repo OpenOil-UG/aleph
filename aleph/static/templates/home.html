@@ -1,88 +1,48 @@
 <div class="home">
-  <div class="jumbotron">
-    <h1>{{result.total | number}} leads</h1>
-    <p class="teaser">for your investigations</p>
-    <div class="search-area">
-      <form class="form-horizontal" role="search" ng-submit="submitSearch(form)">
-        <div class="input-group input-group-lg">
-          <input type="text" class="form-control" autofocus ng-model="query.q" placeholder="Search across documents and data sources">
-          <span class="input-group-btn">
-            <button class="btn btn-primary" type="submit">Search</button>
-          </span>
-        </div>
-      </form>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 feature">
-      <h2>
-        <i class="fa fa-file-text"></i>
-        Search it all
-      </h2>
-      <p>
-        {{title}} lets you search across data and documents from previous investigations,
-        official sources, and scraped databases.
-      </p>
-    </div>
-    <div class="col-md-4 feature">
-      <h2>
-        <i class="fa fa-bell"></i>
-        E-Mail Alerts
-      </h2>
-      <p>
-        As new material gets added, you can stay informed about any additional matches for
-        your previous searches by setting up e-mail alerts
-      </p>
-    </div>
-    <div class="col-md-4 feature">
-      <h2>
-        <i class="fa fa-male"></i>
-        Persons of Interest
-      </h2>
-      <p>
-        Documents and databases are cross-referenced with watchlists based on OCCRP
-        research, and international sanctions lists.
-      </p>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-8 feature">
-      <h3>
-        Document sources
-      </h3>
-      <p>{{result.sources.values.length | number}} document sources are included in
-      searches at the moment. Please feel free to contact us with any other suggested document 
-      and data sets.</p>
-      <div ng-repeat="(category, lst) in sources | orderBy:category">
-        <div class="heading">
-          <strong>{{::category | sourceCategory}}</strong>
-        </div>
-        <div class="row">
-          <div class="col-md-6 source" ng-repeat="source in lst">
-            <a href="/search?filter:source_id={{source.id}}" class="mainlink">{{::source.label}}</a>
-            <a ng-click="editSource(source, $event)" ng-show="::authz.source(authz.WRITE, source.id)">
-              <i class="fa fa-cog"></i>
-            </a>
-            <span class="count">{{::source.count | number}}</span>
+  <div class="search-panel row">
+    <div class="col-md-offset-2 col-md-8">
+      <p class="number-of-investigations">Over 2 million corporate documents</p>
+      <div class="search-area">
+        <form class="form-horizontal" role="search" ng-submit="submitSearch(form)">
+          <div class="input-group input-group-lg">
+            <input type="text"
+            class="form-control"
+            autofocus
+            ng-model="query.q"
+            placeholder="Search for person, companies, projects or other entities" />
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="submit"><i class="material-icons">search</i></button>
+            </span>
           </div>
+        </form>
+      </div>
+      <div class="new-documents">
+        <div class="new-documents__title">New documents today</div>
+        <div class="new-documents__body">Canadian Corporate, Filling US (EDGAR), Australian Stock Exchange</div>
+      </div>
+    </div>
+  </div>
+  <div class="row presentation-panel">
+    <div class="col-md-2 intro">
+      Aleph is a fully text searchable search engine of corporate filing sources.
+    </div>
+    <div class="col-md-6 col-md-offset-1">
+      <div class="row features">
+        <div class="col-md-6 feature">
+          <div class="feature__title">Email alerts</div>
+          <p>Sign in to add email alerts on terms that may pop up in new results</p>
+          <a href="#">learn more</a>
+        </div>
+        <div class="col-md-6 feature">
+          <div class="feature__title">Ask for an expert</div>
+          <p>For more information on the search tool or help to refine your searches contact us</p>
+          <a href="mailto:aleph@openoil.net">aleph@openoil.net</a>
         </div>
       </div>
     </div>
-
-    <div class="col-md-4 feature">
-      <h3>
-        Watchlists
-      </h3>
-      <p>Select a watchlist to cross-reference it with documents:</p>
-      <ul>
-        <li ng-repeat="collection in collections track by collection.id">
-          <a ng-href="/entities?filter:collection_id={{::collection.id}}" class="mainlink" ng-bind="::collection.label"></a>
-          <a ng-click="editCollection(collection, $event)" ng-show="::authz.collection(authz.WRITE, collection.id)">
-            <i class="fa fa-cog"></i>
-          </a>
-        </li>
-      </ul>
+    <div class="col-md-3 suggestions">
+      <div class="suggestions__title">Suggested searches</div>
+      <a ng-repeat="suggestion in suggestions" ng-href="{{ suggestion.href }}" ng-bind="suggestion.label"></a>
     </div>
   </div>
 </div>
