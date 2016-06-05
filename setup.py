@@ -45,15 +45,21 @@ setup(
             'emails = aleph.analyze.regex:EMailAnalyzer',
             'urls = aleph.analyze.regex:URLAnalyzer',
             'regex = aleph.analyze.regex_entity:RegexEntityAnalyzer',
-            'polyglot = aleph.analyze.polyglot_entity:PolyglotEntityAnalyzer'
+            #'polyglot = aleph.analyze.polyglot_entity:PolyglotEntityAnalyzer'
         ],
         'aleph.crawlers': [
             # 'stub = aleph.crawlers.stub:StubCrawler',
-            'opennames = aleph.crawlers.opennames:OpenNamesCrawler',
-            'idrequests = aleph.crawlers.idashboard:IDRequests',
-            'idfiles = aleph.crawlers.idashboard:IDFiles',
-            'blacklight = aleph.crawlers.blacklight:BlacklightCrawler',
-            'sourceafrica = aleph.crawlers.documentcloud:SourceAfricaCrawler'
+            #'opennames = aleph.crawlers.opennames:OpenNamesCrawler',
+            #'idrequests = aleph.crawlers.idashboard:IDRequests',
+            #'idfiles = aleph.crawlers.idashboard:IDFiles',
+            #'blacklight = aleph.crawlers.blacklight:BlacklightCrawler',
+            #'sourceafrica = aleph.crawlers.documentcloud:SourceAfricaCrawler',
+            #'sample = aleph_openoil.crawlers.sample:SampleCrawler',
+            'asx = aleph_openoil.crawlers.asx:ASXCrawler',
+            'edgar = aleph_openoil.crawlers.edgar:EdgarCrawler',
+            'bombay = aleph_openoil.crawlers.bombay:BombayCrawler',
+            'johannesburg = aleph_openoil.crawlers.south_africa:JohannesburgCrawler',
+            'oocontracts = aleph_openoil.crawlers.oocontracts:OpenOilContractsCrawler',
         ],
         'aleph.init': [
         ],
