@@ -2,6 +2,7 @@ from uuid import uuid4
 from flask import current_app
 
 from aleph.core import db, url_for
+from aleph.notify import send_welcome_mail
 from aleph.model.schema_model import SchemaModel
 from aleph.model.common import SoftDeleteModel, IdModel
 from passlib.apps import custom_app_context as pwd_context
@@ -101,6 +102,7 @@ class Role(db.Model, IdModel, SoftDeleteModel, SchemaModel):
             foreign_id="openoil:%s" % email) # XXX do we really need this? 
         db.session.add(src)
         db.session.commit()
+        send_welcome_mail(src)
         return src
         
     @classmethod
