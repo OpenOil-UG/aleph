@@ -107,3 +107,18 @@ def callback():
     db.session.commit()
     log.info("Logged in: %r", session['user'])
     return redirect('/')
+
+
+## openoil email handling
+@blueprint.route('/api/1/sessions/callback/ooemail')
+def ooemail_authorized():
+    '''
+    This is a callback for when we are returning from the
+    external auth provider.
+    So, we use this to handle our sign-in
+    '''
+    return 'oo email authorized'
+
+@blueprint.route('/api/1/sessions/register/ooemail')
+def ooemail_login():
+    return 'oo email authorized'

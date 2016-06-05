@@ -4,6 +4,7 @@ from flask import current_app
 from aleph.core import db, url_for
 from aleph.model.schema_model import SchemaModel
 from aleph.model.common import SoftDeleteModel, IdModel
+from flask.ext.security.utils import get_hmac
 
 
 class Role(db.Model, IdModel, SoftDeleteModel, SchemaModel):
@@ -22,14 +23,21 @@ class Role(db.Model, IdModel, SoftDeleteModel, SchemaModel):
 
     foreign_id = db.Column(db.Unicode(2048), nullable=False, unique=True)
     name = db.Column(db.Unicode, nullable=False)
-    email = db.Column(db.Unicode, nullable=True)
+    email = db.Column(db.Unicode, nullable=False, unique=True)
     api_key = db.Column(db.Unicode, nullable=True)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     type = db.Column(db.Enum(*TYPES, name='role_type'), nullable=False)
     permissions = db.relationship("Permission", backref="role")
-
+    
+    confirmed_at = db.Column(db.DateTime())
+    password = db.Column(db.String(255), nullable=False, server_default='')
+    reset_password_token = db.Column(db.String(100), nullable=False, server_default='')
+ 
     def update(self, data):
         self.schema_update(data)
+
+    def check_pw(self, pw):
+        return self.password == get_hmac(pw)        
 
     @classmethod
     def notifiable(cls):
@@ -77,6 +85,29 @@ class Role(db.Model, IdModel, SoftDeleteModel, SchemaModel):
                 return
             current_app._authz_roles[foreign_id] = role.id
         return current_app._authz_roles[foreign_id]
+
+    @classmethod
+    def by_email(cls, email):
+        q = db.session.query(cls).filter_by(email=email)
+        return q.first()
+
+    @classmethod
+    def create_by_email(cls, email, pw):
+        src = cls(
+            email = email,
+            password = get_hmac(pw)) 
+        db.session.add(src)
+        db.session.commit()
+        
+    @classmethod
+    def create(cls, data, user=None):
+        src = cls()
+        data = SourceCreateForm().deserialize(data)
+        src.slug = data.get('slug')
+        src.crawler = data.get('crawler')
+        src.update_data(data, user)
+        db.session.add(src)
+        return src
 
     def __repr__(self):
         return '<Role(%r,%r)>' % (self.id, self.foreign_id)
