@@ -53,3 +53,4 @@ dateparser==0.3.1
 jdatetime==1.7.2
 coverage
 BeautifulSoup
+flask-security

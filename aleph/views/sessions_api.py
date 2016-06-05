@@ -1,6 +1,7 @@
 import logging
 from flask import session, Blueprint, redirect, request
 from flask_oauthlib.client import OAuthException
+#from flask.ext.login import login_user, logout_user, current_user
 from apikit import jsonify
 
 from aleph import authz, signals
@@ -12,6 +13,15 @@ from aleph.views.cache import enable_cache
 log = logging.getLogger(__name__)
 blueprint = Blueprint('sessions_api', __name__)
 
+def store_login(role):
+    session['logged_in'] = True
+    session['user'] = role.id
+    session['roles'] = session.get('roles', [])
+    session['roles'].append(role.id)
+    pass
+
+def store_logout(user, details):
+    session.clear()
 
 @oauth_provider.tokengetter
 def get_oauth_token():
@@ -107,3 +117,33 @@ def callback():
     db.session.commit()
     log.info("Logged in: %r", session['user'])
     return redirect('/')
+
+
+## openoil email handling
+
+@blueprint.route('/api/1/sessions/callback/ooemail')
+def ooemail_authorized():
+    '''
+    This is a callback for when we are returning from the
+    external auth provider.
+    So, we use this to handle our sign-in
+    '''
+    usr = Role.by_email(request.args.get('email'))
+    if usr is None:
+        abort(403)
+    ok = usr.check_pw(request.args.get('password'))
+    if ok:
+        store_login(usr)
+        return 'oo email authorized'
+    else:
+        abort(403)
+
+@blueprint.route('/api/1/sessions/register/ooemail')
+def ooemail_register():
+    # XXX need some validation here, yesyes;
+    user = Role.create_by_email(request.args.get('email'), request.args.get('pw'))
+    # XXX re-implement welcome mail
+    #alerts.mail_welcome_email(user)
+    # XXX isolate flask-login
+    store_login(user)
+    return 'created oo email'
