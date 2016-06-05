@@ -25,6 +25,7 @@ def upgrade_db():
 
 def create_system_roles():
     log.info("Creating system roles...")
-    Role.load_or_create(Role.SYSTEM_GUEST, Role.SYSTEM, 'All visitors')
-    Role.load_or_create(Role.SYSTEM_USER, Role.SYSTEM, 'Logged-in users')
+    # emails are needed only to enforce the email requirement on all other users
+    Role.load_or_create(Role.SYSTEM_GUEST, Role.SYSTEM, 'All visitors', email="aleph+guest@openoil.net")
+    Role.load_or_create(Role.SYSTEM_USER, Role.SYSTEM, 'Logged-in users', email="aleph+loggedin@openoil.net")
     db.session.commit()

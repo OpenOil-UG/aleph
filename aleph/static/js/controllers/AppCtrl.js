@@ -1,5 +1,5 @@
-aleph.controller('AppCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll', '$route', '$http', '$uibModal', '$q', 'Alert', 'Metadata',
-    function($scope, $rootScope, $location, $anchorScroll, $route, $http, $uibModal, $q, Alert, Metadata) {
+aleph.controller('AppCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll', '$route', '$http', '$uibModal', '$q', 'Alert', 'Metadata', 'OOUser',
+			     function($scope, $rootScope, $location, $anchorScroll, $route, $http, $uibModal, $q, Alert, Metadata, OOUser) {
 
   $scope.session = {logged_in: false};
   $scope.routeLoaded = false;
@@ -9,6 +9,14 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll
   Metadata.get().then(function(metadata) {
     $scope.session = metadata.session;
   });
+
+  $scope.$on('loginStateChange', function(event, args){
+      console.log('login update');
+      window.location.reload(); // XXX hack hack hack
+      Metadata.get().then(function(metadata) {
+	  $scope.session = metadata.session;
+      });
+      });
 
   $rootScope.$on("$routeChangeStart", function (event, next, current) {
     $scope.reportLoading(true);
@@ -65,4 +73,15 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll
     });
   };
 
+ $scope.loginModal = function($event){   
+     $event.stopPropagation();
+     OOUser.loginModal($scope, '/');
+ };
+
+ $scope.registerModal = function($event){   
+     $event.stopPropagation();
+     OOUser.registerModal($scope, '/');
+ };
+
+				
 }]);
