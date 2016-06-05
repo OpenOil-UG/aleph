@@ -16,7 +16,7 @@
     <link rel="shortcut icon" href="{{ config.APP_FAVICON }}">
     <base href="{{url_for('.ui')}}">
   </head>
-  <body ng-controller="AppCtrl as app" ng-keyup="keyDownNotify($event)" ng-class="'aleph--' + $route.current.templateUrl.replace('.html', '')">
+  <body ng-controller="AppCtrl as app" ng-keyup="keyDownNotify($event)" ng-class="'aleph--' + $route.current.templateUrl.replace('.html', '').replace('templates/', '')">
     <div id="page" ng-show="session.roles">
       <nav class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container-fluid">
@@ -28,7 +28,7 @@
           </div>
 
           <div id="navbar" class="collapse navbar-collapse navbar-right">
-            <ul class="nav navbar-nav" ng-show="false">
+            <ul class="nav navbar-nav">
               <li ng-show="!session.logged_in">
                 <a href="{{url_for('sessions_api.login')}}" target="_self">
                   <i class="material-icons">person</i> Sign in
