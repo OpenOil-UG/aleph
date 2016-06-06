@@ -31,7 +31,7 @@
             <ul class="nav navbar-nav">
               <li ng-show="!session.logged_in">
                 <a href="{{url_for('sessions_api.login')}}" target="_self">
-                  <i class="material-icons">person</i> Sign in
+                  <i class="material-icons">person</i> Sign in with Google
                 </a>
               </li>
               <li ng-show="session.logged_in && session.role.is_admin"

@@ -1,6 +1,9 @@
 <div id="login_modal">
-    <span class="close" ng-click="cancel()">x</span>
-    <h2>Log in</h2>
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Log in</h4>
+</div>
+<div class="modal-body">
 
     <b>No account yet? <a href="" ng-click="switch_to_register()">Register</a></b>
     <form novalidate class="simple-form" name="loginform" ng-submit="handle_login(loginform)">
@@ -8,4 +11,5 @@
     Password: <input name="password" type="password" ng-model="formvalues.password"/><br />
     <button type="submit" class="btn btn-primary">Login</button>
   </form>
+</div>
 </div>

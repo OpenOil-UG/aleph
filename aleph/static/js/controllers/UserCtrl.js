@@ -1,5 +1,5 @@
-aleph.controller('UserCtrl', ['$scope', '$uibModalInstance',
-	function($scope, $uibModalInstance){
+aleph.controller('UserCtrl', ['$scope', '$uibModalInstance', 'OOUser',
+	function($scope, $uibModalInstance, OOUser){
    
 		  $scope.cancel = function(){
 		      $uibModalInstance.dismiss('cancel');
@@ -14,8 +14,14 @@ aleph.controller('UserCtrl', ['$scope', '$uibModalInstance',
 
 		  $scope.switch_to_register = function(){
 		      $uibModalInstance.dismiss('cancel');
-		      window.scp.show_register_modal();
+		      OOUser.registerModal();
 		      };
+
+		  $scope.switch_to_login = function(){
+		      $uibModalInstance.dismiss('cancel');
+		      OOUser.loginModal();
+		      };
+
 
 	      }]);
 

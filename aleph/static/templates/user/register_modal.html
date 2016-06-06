@@ -1,8 +1,10 @@
- <div id="register_modal">
-    <span class="close" ng-click="cancel()">x</span>
+<div id="register_modal">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Register for Aleph</h4>
     <h3 ng-show="message">{{message}}</h3>
-    <h2>Register for Aleph</h2>
-
+</div>
+<div class="modal-body">
     <p>Coming soon - the email alerts to receive up to date corporate filings on your queries. Sign up today to receive the latest developments on Aleph.</p>
     
 <p>    <b>Already have an account? <a href="" ng-click="switch_to_login()">Log in</a></b></p>
@@ -12,5 +14,6 @@
     Password (repeated): <input name="password2" type="password" ng-model="formvalues.password2"/><br />
     <button type="submit" class="btn btn-primary">Register</button>
   </form>
+</div>
 </div>
 
