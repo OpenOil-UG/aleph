@@ -38,7 +38,7 @@ The API will return a JSON dictionary. The most important item wihin it is 'resu
 - title: document title
 - score: how well the document matches the search query, as measured by elasticsearch
 - updated_at: when Aleph downloaded the document
-- extract: extracts of text from the document matching the search term. This is a list of matching text snippets, each of which has the matching text highlighted with <em> tags. Note that the list may be empty -- this would happen, for instance, when the search terms were matched only in metadata, not in the text body.
+- extract: extracts of text from the document matching the search term. This is a list of matching text snippets, each of which has the matching text highlighted with &lt;em&gt; tags. Note that the list may be empty -- this would happen, for instance, when the search terms were matched only in metadata, not in the text body.
 
 NB: Please consider this data to be *insecure*, and escape it before use. The title and extract fields, in particular, are drawn from varied sources. They may well contain fragments of html and javascript, and could conceivably also include malicious content.
 
