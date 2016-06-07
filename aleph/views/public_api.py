@@ -7,12 +7,12 @@ from aleph.views import search_api
 
 blueprint = Blueprint('public', __name__)
 
+
 result_element_whitelist = (
     "archive_url","attributes", "collection", "id", "manifest_url",
     "name","redirect_url","score","source_url", "title","updated_at", "filed_at",
-    )
-
-
+)
+# NB highlight is also used, but processed in result_filter
 
 def flatten_attributes(data):
     for result in data['results']:
@@ -26,10 +26,13 @@ def flatten_attributes(data):
 def result_filter(rs):
     newlist = []
     for result in rs:
-        newr = {}
+        newr = {
+        'extract': []}
         for k,v in result.items():
             if k in result_element_whitelist:
                 newr[k] = v
+            if k == 'highlight' and 'summary' in v:
+                newr['extract'] = v['summary']
         newlist.append(newr)
     return newlist
 
