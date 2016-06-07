@@ -46,6 +46,18 @@ DOCUMENT_MAPPING = {
         "summary": {"type": "string", "index": "analyzed"},
         "summary_latin": {"type": "string", "index": "analyzed"},
         "created_at": {"type": "date", "index": "not_analyzed"},
+
+        ## OPENOIL ADDITIONS
+
+        "filing_date": {"type": "date", "index": "not_analyzed"},
+        "filing_type": {"type": "string", "index": "analyzed"},
+        "display_title": {"type": "string", "index": "analyzed"},
+        "company_name": {"type": "string", "index": "analyzed"},
+        "sector": {"type": "string", "index": "analyzed"},        
+
+        ## END OPENOIL ADDITIONS
+
+        
         "updated_at": {"type": "date", "index": "not_analyzed"},
         "entities": {
             "type": "nested",
