@@ -60,6 +60,7 @@ setup(
             'bombay = aleph_openoil.crawlers.bombay:BombayCrawler',
             'johannesburg = aleph_openoil.crawlers.south_africa:JohannesburgCrawler',
             'oocontracts = aleph_openoil.crawlers.oocontracts:OpenOilContractsCrawler',
+            'sedar = aleph_openoil.crawlers.sedar:SedarCrawler',
         ],
         'aleph.init': [
         ],

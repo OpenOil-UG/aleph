@@ -50,11 +50,12 @@ DOCUMENT_MAPPING = {
         ## OPENOIL ADDITIONS
 
         "filing_date": {"type": "date", "index": "not_analyzed"},
-        "filing_type": {"type": "string", "index": "analyzed"},
+        "filing_type": {"type": "string", "index": "not_analyzed"},
         "display_title": {"type": "string", "index": "analyzed"},
-        "company_name": {"type": "string", "index": "analyzed"},
-        "sector": {"type": "string", "index": "analyzed"},        
-
+        "company_name": {"type": "string", "index": "not_analyzed"},
+        "sector": {"type": "string", "index": "not_analyzed"},
+        "industry": {"type": "string", "index": "not_analyzed"},        
+        "file_size": {"type": "integer"},
         ## END OPENOIL ADDITIONS
 
         

@@ -138,7 +138,8 @@ def resetindex():
     """Re-create the ES index configuration, dropping all data."""
     delete_index()
     init_search()
-
+    upgrade_search()
+    install_analyzers()
 
 @manager.command
 def indexentities(foreign_id=None):

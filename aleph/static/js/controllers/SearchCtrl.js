@@ -10,7 +10,8 @@ aleph.controller('SearchCtrl', ['$scope', '$route', '$location', '$anchorScroll'
   $scope.sortOptions = {
     score: 'Relevancy',
     newest: 'Newest',
-    oldest: 'Oldest'
+    oldest: 'Oldest',
+    filing_date: 'Filing Date',  
   };
 
   $scope.loadOffset = function(offset) {

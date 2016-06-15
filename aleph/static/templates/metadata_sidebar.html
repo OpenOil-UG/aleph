@@ -12,6 +12,36 @@
       <th>Source</th>
       <td>{{doc.source.label}}</td>
     </tr>
+    <!-- openoil metadata -->
+    <tr ng-if="doc.filing_date">
+      <th>Filing Date</th>
+      <td>{{doc.filing_date}}</td>
+    </tr>
+    <tr ng-if="doc.filing_type">
+      <th>Filing Type</th>
+      <td>{{doc.filing_type}}</td>
+    </tr>
+    <tr ng-if="doc.company_name">
+      <th>Company Name</th>
+      <td>{{doc.company_name}}</td>
+    </tr>
+    <tr ng-if="doc.sector">
+      <th>Sector</th>
+      <td>{{doc.sector}}</td>
+    </tr>
+    <tr ng-if="doc.industry">
+      <th>Industry</th>
+      <td>{{doc.industry}}</td>
+    </tr>
+    <tr ng-if="doc.file_size">
+      <th>File Size</th>
+      <td>{{doc.file_size}} bytes</td>
+    </tr>
+
+
+    
+    <!-- end openoil bit -->
+
     <tr ng-if="doc.author">
       <th>Author</th>
       <td>{{doc.author}}</td>
@@ -91,6 +121,12 @@
             ng-href="/api/1/documents/{{doc.id}}/pdf" target="_self" download="{{doc.file_name}}.pdf" class="btn btn-default">
             <i class="fa fa-cloud-download"></i> Download PDF
           </a>
+          <a ng-if="doc.source_url"
+            ng-href="{{doc.source_url}}" target="_self" class="btn btn-default">
+            <i class="fa fa-cloud-download"></i> Original source
+          </a>
+
+	  
         </div>
       </td>
   </table>

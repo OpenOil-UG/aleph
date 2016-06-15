@@ -39,6 +39,9 @@ def ingest_url(source_id, metadata, url):
                     fh.write(chunk)
         if not meta.has('source_url'):
             meta.source_url = res.url
+        if not meta.has('file_size'):
+            # XXX this should go into a plugin
+            meta.file_size = os.stat(tmp_path).st_size
         meta.headers = res.headers
         meta = get_archive().archive_file(tmp_path, meta, move=True)
         Ingestor.dispatch(source_id, meta)

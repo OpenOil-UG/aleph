@@ -6,11 +6,17 @@ CORE_FACETS = {
     'mime_type': 'Content type',
     'languages': 'Languages',
     'countries': 'Countries',
-    'keywords': 'Keywords',
+    #'keywords': 'Keywords',
     'author': 'Document author',
     'emails': 'E-Mail addresses',
     'domains': 'Internet domains',
-    'dates': 'Dates'
+    #'dates': 'Dates',
+
+    'sector': 'Industry Sectors',
+    'filing_date': 'Filing Date',
+    'filing_type': 'Filing Type',
+    'company_name': 'Company',
+    'file_size': 'File Size',
 }
 
 SOURCE_CATEGORIES = {

@@ -334,7 +334,6 @@ class Metadata(MutableMapping):
     def mime_type(self, mime_type):
         if isinstance(mime_type, six.string_types):
             mime_type = mime_type.strip()
-
         self.data['mime_type'] = mime_type
 
     @property
@@ -401,6 +400,16 @@ class Metadata(MutableMapping):
 
     def to_index_dict(self):
         return {
+
+            ## OPENOIL ADDITIONS XXX #
+
+            'filing_type': self.data.get('filing_type', None),
+            'company_name': self.data.get('company_name', None),
+            'sector': self.data.get('sector', None),
+            'industry': self.data.get('industry', None),
+            'filing_date': self.data.get('filing_date', None),
+            'file_size': self.data.get('file_size', None),
+
             'content_hash': self.content_hash,
             'foreign_id': self.foreign_id,
             'file_name': self.file_name,

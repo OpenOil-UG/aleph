@@ -17,7 +17,10 @@ from aleph.search.records import records_query
 
 DEFAULT_FIELDS = ['source_id', 'title', 'file_name', 'extension', 'languages',
                   'countries', 'source_url', 'created_at', 'updated_at',
-                  'type', 'summary', 'keywords', 'author', 'recipients']
+                  'type', 'summary', 'keywords', 'author', 'recipients',
+                  #OpenOil
+                  'industry', 'sector', 'filing_type', 'filing_date',
+                  'company',]
 
 # Scoped facets are facets where the returned facet values are returned such
 # that any filter against the same field will not be applied in the sub-query
@@ -32,12 +35,15 @@ def documents_query(args, fields=None, facets=True):
     text = args.get('q', '').strip()
     q = text_query(text)
     q = authz_sources_filter(q)
-
     # Sorting -- should this be passed into search directly, instead of
     # these aliases?
     sort_mode = args.get('sort', '').strip().lower()
-    if text or sort_mode == 'score':
+    print('sort mode is')
+    print(sort_mode)
+    if sort_mode == 'score':
         sort = ['_score']
+    elif sort_mode == 'filing_date':
+        sort = [{'filing_date': 'desc'}]
     elif sort_mode == 'newest':
         sort = [{'dates': 'desc'}, {'created_at': 'desc'}, '_score']
     elif sort_mode == 'oldest':
@@ -45,6 +51,8 @@ def documents_query(args, fields=None, facets=True):
     else:
         sort = [{'updated_at': 'desc'}, {'created_at': 'desc'}, '_score']
 
+    print("sort is")
+    print(sort)
     filters = parse_filters(args)
     for entity in args.getlist('entity'):
         filters.append(('entities.uuid', entity))
@@ -53,14 +61,21 @@ def documents_query(args, fields=None, facets=True):
     if facets:
         aggs = aggregate(q, args)
         aggs = facet_source(q, aggs, filters)
+        #aggs = facet_sector(q, aggs, filters)
+        print('faceted')
+        print(aggs)
+        print('filters')
+        print(filters)
         q = entity_collections(q, aggs, args, filters)
 
+    # XXX this is where I should be hooking in openoil aggregations
     signals.document_query_process.send(q=q, args=args)
     return {
         'sort': sort,
         'query': filter_query(q, filters, OR_FIELDS),
         'aggregations': aggs,
         '_source': fields or DEFAULT_FIELDS
+        #'fields': fields or DEFAULT_FIELDS
     }
 
 
@@ -120,6 +135,20 @@ def facet_source(q, aggs, filters):
         }
     }
     return aggs
+
+def facet_sector(q, aggs, filters):
+    aggs['scoped']['aggs']['sector'] = {
+        'filter': {
+            'query': filter_query(q, filters, OR_FIELDS, skip='sector')
+        },
+        'aggs': {
+            'sector': {
+                'terms': {'field': 'sector', 'size': 1000}
+            }
+        }
+    }
+    return aggs
+
 
 
 def text_query(text):
