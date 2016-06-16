@@ -1,8 +1,7 @@
 
-aleph.controller('HomeCtrl', ['$scope', '$location', '$route', 'Source', 'Collection', 'Authz', 'Role', 'Title', 'data', 'metadata',
-    function($scope, $location, $route, Source, Collection, Authz, Role, Title, data, metadata) {
+aleph.controller('HomeCtrl', ['$scope', '$location', '$route', 'Source', 'Collection', 'Authz', 'Role', 'Title', 'data', 'metadata', '$http',
+			      function($scope, $location, $route, Source, Collection, Authz, Role, Title, data, metadata, $http) {
 
- 
   $scope.suggestions = [
     {
       label: 'Nigeria incorporated',
@@ -48,4 +47,8 @@ aleph.controller('HomeCtrl', ['$scope', '$location', '$route', 'Source', 'Collec
       $route.reload();
     });
   };
+
+	$scope.docs_this_week = 'many';
+	$http.get('/api/1/new_doc_count').then(function(res){
+	    $scope.docs_this_week = res.data['week']});
 }]);
