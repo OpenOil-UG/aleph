@@ -109,6 +109,17 @@
       <td><code>{{doc.content_hash}}</code></td>
     </tr>
     <tr>
+      <table>
+	<tr ng-repeat="(key,value) in doc.metadata">
+	  <th>{{key}}</th>
+	  <td>{{value}}</td>
+	</tr>
+      </table>
+    </tr>
+ 
+    
+    
+    <tr>
       <td colspan="2">
         <div class="btn-group" role="group">
           <a ng-href="/api/1/documents/{{doc.id}}/file" target="_self" download="{{doc.file_name}}" class="btn btn-default">

@@ -409,6 +409,7 @@ class Metadata(MutableMapping):
             'industry': self.data.get('industry', None),
             'filing_date': self.data.get('filing_date', None),
             'file_size': self.data.get('file_size', None),
+            'metadata': self.data,
 
             'content_hash': self.content_hash,
             'foreign_id': self.foreign_id,

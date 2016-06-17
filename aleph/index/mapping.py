@@ -56,6 +56,8 @@ DOCUMENT_MAPPING = {
         "sector": {"type": "string", "index": "not_analyzed"},
         "industry": {"type": "string", "index": "not_analyzed"},        
         "file_size": {"type": "integer"},
+
+        "metadata": {"type": "object", "dynamic": True},
         ## END OPENOIL ADDITIONS
 
         
