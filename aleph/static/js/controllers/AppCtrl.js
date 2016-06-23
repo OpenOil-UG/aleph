@@ -11,9 +11,7 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll
   });
 
   $scope.$on('loginStateChange', function(event, args){
-      console.log('login update');
-      window.location.reload(); // XXX hack hack hack
-      Metadata.get().then(function(metadata) {
+      Metadata.flush().then(function(metadata) {
 	  $scope.session = metadata.session;
       });
       });
