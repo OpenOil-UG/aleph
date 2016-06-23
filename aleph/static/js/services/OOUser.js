@@ -37,14 +37,17 @@ aleph.factory('OOUser', ['$uibModal', '$http', '$q', 'Metadata', function($uibMo
     }
 
     var registerModal = function($scope, redirect_url){
+	$scope.formvalues = {mailing_list: true}
 	var register_modal = $uibModal.open({
                          templateUrl: 'templates/user/register_modal.html',
                          controller: 'UserCtrl',
-                         backdrop: true
-                     });
+            backdrop: true,
+	    scope: $scope
+        });
 	  register_modal.result.then(
 	      function(mdl){
 		  var email = mdl.formvalues.email;
+		  var mailing_list = mdl.formvalues.mailing_list;
 		  var pw1 = mdl.formvalues.password1;
 		  var pw2 = mdl.formvalues.password2;
 		  if(pw1 != pw2){
@@ -52,7 +55,7 @@ aleph.factory('OOUser', ['$uibModal', '$http', '$q', 'Metadata', function($uibMo
 		      console.log('passwords do not match');
 		      return;
 		  }
-		  createAccount({email: email, pw: pw1}).success(function(data){
+		  createAccount({email: email, pw: pw1, mailing_list: mailing_list}).success(function(data){
 		      destination = ''; //XXX fixme legacy from old oo
 		      if(destination == 'create_alert'){
 			  $scope.makeAlertModal($scope, "Thank you for registering for Aleph");

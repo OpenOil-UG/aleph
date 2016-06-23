@@ -37,6 +37,8 @@ class Role(db.Model, IdModel, SoftDeleteModel, SchemaModel):
     mailing_list = db.Column(db.Boolean, default=False)
  
     def update(self, data):
+        print('---role update---')
+        print(data)
         self.schema_update(data)
 
     def check_pw(self, pw):
@@ -58,13 +60,14 @@ class Role(db.Model, IdModel, SoftDeleteModel, SchemaModel):
 
     @classmethod
     def load_or_create(cls, foreign_id, type, name, email=None,
-                       is_admin=None):
+                       is_admin=None, mailing_list=False):
         role = cls.by_foreign_id(foreign_id)
         if role is None:
             role = cls()
             role.foreign_id = foreign_id
             role.type = type
             role.is_admin = False
+            role.mailing_list = mailing_list
 
         if role.api_key is None:
             role.api_key = uuid4().hex
@@ -95,12 +98,13 @@ class Role(db.Model, IdModel, SoftDeleteModel, SchemaModel):
         return q.first()
 
     @classmethod
-    def create_by_email(cls, email, pw):
+    def create_by_email(cls, email, pw, mailing_list=None):
         src = cls(
             email = email,
             name = email, # XXX ask for this in the registration form
             password = pwd_context.encrypt(pw),
             type = cls.USER,
+            mailing_list=mailing_list,
             foreign_id="openoil:%s" % email) # XXX do we really need this? 
         db.session.add(src)
         db.session.commit()
@@ -129,5 +133,6 @@ class Role(db.Model, IdModel, SoftDeleteModel, SchemaModel):
         data['foreign_id'] = self.foreign_id
         data['is_admin'] = self.is_admin
         data['email'] = self.email
+        data['mailing_list'] = self.mailing_list
         data['type'] = self.type
         return data

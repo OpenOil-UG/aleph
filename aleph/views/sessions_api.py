@@ -98,7 +98,8 @@ def handle_google_oauth(sender, provider=None, session=None):
     me = provider.get('userinfo')
     user_id = 'google:%s' % me.data.get('id')
     role = Role.load_or_create(user_id, Role.USER, me.data.get('name'),
-                               email=me.data.get('email'))
+                               email=me.data.get('email'),
+                               mailing_list=False) # we can't get opt-in here
     session['roles'].append(role.id)
     session['user'] = role.id
 
@@ -151,7 +152,11 @@ def ooemail_authorized():
 @blueprint.route('/api/1/sessions/register/ooemail')
 def ooemail_register():
     # XXX need some validation here, yesyes;
-    user = Role.create_by_email(request.args.get('email'), request.args.get('pw'))
+    user = Role.create_by_email(
+        email=request.args.get('email'),
+        pw=request.args.get('pw'),
+        mailing_list=request.args.get('mailing_list'),
+    )
     # XXX re-implement welcome mail
     #alerts.mail_welcome_email(user)
     # XXX isolate flask-login

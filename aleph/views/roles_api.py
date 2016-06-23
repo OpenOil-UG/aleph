@@ -23,6 +23,7 @@ def index():
 
 @blueprint.route('/api/1/roles/<int:id>', methods=['GET'])
 def view(id):
+    ## XXX seems to let any user get private info on other users?
     authz.require(authz.logged_in())
     role = obj_or_404(Role.by_id(id))
     data = role.to_dict()
