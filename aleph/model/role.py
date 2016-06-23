@@ -33,6 +33,8 @@ class Role(db.Model, IdModel, SoftDeleteModel, SchemaModel):
     confirmed_at = db.Column(db.DateTime())
     password = db.Column(db.String(255), nullable=False, server_default='')
     reset_password_token = db.Column(db.String(100), nullable=False, server_default='')
+
+    mailing_list = db.Column(db.Boolean, default=False)
  
     def update(self, data):
         self.schema_update(data)
