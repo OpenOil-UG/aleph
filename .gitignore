@@ -1,3 +1,7 @@
+# -*- mode: gitignore; -*-
+*~
+\#*\#
+
 *.pyc
 *.DS_Store
 *.egg-info

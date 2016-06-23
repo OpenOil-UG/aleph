@@ -130,13 +130,23 @@ def ooemail_authorized():
     '''
     usr = Role.by_email(request.args.get('email'))
     if usr is None:
-        abort(403)
+        return jsonify({
+            'status': 'error',
+            'message': 'You are not authorized to do this.',
+            'roles': request.auth_roles,
+            'user': request.auth_role
+    }, status=403)
     ok = usr.check_pw(request.args.get('password'))
     if ok:
         store_login(usr)
         return 'oo email authorized'
     else:
-        abort(403)
+        return jsonify({
+            'status': 'error',
+            'message': 'You are not authorized to do this.',
+            'roles': request.auth_roles,
+            'user': request.auth_role
+        }, status=403)
 
 @blueprint.route('/api/1/sessions/register/ooemail')
 def ooemail_register():

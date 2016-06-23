@@ -61,6 +61,7 @@ setup(
             'johannesburg = aleph_openoil.crawlers.south_africa:JohannesburgCrawler',
             'oocontracts = aleph_openoil.crawlers.oocontracts:OpenOilContractsCrawler',
             'sedar = aleph_openoil.crawlers.sedar:SedarCrawler',
+            'singapore = aleph_openoil.crawlers.singapore:SingaporeCrawler',
         ],
         'aleph.init': [
         ],
