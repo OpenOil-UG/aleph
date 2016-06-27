@@ -14,12 +14,12 @@ aleph.controller('UserCtrl', ['$scope', '$uibModalInstance', 'OOUser',
 
 		  $scope.switch_to_register = function(){
 		      $uibModalInstance.dismiss('cancel');
-		      OOUser.registerModal();
+		      OOUser.registerModal($scope);
 		      };
 
 		  $scope.switch_to_login = function(){
 		      $uibModalInstance.dismiss('cancel');
-		      OOUser.loginModal();
+		      OOUser.loginModal($scope);
 		      };
 
 
