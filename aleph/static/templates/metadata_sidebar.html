@@ -85,7 +85,7 @@
       </td>
     </tr>
     <tr>
-      <th>Updated</th>
+      <th>Added to Aleph</th>
       <td>{{doc.updated_at | date}}</td>
     </tr>
     <tr ng-if="doc.summary">
@@ -96,6 +96,13 @@
       <th>Source&nbsp;URL</th>
       <td><a ng-href="{{doc.source_url}}" target="_new">{{doc.source_url | host}}</a></td>
     </tr>
+  </table>
+
+  <a href="#" ng-show="!full_metadata_visible"ng-click="full_metadata_visible=!full_metadata_visible">Show full details</a>
+  <a href="#" ng-show="full_metadata_visible" ng-click="full_metadata_visible=!full_metadata_visible">Hide full details</a>
+  
+  <table class="table" id="metadata_bottom_table" ng-show="full_metadata_visible">
+    
     <tr ng-if="doc.file_name">
       <th>File</th>
       <td><code>{{doc.file_name}}</code></td>
@@ -109,16 +116,14 @@
       <td><code>{{doc.content_hash}}</code></td>
     </tr>
     <tr>
-      <table>
 	<tr ng-repeat="(key,value) in doc.metadata">
 	  <th>{{key}}</th>
 	  <td>{{value}}</td>
 	</tr>
-      </table>
     </tr>
- 
+</table> 
     
-    
+<table class="table">    
     <tr>
       <td colspan="2">
         <div class="btn-group" role="group">
@@ -140,5 +145,6 @@
 	  
         </div>
       </td>
-  </table>
+</table>
+
 </div> 

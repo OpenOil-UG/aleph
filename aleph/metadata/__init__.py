@@ -65,7 +65,7 @@ class Metadata(MutableMapping):
 
     @property
     def title(self):
-        title = self.data.get('title')
+        title = self.data.get('title') or self.data.get('backup_title')
         if title is None or not len(title.strip()):
             if self.file_name:
                 title = self.file_name
@@ -404,7 +404,7 @@ class Metadata(MutableMapping):
             ## OPENOIL ADDITIONS XXX #
 
             'filing_type': self.data.get('filing_type', None),
-            'company_name': self.data.get('company_name', None),
+            'company_name': self.data.get('company_name'),
             'sector': self.data.get('sector', None),
             'industry': self.data.get('industry', None),
             'filing_date': self.data.get('filing_date', None),

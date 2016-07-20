@@ -12,7 +12,8 @@ def notify_role(role, subject, html):
         log.error("Role does not have E-Mail: %r", role)
         return
 
-    sender = '%s <%s>' % (get_config('APP_TITLE'),
+    email_name = get_config('MAIL_SENDER', get_config('APP_TITLE'))
+    sender = '%s <%s>' % (email_name,
                           get_config('MAIL_FROM'))
     subject = '[%s] %s' % (get_config('APP_TITLE'), subject)
     msg = Message(subject=subject,

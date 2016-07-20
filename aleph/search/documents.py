@@ -20,7 +20,7 @@ DEFAULT_FIELDS = ['source_id', 'title', 'file_name', 'extension', 'languages',
                   'type', 'summary', 'keywords', 'author', 'recipients',
                   #OpenOil
                   'industry', 'sector', 'filing_type', 'filing_date',
-                  'company',]
+                  'company_name', 'file_size']
 
 # Scoped facets are facets where the returned facet values are returned such
 # that any filter against the same field will not be applied in the sub-query

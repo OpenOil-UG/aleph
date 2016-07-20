@@ -13,7 +13,7 @@
           <a class="dropdown-toggle"
             uib-dropdown-toggle>
             <i class="material-icons">sort</i>
-            Explore by
+            Sort by
           </a>
           <ul class="uib-dropdown-menu" role="menu">
 
@@ -104,7 +104,7 @@
           No documents with {{facet.label}} metadata.
         </li>
         <li class="list-group-item facet animate toggle"
-          ng-repeat="val in facet.values track by val.id"
+          ng-repeat="val in facet.values | orderBy:'label' track by val.id"
           ng-class="{'active': query.hasFilter(facet.field, val.id)}"
           ng-click="query.toggleFilter(facet.field, val.id)">
           <span class="badge">{{val.count | number}}</span>
