@@ -4,12 +4,15 @@
         .navbar-brand {
           font-size: 1em;
           position: relative;
-          padding-left: 110px;
+          margin-left: 110px;
           color: $text-color;
           padding-top: 15px;
           &:before {
-            position: absolute;
-            content: '';
+          }
+        }
+	.navbar-image {
+	    position: absolute;
+	    content: '';
             width: 88px;
             height: 23px;
             top: 14px;
@@ -17,8 +20,8 @@
             background-image: url('../images/OO_logoNav_black.png');
             background-repeat: no-repeat;
             background-size: cover;
-          }
-        }
+
+	}
         .navbar-description {
             color: #5e5e5e;
             white-space: nowrap;

@@ -43,7 +43,7 @@ def alerts():
 
 
 @manager.command
-def crawl(name):
+def crawl(name, incremental=False):
     """Execute the given crawler."""
     log.info('Crawling %r...', name)
     crawlers = get_crawlers()
@@ -51,7 +51,7 @@ def crawl(name):
         log.info('No such crawler: %r', name)
     else:
         crawler = crawlers.get(name)()
-        crawler.execute()
+        crawler.execute(incremental=incremental)
     db.session.commit()
 
 
@@ -128,6 +128,8 @@ def index(foreign_id=None):
             raise ValueError("No such source: %r" % foreign_id)
         q = q.filter(Document.source_id == source.id)
     for doc_id, in q:
+        import time; time.sleep(10) #let's not get banned
+        print('indexing %s' % doc_id)
         index_document.delay(doc_id)
     if foreign_id is None:
         reindex_entities()

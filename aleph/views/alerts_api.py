@@ -19,9 +19,26 @@ def index():
 
 @blueprint.route('/api/1/alerts', methods=['POST', 'PUT'])
 def create():
+    # also handles update
+    data = request.get_json()
+    print(data)
     authz.require(authz.logged_in())
-    alert = Alert.create(request_data(),
-                         request.auth_role)
+
+    if data.get('alert_id', None): # UPDATE
+        alert_id = int(data['alert_id'])
+        alert = obj_or_404(Alert.by_id(alert_id))
+        authz.require(alert.role_id == request.auth_role.id)
+        alert.query = data['query']
+        alert.label = data.get('custom_label', data['query'])
+        alert.checking_interval=int(data.get('checking_interval', 9))
+    else: # CREATE
+        alert = Alert(
+            role_id = request.auth_role.id,
+            query=data['query'],
+            label=data.get('custom_label', data['query']),
+            checking_interval=int(data.get('checking_interval', 9))
+         )
+    db.session.add(alert)
     db.session.commit()
     return view(alert.id)
 
