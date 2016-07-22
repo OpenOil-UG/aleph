@@ -20,7 +20,32 @@ class Alert(db.Model, SoftDeleteModel):
     entity_id = db.Column(db.String(32), db.ForeignKey('entity.id'), nullable=True)  # noqa
     entity = db.relationship(Entity, backref=db.backref('alerts', lazy='dynamic'))  # noqa
     notified_at = db.Column(db.DateTime, nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    checking_interval = db.Column(db.Integer, default=None)
+    #days between checks. None == Never check
 
+
+    def due_to_check(self):
+        '''
+        Return True if it is time to run this query
+
+        NB We expect this script to run at nearly-but-not-precisely
+        the same time each day, and we want to run at an intuitive
+        'once per day', rather than skipping because today's run
+        has happened a few seconds earlier.
+        Therefore we allow 2 hours of wiggle room
+        [we aren't worried about sending duplicate alerts, because that
+        will be handled precisely by filtering result insert dates against
+        the checked_at field
+        '''
+        if self.checking_interval == None: # query is disabled
+            return False
+        if self.notified_at == None: # query is being run for the first time
+            return True
+        min_check_date = datetime.utcnow() - timedelta(days=self.checking_interval) + timedelta(hours=2)
+        return self.notified_at <= min_check_date
+
+    
     @property
     def label(self):
         if self.custom_label is not None:

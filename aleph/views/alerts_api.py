@@ -22,6 +22,8 @@ def create():
     # also handles update
     data = request.get_json()
     print(data)
+    if 'query' not in data:
+        return jsonify({'status': 'invalid'})
     authz.require(authz.logged_in())
 
     if data.get('alert_id', None): # UPDATE
