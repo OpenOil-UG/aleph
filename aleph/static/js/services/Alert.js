@@ -46,7 +46,7 @@ aleph.factory('Alert', ['$http', '$q', '$location', '$sce', '$uibModal', 'Metada
       console.log(alert);
       var editAlertModal = $uibModal.open({
                 templateUrl: 'templates/alert_create_form.html',
-                //controller: 'AlertCtrl',
+                //controller: 'AlertsManageCtrl',
                 backdrop: true,
                 resolve: {
                     formvalues: function(){
