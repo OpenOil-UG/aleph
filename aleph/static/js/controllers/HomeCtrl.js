@@ -5,7 +5,7 @@ aleph.controller('HomeCtrl', ['$scope', '$location', '$route', 'Source', 'Collec
   $scope.suggestions = [
     {
       label: 'Nigeria incorporated',
-      href: 'https://search.openoil.net/#/search?q=Nigeria incorporated'
+      href: 'https://search.openoil.net/#/search?q="Nigeria incorporated"~10'
     },
     {
       label: 'Doubt going concern',
@@ -13,7 +13,7 @@ aleph.controller('HomeCtrl', ['$scope', '$location', '$route', 'Source', 'Collec
     },
     {
       label: 'Statement of reserves',
-      href: 'https://search.openoil.net/#/search?q=reserve%20statement'
+      href: 'https://search.openoil.net/#/search?q="reserve statement"'
     }
   ];
 	
