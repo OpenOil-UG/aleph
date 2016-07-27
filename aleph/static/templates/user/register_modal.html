@@ -5,9 +5,9 @@
     <h3 ng-show="message">{{message}}</h3>
 </div>
 <div class="modal-body">
-    <p>Sign up to Aleph and create email alerts to receive up to date corporate filings for your queries on oil & gas and mining.</p>
+    <p>Sign up to Aleph and create email alerts to receive up-to-date corporate filings for your queries on oil & gas and mining.</p>
     
-<p>    <b>Already have an account? <a href="" ng-click="switch_to_login()">Log in</a></b></p>
+<p>    <span class="login_referral">Already have an account? <a href="" ng-click="switch_to_login()">Log in</a></span></p>
     <form novalidate class="simple-form" name="registerform" ng-submit="handle_register(registerform)">
     Email: <input name="email" type="text" ng-model="formvalues.email"/><br />
     Password: <input name="password1" type="password" ng-model="formvalues.password1"/><br />
