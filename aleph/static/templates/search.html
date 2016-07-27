@@ -3,7 +3,10 @@
     <search-box query="query"></search-box>
     <div class="search-actions-bar">
       <div class="total" ng-if="!result.total">
-        No results were found
+	<p>No results were found</p>
+<p>Find useful search tips for Aleph under the Help tab.</p>  
+<p>Ask for more information from an expert by contacting <a href="mailto:aleph@openoil.net">aleph@openoil.net</a>.</p> 
+
       </div>
       <div class="total" ng-if="result.total">
         {{result.total | number}} documents found
