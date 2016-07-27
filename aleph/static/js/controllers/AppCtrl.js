@@ -6,6 +6,10 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll
   $scope.routeFailed = false;
   $scope.$route = $route;
 
+  $scope.cancel = function() {
+    $uibModalInstance.dismiss('cancel');
+  };
+
   Metadata.get().then(function(metadata) {
     $scope.session = metadata.session;
   });

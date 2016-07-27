@@ -9,9 +9,10 @@ aleph.controller('SearchCtrl', ['$scope', '$route', '$location', '$anchorScroll'
   $scope.authz = Authz;
   $scope.sortOptions = {
     score: 'Relevancy',
-    newest: 'Newest',
-    oldest: 'Oldest',
-    filing_date: 'Filing Date',  
+    //newest_added: 'Newest',
+    //oldest_added: 'Oldest',
+    newest_filed: 'Newest',  
+    oldest_filed: 'Oldest',
   };
 
   $scope.loadOffset = function(offset) {

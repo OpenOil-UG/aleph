@@ -2,6 +2,7 @@ $aleph-theme: #0049e6 !default;
 $aleph-dark: #3a4953 !default;
 $aleph-highlights: yellow !default;
 
+
 @import "custom";
 
 // Style tiles, Colours
@@ -97,7 +98,7 @@ footer {
 .navbar.navbar-default {
     background-color: $body-bg;
     border-bottom: 0;
-    @include drop-shadow;
+    //@include drop-shadow;
 
     // .input-group-addon.brand-field {
     //     background-color: $page-bg;
@@ -135,3 +136,34 @@ footer {
     overflow-y: scroll;
     @extend .modal-table;
 }
+
+
+// OO stuff
+// OO-specific
+// should later go back into _custom.scss
+
+$aleph-theme: #0049e6;
+$body-bg: #e6e6e6;
+
+.dropdown-menu{
+	background-color: $body-bg !important;
+
+	li, a {
+	      color: #333 !important;
+	}
+}
+
+.suggested_searches {
+ 
+    //color: #0049e6;
+    color: $aleph-dark;
+}	
+
+.login_referral {
+    color: $text-color;
+    font-weight: bold;
+
+    a {
+      color: #0049e6;
+      }
+ }	

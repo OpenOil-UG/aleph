@@ -39,11 +39,13 @@ def documents_query(args, fields=None, facets=True):
     sort_mode = args.get('sort', '').strip().lower()
     if sort_mode == 'score':
         sort = ['_score']
-    elif sort_mode == 'filing_date':
+    elif sort_mode == 'newest_filed':
         sort = [{'filing_date': 'desc'}]
-    elif sort_mode == 'newest':
+    elif sort_mode == 'oldest_filed':
+        sort = [{'filing_date': 'asc'}]
+    elif sort_mode == 'newest_added':
         sort = [{'dates': 'desc'}, {'created_at': 'desc'}, '_score']
-    elif sort_mode == 'oldest':
+    elif sort_mode == 'oldest_added':
         sort = [{'dates': 'asc'}, {'created_at': 'asc'}, '_score']
     else:
         sort = [{'updated_at': 'desc'}, {'created_at': 'desc'}, '_score']
