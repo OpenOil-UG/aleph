@@ -22,22 +22,23 @@ def create():
     # also handles update
     data = request.get_json()
     print(data)
-    if 'query' not in data:
+    if 'query_text' not in data:
         return jsonify({'status': 'invalid'})
     authz.require(authz.logged_in())
 
     if data.get('alert_id', None): # UPDATE
+        print('updating')
         alert_id = int(data['alert_id'])
         alert = obj_or_404(Alert.by_id(alert_id))
         authz.require(alert.role_id == request.auth_role.id)
-        alert.query = data['query']
-        alert.label = data.get('custom_label', data['query'])
+        alert.query_text = data['query_text']
+        alert.custom_label = data.get('custom_label', data['query_text'])
         alert.checking_interval=int(data.get('checking_interval', 9))
     else: # CREATE
         alert = Alert(
             role_id = request.auth_role.id,
-            query=data['query'],
-            label=data.get('custom_label', data['query']),
+            query_text=data['query_text'],
+            custom_label=data.get('custom_label', data['query_text']),
             checking_interval=int(data.get('checking_interval', 9))
          )
     db.session.add(alert)

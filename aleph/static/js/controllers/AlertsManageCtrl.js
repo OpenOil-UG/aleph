@@ -9,6 +9,13 @@ aleph.controller('AlertsManageCtrl', ['$scope', '$uibModalInstance', '$location'
     $uibModalInstance.close();
   };
 
+  $scope.editAlert = function(alert) {
+    console.log('about to edit');
+    Alert.edit(alert).then(function(){
+	console.log('edited an alert');
+	});
+      }		   
+
   $scope.removeAlert = function(alert) {
     Alert.delete(alert.id).then(function() {
       $scope.alerts.splice($scope.alerts.indexOf(alert), 1)
