@@ -41,6 +41,47 @@ aleph.factory('Alert', ['$http', '$q', '$location', '$sce', '$uibModal', 'Metada
     return dfd.promise;
   };
 
+  function editAlert(alert){
+      console.log('editAlert');
+      console.log(alert);
+      var editAlertModal = $uibModal.open({
+                templateUrl: 'templates/alert_create_form.html',
+                //controller: 'AlertCtrl',
+                backdrop: true,
+                resolve: {
+                    formvalues: function(){
+                        return {
+                            searchTerm: alert.query,
+                            label: alert.label,
+                            alert_id: alert.id,
+                            frequency: alert.checking_interval
+                        }}
+                }
+            });
+            editAlertModal.result.then(
+                function (formdata) {
+                    params = {
+                        alert_id: formdata['alert_id'],
+                        query: formdata['alert_query'],
+                        custom_label: formdata['alert_label'],
+                        checking_interval: formdata['alert_frequency'],
+                    }
+		    console.log('oh boy');
+                    /*Alert.create(params).then(function(data){
+                        $scope.message = 'Edited your email alert';
+                        Alert.index().then(function(data){
+                            $scope.alerts = data.results}
+                         );
+                    }, function(data){
+                        Flash.message('something went wrong', 'error');
+                    })*/
+
+                },
+                function (result) {
+                }
+            );	    
+	}
+
   function createAlert(alert) {
     var dfd = $q.defer();
     $http.post('/api/1/alerts', alert).then(function(res) {
@@ -103,6 +144,7 @@ aleph.factory('Alert', ['$http', '$q', '$location', '$sce', '$uibModal', 'Metada
     check: checkAlert,
     toggle: toggleAlert,
     delete: deleteAlert,
+    edit: editAlert,
     create: createAlert,
     valid: validAlert
   };
