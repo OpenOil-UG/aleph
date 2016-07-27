@@ -2,21 +2,23 @@ from babel import Locale
 from pycountry import countries
 
 CORE_FACETS = {
+    'company_name': 'Company',
+    'filing_type': 'Filing Type',
+    'sector': 'Industry Sectors',
+    #'filing_date': 'Filing Date',
+    #'file_size': 'File Size',
+
+
     # 'extension': 'File extension',
-    'mime_type': 'Content type',
+    #'mime_type': 'Content type',
     'languages': 'Languages',
     'countries': 'Countries',
     #'keywords': 'Keywords',
-    'author': 'Document author',
-    'emails': 'E-Mail addresses',
-    'domains': 'Internet domains',
+    #'author': 'Document author',
+    #'emails': 'E-Mail addresses',
+    #'domains': 'Internet domains',
     #'dates': 'Dates',
 
-    'sector': 'Industry Sectors',
-    'filing_date': 'Filing Date',
-    'filing_type': 'Filing Type',
-    'company_name': 'Company',
-    'file_size': 'File Size',
 }
 
 SOURCE_CATEGORIES = {

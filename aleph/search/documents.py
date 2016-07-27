@@ -1,5 +1,4 @@
 import json
-from pprint import pprint  # noqa
 
 from werkzeug.datastructures import MultiDict
 
@@ -38,8 +37,6 @@ def documents_query(args, fields=None, facets=True):
     # Sorting -- should this be passed into search directly, instead of
     # these aliases?
     sort_mode = args.get('sort', '').strip().lower()
-    print('sort mode is')
-    print(sort_mode)
     if sort_mode == 'score':
         sort = ['_score']
     elif sort_mode == 'filing_date':
@@ -51,8 +48,6 @@ def documents_query(args, fields=None, facets=True):
     else:
         sort = [{'updated_at': 'desc'}, {'created_at': 'desc'}, '_score']
 
-    print("sort is")
-    print(sort)
     filters = parse_filters(args)
     for entity in args.getlist('entity'):
         filters.append(('entities.uuid', entity))
@@ -62,10 +57,6 @@ def documents_query(args, fields=None, facets=True):
         aggs = aggregate(q, args)
         aggs = facet_source(q, aggs, filters)
         #aggs = facet_sector(q, aggs, filters)
-        print('faceted')
-        print(aggs)
-        print('filters')
-        print(filters)
         q = entity_collections(q, aggs, args, filters)
 
     # XXX this is where I should be hooking in openoil aggregations
