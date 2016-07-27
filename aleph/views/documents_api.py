@@ -17,6 +17,15 @@ from aleph.views.util import get_tabular, get_page
 log = logging.getLogger(__name__)
 blueprint = Blueprint('documents_api', __name__)
 
+# 
+ALLOWED_METADATA = [
+    # SEC
+    'assignedSIC', 'period', 'acceptanceDatetime', 'sic',
+    'primary_share_code', 'web_address', 
+    ]
+
+
+
 
 @blueprint.route('/api/1/documents', methods=['GET'])
 def index():
@@ -48,6 +57,7 @@ def view(document_id):
             data['pdf_url'] = url_for('documents_api.pdf',
                                       document_id=document_id)
     data['source'] = doc.source
+    #data['metadata'] = {k:v for k,v in data['metadata'].items() if k in ALLOWED_METADATA}
     return jsonify(data)
 
 
