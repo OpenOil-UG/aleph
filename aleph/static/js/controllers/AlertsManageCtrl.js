@@ -11,9 +11,9 @@ aleph.controller('AlertsManageCtrl', ['$scope', '$uibModalInstance', '$location'
 
   $scope.editAlert = function(alert) {
     console.log('about to edit');
-    Alert.edit(alert).then(function(){
+    Alert.edit(alert) /*.then(function(){
 	console.log('edited an alert');
-	});
+	});*/
       }		   
 
   $scope.removeAlert = function(alert) {
