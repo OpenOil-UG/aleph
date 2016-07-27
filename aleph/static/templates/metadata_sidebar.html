@@ -33,6 +33,11 @@
       <th>Industry</th>
       <td>{{doc.industry}}</td>
     </tr>
+    <tr ng-if="doc.author">
+      <th>Author</th>
+      <td>{{doc.author}}</td>
+    </tr>
+
     <tr ng-if="doc.file_size">
       <th>File Size</th>
       <td>{{doc.file_size}} bytes</td>
@@ -42,10 +47,6 @@
     
     <!-- end openoil bit -->
 
-    <tr ng-if="doc.author">
-      <th>Author</th>
-      <td>{{doc.author}}</td>
-    </tr>
     <tr ng-if="doc.recipients && doc.recipients.length">
       <th>Recipients</th>
       <td>
@@ -103,17 +104,18 @@
   
   <table class="table" id="metadata_bottom_table" ng-show="full_metadata_visible">
     
-    <tr ng-if="doc.file_name">
+    <!--<tr ng-if="doc.file_name">
       <th>File</th>
       <td><code>{{doc.file_name}}</code></td>
-    </tr>
-    <tr ng-if="doc.mime_type">
-      <th>Type</th>
-      <td><code>{{doc.mime_type}}</code></td>
     </tr>
     <tr ng-if="doc.source_url">
       <th>Checksum</th>
       <td><code>{{doc.content_hash}}</code></td>
+    </tr>
+    -->
+    <tr ng-if="doc.mime_type">
+      <th>Type</th>
+      <td><code>{{doc.mime_type}}</code></td>
     </tr>
     <tr>
 	<tr ng-repeat="(key,value) in doc.metadata">
