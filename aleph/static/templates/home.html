@@ -16,31 +16,53 @@
           </div>
         </form>
       </div>
+      
       <div class="new-documents">
+
+      <div class="new-documents__body">
+      Suggested searches: 
+      <span ng-repeat="suggestion in suggestions">
+      <a class="suggested_searches" ng-href="{{ suggestion.href }}" ng-bind="suggestion.label"></a> {{ last ? '': ', '}}</span>
+</div>
+
+
         <div class="new-documents__title"><b>{{docs_this_week}}</b> new documents this week</div>
-        <!--<div class="new-documents__body">Canadian Corporate, Filling US (EDGAR), Australian Stock Exchange--></div>
       </div>
     </div>
   </div>
   <div class="row presentation-panel">
-    <div class="col-md-2 intro">
+    <!--<div class="col-md-2 intro">
       Aleph offers a database of corporate filings from the extractive industries.
-    </div>
-    <div class="col-md-6 col-md-offset-1">
+    </div>-->
+    <div class="col-md-12">
       <div class="row features">
-        <div class="col-md-6 feature">
+
+        <div class="col-md-3 feature">
+          <div class="feature__title">What is Aleph?</div>
+          <p>Aleph allows you to search public domain documents filed by oil & gas and mining companies to financial regulars around the world. Over 2 million documents are currently indexed and are searchable. You will find filings to SEC, SEDAR, Australian Stock Exchange News and others. Filings are updated daily.</p>
+        </div>
+
+        <div class="col-md-3 feature">
           <div class="feature__title">Email alerts</div>
-          <p>Get an email whenever new documents matching your query are added to Aleph. <a href="mailto:aleph@openoil.net">Mail us</a> to get started</p>
+          <p>Register easily and create an email alert for queries you are interested in. The next time your search query is mentioned in a new company report, press release or news report you will be notified by email.</p>
         </div>
-        <div class="col-md-6 feature">
+
+        <div class="col-md-3 feature">
+          <div class="feature__title">Ask An Expert </div>
+          <p>We offer expert advise and search tips. Our experts are also ready to discuss how you can integrate Aleph in your work. For more information or for a demo contact us at <a href="mailto:aleph@openoil.net">aleph@openoil.net</a></p>
+        </div>
+
+        <div class="col-md-3 feature">
           <div class="feature__title">Get started</div>
-          <p>You can get some tips from our <a href="https://search.openoil.net/#/help">help pages</a>. Or <a href="mailto:aleph@openoil.net">mail us</a>, and we'll help you find what you're looking for</p>
+          <p>You can routinely crawl and import document sources by using the API. Contact us at <a href="mailto:aleph@openoil.net">aleph@openoil.net</a> to get more information.
         </div>
+
       </div>
+
     </div>
-    <div class="col-md-3 suggestions">
+<!--    <div class="col-md-3 suggestions">
       <div class="suggestions__title">Suggested searches</div>
       <a ng-repeat="suggestion in suggestions" ng-href="{{ suggestion.href }}" ng-bind="suggestion.label"></a>
-    </div>
+    </div> -->
   </div>
 </div>
