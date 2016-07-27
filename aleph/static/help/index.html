@@ -10,10 +10,10 @@
 
 <p>
   To find <strong>exact matches</strong> for a given search term, e.g.
-  to search for a person or company, try putting the name in quotes:
+  to search for a person, company, project or technical term, try putting the name in quotes:
 </p>
 
-<pre>"Cooper Energy Limited"</pre>
+<pre>"Nigeria Limited"</pre>
 
 <h4>Proximity Searches</h4>
 
@@ -24,12 +24,12 @@
   the requested search terms within a given distance from each other:
 </p>
 
-<pre>"Bank America"~2</pre>
+<pre>"Nigeria incorporated"~10</pre>
 
 <p>
-  This will find relevant matches with the terms "Bank" and "America"
-  occuring within two words from each other, such as "Bank of America",
-  "Bank in America", even "America has a Bank".
+  This will find relevant matches with the terms "Nigeria" and "Incorporated"
+  occuring within ten words from each other, such as "Nigeria Limited Incorporated" or
+  "incorporated in Nigeria".
 </p>
 
 <h4>Spelling Errors</h4>
@@ -42,11 +42,11 @@
   that must be made to get from the original word to the variant.
 </p>
 
-<pre>Wladimir~2</pre>
+<pre>Siliclastic ~2</pre>
 
 <p>
-  This will find not just the term "Wladimir", but also similar words
-  such as "Vladimir", "Wladimyr" or "Vladimyr". Note that if you set the
+  This will find not just the term "Siliclastic", but also similar words
+  such as "Siliccilastic". Note that if you set the
   permissible distance too high, you will get very slow searches and
   many false results.
 </p>
@@ -67,7 +67,7 @@
   are removed).
 </p>
 
-<pre>banana -ice -cream +fruit</pre>
+<pre>Malawi -Zambia</pre>
 
 <p>
   You can also make more complex, boolean queries in which the terms "OR"
@@ -75,5 +75,10 @@
   together (or can serve as alternatives to each other).
 </p>
 
-<pre>banana AND ("ice cream" OR gelato)</pre>
+<pr>Nigeria AND (incorporated OR operation)</pre>
 
+<pr> Aleph supports an extensive API for searching documents and entities. 
+It can also be used to retrieve raw metadata, source documents and other 
+useful detail.</pr>
+
+<pre>Find out more here <a href="https://github.com/OpenOil-UG/aleph/blob/master/aleph/views/public_api.markdown">Github</a> 
