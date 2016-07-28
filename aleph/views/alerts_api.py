@@ -27,12 +27,11 @@ def create():
     authz.require(authz.logged_in())
 
     if data.get('alert_id', None): # UPDATE
-        print('updating')
         alert_id = int(data['alert_id'])
         alert = obj_or_404(Alert.by_id(alert_id))
         authz.require(alert.role_id == request.auth_role.id)
         alert.query_text = data['query_text']
-        alert.custom_label = data.get('custom_label', data['query_text'])
+        alert.custom_label = data.get('custom_label' '') or data['query_text']
         alert.checking_interval=int(data.get('checking_interval', 9))
     else: # CREATE
         alert = Alert(

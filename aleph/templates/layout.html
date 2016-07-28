@@ -162,6 +162,7 @@
     </footer>
 
     {% include "analytics.html" %}
+    <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
 
     {% for path, tmpl in templates %}
       <script id="{{path}}" type="text/ng-template">{{ tmpl | safe }}</script>
