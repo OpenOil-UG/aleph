@@ -3,6 +3,32 @@ aleph.factory('Alert', ['$http', '$q', '$location', '$sce', '$uibModal', 'Metada
     function($http, $q, $location, $sce, $uibModal, Metadata) {
   var indexDfd = null, indexAlerts = null;
 
+  function alert_controller_func($scope, $modalInstance, formvalues){
+
+      $scope.cancel = function(){
+	  $modalInstance.dismiss('cancel');
+      };
+
+      defaults = {
+	searchTerm: "Enter a search here",
+	frequency: 7,
+	alert_id: null,
+	label: "",
+	message: "",
+      }
+      $scope.formvalues = jQuery.extend({}, defaults, formvalues);
+
+      $scope.emailAlertSubmit = function(form){
+	  console.log('habemus subbuteo');
+	  var formdata = {}
+	
+	  $.each($('[name=alertForm]').serializeArray(), function(i, field) {
+	      formdata[field.name] = field.value;
+	  });
+	  $modalInstance.close(formdata);
+      };
+  };
+
   function index() {
     if (indexDfd === null) {
       indexDfd = $q.defer();
@@ -42,48 +68,43 @@ aleph.factory('Alert', ['$http', '$q', '$location', '$sce', '$uibModal', 'Metada
   };
 
   function editAlert(alert){
-      console.log('editAlert');
-      console.log(alert);
+      var dfd = $q.defer();
       var editAlertModal = $uibModal.open({
                 templateUrl: 'templates/alert_create_form.html',
-                //controller: 'AlertsManageCtrl',
+                controller: alert_controller_func,
                 backdrop: true,
                 resolve: {
                     formvalues: function(){
                         return {
-                            searchTerm: alert.query,
-                            label: alert.label,
+                            query_text: alert.query_text,
+                            custom_label: alert.custom_label,
                             alert_id: alert.id,
-                            frequency: alert.checking_interval
+                            checking_interval: alert.checking_interval,
                         }}
                 }
             });
-            editAlertModal.result.then(
-                function (formdata) {
-                    params = {
+      editAlertModal.result.then(
+          function (formdata) {
+              params = {
                         alert_id: formdata['alert_id'],
-                        query: formdata['alert_query'],
-                        custom_label: formdata['alert_label'],
-                        checking_interval: formdata['alert_frequency'],
-                    }
-		    console.log('oh boy');
-                    /*Alert.create(params).then(function(data){
-                        $scope.message = 'Edited your email alert';
-                        Alert.index().then(function(data){
-                            $scope.alerts = data.results}
-                         );
-                    }, function(data){
-                        Flash.message('something went wrong', 'error');
-                    })*/
-
+                        query_text: formdata['query_text'],
+                        custom_label: formdata['custom_label'],
+                        checking_interval: formdata['checking_interval'],
+              }
+	      createAlert(params).then(function(){
+		  dfd.resolve(formdata['alert_id'])
+	      });
                 },
-                function (result) {
-                }
-            );	    
-	}
+          function (result) {
+	      dfd.reject(result)
+          }
+      );
+      return dfd.promise;	    
+  }
 
   function createAlert(alert) {
     var dfd = $q.defer();
+    console.log(alert)
     $http.post('/api/1/alerts', alert).then(function(res) {
       flush().then(function() {
         dfd.resolve(res.data.id);

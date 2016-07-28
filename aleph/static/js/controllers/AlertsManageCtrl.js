@@ -1,5 +1,5 @@
-aleph.controller('AlertsManageCtrl', ['$scope', '$uibModalInstance', '$location', '$route', 'alerts', 'Alert',
-    function($scope, $uibModalInstance, $location, $route, alerts, Alert) {
+aleph.controller('AlertsManageCtrl', ['$scope', '$uibModalInstance', '$location', '$route', 'alerts', 'Alert', '$uibModal',
+    function($scope, $uibModalInstance, $location, $route, alerts, Alert, $uibModal) {
 
   $scope.alerts = alerts.results;
 
@@ -11,10 +11,19 @@ aleph.controller('AlertsManageCtrl', ['$scope', '$uibModalInstance', '$location'
 
   $scope.editAlert = function(alert) {
     console.log('about to edit');
-    Alert.edit(alert) /*.then(function(){
-	console.log('edited an alert');
-	});*/
-      }		   
+    $uibModalInstance.close();
+    Alert.edit(alert).then(function(){
+	$uibModal.open({
+	    templateUrl: 'templates/alerts_manage.html',
+	    controller: 'AlertsManageCtrl',
+	    backdrop: true,
+	    size: 'md',
+	    resolve: {
+		alerts: Alert.index()
+	    }
+	});
+      });
+      };
 
   $scope.removeAlert = function(alert) {
     Alert.delete(alert.id).then(function() {
