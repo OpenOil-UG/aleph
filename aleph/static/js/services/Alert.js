@@ -10,8 +10,8 @@ aleph.factory('Alert', ['$http', '$q', '$location', '$sce', '$uibModal', 'Metada
       };
 
       defaults = {
-	searchTerm: "Enter a search here",
-	frequency: 7,
+	query_text: '',
+	checking_interval: 1,
 	alert_id: null,
 	label: "",
 	message: "",
@@ -102,9 +102,11 @@ aleph.factory('Alert', ['$http', '$q', '$location', '$sce', '$uibModal', 'Metada
       return dfd.promise;	    
   }
 
+  function createAlertModal(alert){
+      }
+
   function createAlert(alert) {
     var dfd = $q.defer();
-    console.log(alert)
     $http.post('/api/1/alerts', alert).then(function(res) {
       flush().then(function() {
         dfd.resolve(res.data.id);
@@ -145,7 +147,8 @@ aleph.factory('Alert', ['$http', '$q', '$location', '$sce', '$uibModal', 'Metada
   function toggleAlert(alert) {
     var alertId = checkAlert(alert);
     if (!alertId) {
-      return createAlert(alert);
+	return editAlert(alert);
+    //  return createAlert(alert);
     }
     return deleteAlert(alertId);
   };

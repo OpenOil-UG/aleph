@@ -37,7 +37,7 @@ def create():
         alert = Alert(
             role_id = request.auth_role.id,
             query_text=data['query_text'],
-            custom_label=data.get('custom_label', data['query_text']),
+            custom_label=data.get('custom_label' '') or data['query_text'],
             checking_interval=int(data.get('checking_interval', 9))
          )
     db.session.add(alert)
