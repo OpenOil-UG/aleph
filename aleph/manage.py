@@ -43,15 +43,18 @@ def alerts():
 
 
 @manager.command
-def crawl(name, incremental=False):
-    """Execute the given crawler."""
+def crawl(name, incremental=False, param=None):
+    """Execute the given crawler.
+    Use param to pass in additional args
+    """
     log.info('Crawling %r...', name)
     crawlers = get_crawlers()
     if name not in crawlers:
         log.info('No such crawler: %r', name)
     else:
         crawler = crawlers.get(name)()
-        crawler.execute(incremental=incremental)
+        params = {'param': param} if param else {}
+        crawler.execute(incremental=incremental, **params)
     db.session.commit()
 
 
