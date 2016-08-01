@@ -7,6 +7,8 @@ from aleph.ext import get_ingestors
 from aleph.model import Document, CrawlerState
 from aleph.analyze import analyze_document
 
+from aleph.core import celery
+
 log = logging.getLogger(__name__)
 
 
@@ -51,8 +53,11 @@ class Ingestor(object):
 
     @classmethod
     def handle_exception(cls, meta, source_id, exception):
-        db.session.rollback()
-        db.session.close()
+        try:
+            db.session.rollback()
+            db.session.close()
+        except Exception:
+            print('db is confused')
         (error_type, error_message, error_details) = sys.exc_info()
         if error_type is not None:
             error_message = unicode(error_message)
@@ -66,6 +71,7 @@ class Ingestor(object):
                                 error_message=error_message,
                                 error_details=error_details)
         db.session.commit()
+
 
     @classmethod
     def match(cls, meta, local_path):
