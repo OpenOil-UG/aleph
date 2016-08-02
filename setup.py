@@ -62,7 +62,7 @@ setup(
             'oocontracts = aleph_openoil.crawlers.oocontracts:OpenOilContractsCrawler',
             'sedar = aleph_openoil.crawlers.sedar:SedarCrawler',
             'singapore = aleph_openoil.crawlers.singapore:SingaporeCrawler',
-            'edgar_html = aleph_openoil.crawlers.edgar:EdgarHTMLCrawler',
+            'edgar_html = aleph_openoil.crawlers.edgar:EdgarHTMLCrawler', 
         ],
         'aleph.init': [
         ],
