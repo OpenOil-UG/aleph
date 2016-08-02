@@ -1,6 +1,30 @@
 //.aleph--home #page {
 .aleph--home #page {
     // header
+
+/*    iframe {
+    	   display: none;
+	   }*/
+
+.video {
+    position: relative;
+    display: inline-block;
+
+}
+.video img,a {
+    width: 100%;
+    //height: 360px;
+}
+.video:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background: transparent url('/static/images/playbutton.jpg') center center no-repeat;
+    background-size: 40%;
+}
+
     .navbar.navbar-default {
         background-color: transparent;
         position: absolute;

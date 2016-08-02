@@ -17,6 +17,17 @@ aleph.controller('HomeCtrl', ['$scope', '$location', '$route', 'Source', 'Collec
     }
   ];
 	
+	jQuery(document).ready(function() {
+	    $('.video').fancybox({
+		openEffect  : 'none',
+		closeEffect : 'none',
+		helpers : {
+			media : {}
+		}
+	    });
+
+	});
+
   $scope.result = data.result;
   $scope.sources = data.sources;
   $scope.session = metadata.session;
