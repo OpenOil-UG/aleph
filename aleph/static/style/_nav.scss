@@ -13,15 +13,28 @@
 	.navbar-image {
 	    position: absolute;
 	    content: '';
-            width: 88px;
-            height: 23px;
-            top: 14px;
-            left: 10px;
-            background-image: url('../images/OO_logoNav_white.png');
+            width: 50px;
+            height: 43px;
+            //top: 14px;
+            left: 40px;
+            background-image: url('../images/aleph_black.png');
             background-repeat: no-repeat;
             background-size: cover;
 
 	}
+	.navbar-image-home {
+	    position: absolute;
+	    content: '';
+            width: 88px;
+            height: 76px;
+            //top: 14px;
+            left: 10px;
+            background-image: url('../images/aleph_white.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+
+	}
+
         .navbar-description {
             color: #5e5e5e;
             white-space: nowrap;
