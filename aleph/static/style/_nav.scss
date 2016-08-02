@@ -1,38 +1,23 @@
 
 .navbar {
     .navbar-header {
+        margin-left: 50px;
+
         .navbar-brand {
           font-size: 1em;
           position: relative;
-          margin-left: 110px;
+          margin-left: 40px;
           color: $text-color;
           padding-top: 15px;
           &:before {
           }
         }
-	.navbar-image {
+	.navbar-img {
 	    position: absolute;
-	    content: '';
-            width: 50px;
-            height: 43px;
-            //top: 14px;
-            left: 40px;
-            background-image: url('../images/aleph_black.png');
-            background-repeat: no-repeat;
-            background-size: cover;
-
-	}
-	.navbar-image-home {
-	    position: absolute;
-	    content: '';
-            width: 88px;
-            height: 76px;
-            //top: 14px;
-            left: 10px;
-            background-image: url('../images/aleph_white.png');
-            background-repeat: no-repeat;
-            background-size: cover;
-
+            width: 41px;
+            height: 35px;
+            top: 1px;
+            left: 70px;
 	}
 
         .navbar-description {
