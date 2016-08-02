@@ -78,7 +78,10 @@ def status():
 
 @blueprint.route('/api/1/sessions/login')
 def login():
-    return oauth_provider.authorize(callback=url_for('.callback'))
+    return oauth_provider.authorize(
+        callback=url_for('.callback'),
+        state = request.referrer,
+    )
 
 
 @blueprint.route('/api/1/sessions/logout')
@@ -117,7 +120,7 @@ def callback():
     signals.handle_oauth_session.send(provider=oauth_provider, session=session)
     db.session.commit()
     log.info("Logged in: %r", session['user'])
-    return redirect('/')
+    return redirect(request.args.get('state', '/'))
 
 
 ## openoil email handling
