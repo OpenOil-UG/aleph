@@ -74,7 +74,10 @@ aleph.factory('OOUser', ['$uibModal', '$http', '$q', 'Metadata', function($uibMo
 			      backdrop: true
 			  });
 			  // XXX we need to reload the navbar here
-			  d.result.then(function(){window.location.reload();})
+			  d.result.then(function(){
+			      window.location.reload();
+			  }, function(){
+			      window.location.reload();}				       )
 		      }
 		      
 		}).error(function(data){
