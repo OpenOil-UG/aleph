@@ -4,6 +4,18 @@ aleph.filter('date', function() {
   };
 });
 
+aleph.filter('oo_title_fix', function(){
+    return function(doc){
+	var title = doc.title;
+	if(title == 'getfile.do'){
+	    title = doc.filing_type;
+	    }
+	title = title.replace(
+	    'Microsoft Word', '');
+	return title;
+	}
+    });
+
 aleph.filter('relativeDate', function() {
   return function(val) {
     return moment(val).fromNow();

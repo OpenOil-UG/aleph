@@ -131,7 +131,7 @@
         <div class="btn-group" role="group">
           <a ng-href="/api/1/documents/{{doc.id}}/file" target="_self" download="{{doc.file_name}}" class="btn btn-default">
             <i class="fa fa-cloud-download"></i> Download
-            <span ng-if="doc.extension">
+            <span ng-if="doc.extension && doc.extension != 'do'">
               ({{doc.extension}})
             </span>
           </a>
