@@ -1,6 +1,7 @@
 aleph.factory('OOUser', ['$uibModal', '$http', '$q', 'Metadata', function($uibModal, $http, $q, Metadata) {
 
-    var loginModal = function($scope, redirect_url, onsuccess){
+
+    var loginModal = function($scope, redirect_url, onsuccess, message){
 	var onsuccess = onsuccess || function(data){
 	    //Metadata.get();
 	    $scope.$emit('loginStateChange', {});
@@ -14,7 +15,12 @@ aleph.factory('OOUser', ['$uibModal', '$http', '$q', 'Metadata', function($uibMo
 	var mod = $uibModal.open({
                          templateUrl: 'templates/user/login_modal.html',
                          controller: 'UserCtrl',
-                         backdrop: true
+                         backdrop: true,
+	                 resolve: {
+			     data: function(){
+				 return {
+				     'message': 'Something went wrong'
+				 }}}
                      });
 	  mod.result.then(
 	      function(formdata){
@@ -31,6 +37,7 @@ aleph.factory('OOUser', ['$uibModal', '$http', '$q', 'Metadata', function($uibMo
 			'password': pw}
 		}).success(onsuccess).error(function(data){
 		    console.log('bad login'); //XXX needs user-facing error
+		    loginModal($scope, redirect_url, onsuccess, 'Could not log you in -- please try again');
 		    });
 },
 	      function(){});

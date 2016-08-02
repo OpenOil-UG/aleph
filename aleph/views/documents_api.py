@@ -20,7 +20,9 @@ blueprint = Blueprint('documents_api', __name__)
 # 
 ALLOWED_METADATA = [
     # SEC
-    'assignedSIC', 'period', 'acceptanceDatetime', 'sic',
+    'assignedSIC', 'period', 'acceptanceDatetime', 'sic', 'filing_url',
+
+    # ASX
     'primary_share_code', 'web_address', 
     ]
 

@@ -251,6 +251,5 @@ def alert_query(alert):
             sub_queries.append(json.dumps({}))
             sub_queries.append(json.dumps(sq))
         output['results'].append(document)
-
     run_sub_queries(output, sub_queries)
     return output

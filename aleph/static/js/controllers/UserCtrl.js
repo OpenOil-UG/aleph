@@ -1,6 +1,5 @@
 aleph.controller('UserCtrl', ['$scope', '$uibModalInstance', 'OOUser',
 	function($scope, $uibModalInstance, OOUser){
-   
 		  $scope.cancel = function(){
 		      console.log('cancel');
 		      $uibModalInstance.dismiss('cancel');

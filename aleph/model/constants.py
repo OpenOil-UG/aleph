@@ -4,15 +4,16 @@ from pycountry import countries
 CORE_FACETS = {
     'company_name': 'Company',
     'filing_type': 'Filing Type',
-    'sector': 'Industry Sectors',
+    #'sector': 'Industry Sectors',
+    'industry': 'Industry',
     #'filing_date': 'Filing Date',
     #'file_size': 'File Size',
 
 
     # 'extension': 'File extension',
     #'mime_type': 'Content type',
-    'languages': 'Languages',
-    'countries': 'Countries',
+    #'languages': 'Languages',
+    #'countries': 'Countries',
     #'keywords': 'Keywords',
     #'author': 'Document author',
     #'emails': 'E-Mail addresses',

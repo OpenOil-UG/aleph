@@ -88,8 +88,9 @@ class S3Archive(Archive):  # pragma: no cover
             cors.put(CORSConfiguration=config)
         params = {
             'Bucket': self.bucket_name,
-            'Key': self._get_file_path(meta)
+            'Key': self._get_file_path(meta),
         }
+
         return self.client.generate_presigned_url('get_object',
                                                   Params=params,
                                                   ExpiresIn=86400)
