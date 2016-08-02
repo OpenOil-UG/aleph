@@ -21,6 +21,9 @@
                   background-image: url('../images/aleph_white.png');
               }
             }
+	    .navbar-image {
+	    	    content:url("/static/images/aleph_black.png");
+		    }  
             .navbar-description {
                 opacity: 0.6;
                 display: block;

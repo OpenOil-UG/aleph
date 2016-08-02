@@ -6,6 +6,7 @@ aleph.controller('AppCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll
   $scope.routeFailed = false;
   $scope.$route = $route;
 
+
   $scope.cancel = function() {
     $uibModalInstance.dismiss('cancel');
   };
