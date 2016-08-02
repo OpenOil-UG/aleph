@@ -12,7 +12,7 @@
       <form novalidate class="simple-form" name="alertForm" ng-submit="emailAlertSubmit(alertForm)">
         <input type="text" ng-show="false" name="alert_id" ng-class="alert_id" ng-model="formvalues.alert_id"/>
     Query: <input name="query_text" type="text" id="alert_query_text" ng-class="alert_query" ng-model="formvalues.query_text"/><br />
-    <span> Label: <input name="custom_label" type="text" ng-class="alert_label" ng-model="custom_label"/><br /></span>
+    <span> Label: <input name="custom_label" type="text" ng-class="custom_label" ng-model="formvalues.custom_label"/><br /></span>
     Check: <input name="checking_interval" type="radio" value="1" ng-class="alert_frequency" ng-model="formvalues.checking_interval" />daily
     <input type="radio" name="checking_interval" value="7" ng-class="alert_frequency" ng-model="formvalues.checking_interval" />weekly<br />
     <!--<button ng-click="emailAlertSubmit(alertForm)">Submit</button> -->

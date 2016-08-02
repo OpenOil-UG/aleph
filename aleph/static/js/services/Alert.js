@@ -77,7 +77,7 @@ aleph.factory('Alert', ['$http', '$q', '$location', '$sce', '$uibModal', 'Metada
                     formvalues: function(){
                         return {
                             query_text: alert.query_text,
-                            custom_label: alert.custom_label,
+                            custom_label: alert.label,
                             alert_id: alert.id,
                             checking_interval: alert.checking_interval,
                         }}
