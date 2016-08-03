@@ -1,16 +1,19 @@
 <div id="login_modal">
-<div class="modal-header">
-  <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
-    <h4 class="modal-title">Log in</h4>
-</div>
-<div class="modal-body">
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+		<h4 class="modal-title">Log in</h4>
+	</div>
+	<form novalidate class="simple-form" name="loginform" ng-submit="handle_login(loginform)">
+		<div class="modal-body">
 
-    <span class="login_referral">No account yet? <a href="" ng-click="switch_to_register()">Register</a></span>
-    <form novalidate class="simple-form" name="loginform" ng-submit="handle_login(loginform)">
-    Email: <input name="email" type="text" ng-model="formvalues.email"/><br />
-    Password: <input name="password" type="password" ng-model="formvalues.password"/><br />
-    <button type="submit" class="btn btn-primary">Login</button>
-  </form>
-</div>
-<div class="modal-footer"></div>
+			<span class="login_referral">No account yet? <a href="" ng-click="switch_to_register()">Register</a></span>
+
+			Email: <input name="email" type="text" ng-model="formvalues.email"/><br />
+			Password: <input name="password" type="password" ng-model="formvalues.password"/><br />
+
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-primary">Login</button>
+		</div>
+	</form>
 </div>
