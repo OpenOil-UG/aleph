@@ -1,22 +1,23 @@
 <div id="register_modal">
-<div class="modal-header">
-  <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
-    <h4 class="modal-title">Register for Aleph</h4>
-    <h3 ng-show="message">{{message}}</h3>
-</div>
-<div class="modal-body">
-    <p>Sign up to Aleph and create email alerts to receive up-to-date corporate filings for your queries on oil & gas and mining.</p>
-    
-<p>    <span class="login_referral">Already have an account? <a href="" ng-click="switch_to_login()">Log in</a></span></p>
-    <form novalidate class="simple-form" name="registerform" ng-submit="handle_register(registerform)">
-    Email: <input name="email" type="text" ng-model="formvalues.email"/><br />
-    Password: <input name="password1" type="password" ng-model="formvalues.password1"/><br />
-    Password (repeated): <input name="password2" type="password" ng-model="formvalues.password2"/><br />
+    <div class="modal-header">
+      <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+      <h4 class="modal-title">Register for Aleph</h4>
+      <h3 ng-show="message">{{message}}</h3>
+  </div>
+  <form novalidate class="simple-form" name="registerform" ng-submit="handle_register(registerform)">
+    <div class="modal-body">
+        <p>Sign up to Aleph and create email alerts to receive up-to-date corporate filings for your queries on oil & gas and mining.</p>
 
-    Add me to the OpenOil newsletter: <input ng-model="formvalues.mailing_list" type="checkbox" checked="checked"><br/>
-    <button type="submit" class="btn btn-primary">Register</button>
-  </form>
-</div>
-<div class="modal-footer"></div>
-</div>
+        <p>    <span class="login_referral">Already have an account? <a href="" ng-click="switch_to_login()">Log in</a></span></p>
+        Email: <input name="email" type="text" ng-model="formvalues.email"/><br />
+        Password: <input name="password1" type="password" ng-model="formvalues.password1"/><br />
+        Password (repeated): <input name="password2" type="password" ng-model="formvalues.password2"/><br />
 
+        Add me to the OpenOil newsletter: <input ng-model="formvalues.mailing_list" type="checkbox" checked="checked"><br/>
+
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Register</button>
+    </div>
+</form>
+</div>

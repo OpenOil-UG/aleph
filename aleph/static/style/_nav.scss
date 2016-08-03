@@ -16,7 +16,7 @@
 	    position: absolute;
             width: 41px;
             height: 35px;
-            top: 1px;
+            top: 4px;
             left: 70px;
 	    content:url("/static/images/aleph_black.png");
 	}
@@ -37,7 +37,9 @@
     .navbar {
         .navbar-header {
 	   .navbar-img {
+               top: 12px;
 	       content:url("/static/images/aleph_white.png");
+               left: 100px;
            }
         }
     }
