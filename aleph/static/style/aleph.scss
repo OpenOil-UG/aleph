@@ -168,6 +168,7 @@ $body-bg: #e6e6e6;
       }
  }	
 
-.md-20 {
-    font-size: 20px;
-}
+// potential fix, weird edgecase, debug more ;)
+//ul.nav.navbar-nav li a i.material-icons.md-20 {
+//    font-size: 20px;
+//}
