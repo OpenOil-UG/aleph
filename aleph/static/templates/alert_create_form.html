@@ -1,14 +1,16 @@
 
  <div>
+<div class="modal-header">
     <span class="close" ng-click="cancel()">x</span>
 
     <div class="alert alert-success" ng-show="formvalues.message">
         <p>{{formvalues.message}}</p>
       </div>
 
-    <p>Set up email alert</p>
-                                                                             
-
+<div class="modal-header">
+    <div class="modal-title">Set up email alert</div>
+</div>
+<div class="modal-body">
       <form novalidate class="simple-form" name="alertForm" ng-submit="emailAlertSubmit(alertForm)">
         <input type="text" ng-show="false" name="alert_id" ng-class="alert_id" ng-model="formvalues.alert_id"/>
     Query: <input name="query_text" type="text" id="alert_query_text" ng-class="alert_query" ng-model="formvalues.query_text"/><br />
@@ -18,5 +20,6 @@
     <!--<button ng-click="emailAlertSubmit(alertForm)">Submit</button> -->
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
-
+</div>
+<div class="modal-footer"></div>
 </div>

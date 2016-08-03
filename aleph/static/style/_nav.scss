@@ -28,6 +28,17 @@
             padding: 15px 0;
             line-height: 18px;
             font-family: $font-family-serif;
+	    left: 80px;
+        }
+    }
+}
+
+.aleph--home {
+    .navbar {
+        .navbar-header {
+	   .navbar-img {
+	       content:url("/static/images/aleph_white.png");
+           }
         }
     }
 }
