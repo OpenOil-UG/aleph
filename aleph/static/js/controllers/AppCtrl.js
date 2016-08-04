@@ -1,5 +1,5 @@
-aleph.controller('AppCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll', '$route', '$http', '$uibModal', '$q', 'Alert', 'Metadata', 'OOUser',
-			     function($scope, $rootScope, $location, $anchorScroll, $route, $http, $uibModal, $q, Alert, Metadata, OOUser) {
+aleph.controller('AppCtrl', ['$scope', '$rootScope', '$location', '$anchorScroll', '$route', '$http', '$uibModal', '$q', 'Alert', 'Metadata', 'OOUser', '$routeParams', '$window',
+			     function($scope, $rootScope, $location, $anchorScroll, $route, $http, $uibModal, $q, Alert, Metadata, OOUser, $routeParams, $window) {
 
   $scope.session = {logged_in: false};
   $scope.routeLoaded = false;
