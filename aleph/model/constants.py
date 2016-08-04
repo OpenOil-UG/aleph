@@ -5,7 +5,7 @@ CORE_FACETS = {
     'company_name': 'Company',
     'filing_type': 'Filing Type',
     #'sector': 'Industry Sectors',
-    'industry': 'Industry',
+    #'industry': 'Industry',
     #'filing_date': 'Filing Date',
     #'file_size': 'File Size',
 
