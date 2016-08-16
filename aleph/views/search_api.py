@@ -28,6 +28,36 @@ def query():
         result['next'] = url_for('search_api.query', **params)
     return jsonify(result)
 
+def _query():
+    '''
+    everything here should be applicable both to the internal and to the
+    public api
+    '''
+    creds = authz.collections(authz.READ), authz.sources(authz.READ)
+    enable_cache(vary_user=True, vary=creds)
+    query = documents_query(request.args)
+    query['size'] = get_limit(default=100)
+    query['from'] = get_offset()
+    result = execute_documents_query(request.args, query)
+    params = next_params(request.args, result)
+    if params is not None:
+        result['next'] = url_for('search_api.query', **params)
+    return result
+    '''
+    etag_cache_keygen()
+    query = document_query(request.args, lists=authz.authz_lists('read'),
+                           sources=authz.authz_sources('read'),
+                           highlights=True)
+    results = search_documents(query)
+    pager = Pager(results,
+                  results_converter=lambda ds: [add_urls(d) for d in ds])
+    data = pager.to_dict()
+    #import ipdb; ipdb.set_trace()
+    data['facets'] = transform_facets(results.result.get('aggregations', {}))
+    return data
+    '''
+
+
 
 @blueprint.route('/api/1/query/records/<int:document_id>')
 def records(document_id):
