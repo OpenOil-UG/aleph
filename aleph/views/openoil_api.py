@@ -64,16 +64,17 @@ def result_filter(rs):
         newr = {
             'extract': [],
             'attributes': {},
-            'unwanted': {}}
+        #    'unwanted': {}
+        }
         newr['extract'] = [x['text'][0] for x in result['records']['results']]
         for k,v in result.items():
             if k in attribute_items:
                 newr['attributes'][attribute_items[k]] = v
             elif k in base_items:
                 newr[base_items[k]] = v
-            else:
-                newr['unwanted'][k] = v
-        
+            #else:
+            #    newr['unwanted'][k] = v
+        newr['id'] = str(newr['id']) # keep backwards consistency
         newr['redirect_url'] = make_redirect_url(newr['source_url'])
         newr['viewer_url'] = 'https://aleph.openoil.net/text/%s' % newr['id']
         newlist.append(newr)
