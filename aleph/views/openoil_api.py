@@ -59,6 +59,7 @@ def result_filter(rs):
         'id': 'id',
         'created_at': 'updated_at',
         'file_name': 'name',
+        'data_url': 'archive_url', # name retaied for backwards compatibility
         }
     for result in rs:
         newr = {
