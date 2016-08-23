@@ -44,8 +44,8 @@ is 'results'. This contains a list of matches, each of which is a
 dictionary with the following items:
 
 -  archive\_url: a link to our cached copy of the document
--  collection: which of our document bases the document is from
 -  source\_url: original source (e.g. on the regulator website).
+-  viewer\_url: link to the Aleph page where you can view the document
 -  title: document title
 -  score: how well the document matches the search query, as measured by
    elasticsearch
@@ -54,7 +54,8 @@ dictionary with the following items:
    This is a list of matching text snippets, each of which has the
    matching text highlighted with <em> tags. Note that the list may be
    empty -- this would happen, for instance, when the search terms were
-   matched only in metadata, not in the text body.
+matched only in metadata, not in the text body.
+-  attributes: further information about the document (company, industry, file size etc)
 
 NB: Please consider this data to be *insecure*, and escape it before
 use. The title and extract fields, in particular, are drawn from varied
