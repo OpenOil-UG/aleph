@@ -76,7 +76,8 @@ def result_filter(rs):
             #else:
             #    newr['unwanted'][k] = v
         newr['id'] = str(newr['id']) # keep backwards consistency
-        newr['redirect_url'] = make_redirect_url(newr['source_url'])
+        if newr['source_url']:
+            newr['redirect_url'] = make_redirect_url(newr['source_url'])
         newr['viewer_url'] = 'https://aleph.openoil.net/text/%s' % newr['id']
         newlist.append(newr)
     return newlist
