@@ -4,16 +4,16 @@ aleph.controller('HomeCtrl', ['$scope', '$location', '$route', 'Source', 'Collec
 
   $scope.suggestions = [
     {
-      label: 'Nigeria incorporated',
-      href: 'http://aleph.openoil.net/#/search?q="Nigeria incorporated"~10'
+      label: 'Bob Dudley',
+      href: 'http://aleph.openoil.net/#/search?q="Bob Dudley"'
     },
     {
-      label: 'Doubt going concern',
-      href: 'http://aleph.openoil.net/#/search?q="doubt going concern"~10'
+      label: 'financial statement',
+      href: 'http://aleph.openoil.net/#/search?q="financial statement"'
     },
     {
-      label: 'Statement of reserves',
-      href: 'http://aleph.openoil.net/#/search?q="reserve statement"'
+      label: 'climate change policy',
+      href: 'http://aleph.openoil.net/#/search?q="our climate change policy"~20'
     }
   ];
 	
