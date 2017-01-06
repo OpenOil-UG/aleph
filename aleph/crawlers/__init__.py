@@ -19,11 +19,13 @@ def get_exposed_crawlers():
 
 
 @celery.task()
-def execute_crawler(crawler_id, incremental=False):
+def execute_crawler(crawler_id, incremental=False, param=None):
     for cls in get_exposed_crawlers():
         if cls.get_id() != crawler_id:
             continue
-        cls.execute(incremental=incremental)
+        # XXX clean up/document param infrastructure
+        params = {'param': param} if param else {}
+        cls.execute(incremental=incremental, **params)
 
 
 @celery.task()

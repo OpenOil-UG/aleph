@@ -1,6 +1,6 @@
 
 aleph.controller('SearchCtrl', ['$scope', '$route', '$location', '$anchorScroll', '$http', '$uibModal', 'Source', 'Authz', 'Alert', 'Document', 'Role', 'Title', 'data', 'alerts', 'metadata',
-    function($scope, $route, $location, $anchorScroll, $http, $uibModal, Source, Authz, Alert, Document, Role, Title, data, alerts, metadata) {
+				function($scope, $route, $location, $anchorScroll, $http, $uibModal, Source, Authz, Alert, Document, Role, Title, data, alerts, metadata) {
 
   $scope.fields = metadata.fields;
   $scope.sourceFacets = [];
@@ -95,9 +95,24 @@ aleph.controller('SearchCtrl', ['$scope', '$route', '$location', '$anchorScroll'
         var values = result.facets[name].values;
         facet.values = query.sortFacet(values, 'filter:' + name);  
       }
-      facets.push(facet);
+      facets.push(facet);  
     }
-    $scope.facets = facets;
+      $scope.facets = facets;
+
+      var sizes = result.facets['file_size'].values.map(function(el){ return parseInt(el.id) })
+      var file_size_min = Math.min.apply(null,sizes);
+      var file_size_max = Math.max.apply(null,sizes);
+      
+      $scope.slider = {
+    minValue: file_size_min,
+    maxValue: file_size_max,
+    options: {
+        floor: file_size_min,
+        ceil: file_size_max,
+        step: Math.ceil(file_size_max / 100)
+    }
+};
+      
   };
 
   $scope.$on('$routeUpdate', function() {

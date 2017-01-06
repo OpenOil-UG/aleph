@@ -76,9 +76,10 @@ aleph.factory('Query', ['$route', '$location', '$httpParamSerializer',
       if (counts !== 0) {
         return counts;
       }
-      var al = a.label || a.name || a.id;
-      var bl = b.label || b.name || b.id;
-      return al.localeCompare(bl);
+	var al = a.label || a.name || a.id.toString();
+	var bl = b.label || b.name || a.id;
+	// workaround for having stored filesizes with integer labels(??)
+	return al.toString().localeCompare(bl.toString());
     });
   };
 
