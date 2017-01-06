@@ -55,3 +55,4 @@ jdatetime==1.7.2
 coverage
 BeautifulSoup
 flask-security
+click

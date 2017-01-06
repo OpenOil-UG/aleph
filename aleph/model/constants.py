@@ -7,7 +7,7 @@ CORE_FACETS = {
     #'sector': 'Industry Sectors',
     #'industry': 'Industry',
     #'filing_date': 'Filing Date',
-    #'file_size': 'File Size',
+    'file_size': 'File Size',
 
 
     # 'extension': 'File extension',

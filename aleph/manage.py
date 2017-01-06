@@ -6,7 +6,7 @@ from flask.ext.script import Manager
 from flask.ext.assets import ManageAssets
 from flask.ext.migrate import MigrateCommand
 
-from aleph.core import create_app
+from aleph.core import create_app, celery
 from aleph.model import db, upgrade_db, Source, Document
 from aleph.views import mount_app_blueprints, assets
 from aleph.analyze import analyze_source, install_analyzers
@@ -18,6 +18,7 @@ from aleph.ext import get_crawlers
 from aleph.crawlers.directory import DirectoryCrawler
 from aleph.crawlers.sql import SQLCrawler
 from aleph.crawlers.metafolder import MetaFolderCrawler
+from aleph.crawlers import execute_crawler
 
 
 log = logging.getLogger('aleph')
@@ -55,7 +56,8 @@ def crawl(name, incremental=False, param=None):
         crawler = crawlers.get(name)()
         params = {'param': param} if param else {}
         crawler.execute(incremental=incremental, **params)
-    db.session.commit()
+        #execute_crawler.delay(crawler.get_id(), incremental=incremental, param=param)
+    db.session.commit() # XXX meaningless
 
 
 @manager.command
