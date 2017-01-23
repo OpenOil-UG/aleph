@@ -15,7 +15,11 @@ def init_search():
             TYPE_DOCUMENT: DOCUMENT_MAPPING,
             TYPE_RECORD: RECORD_MAPPING,
             TYPE_ENTITY: ENTITY_MAPPING
-        }
+        },
+        'settings': {
+            'number_of_shards': 10,
+            'number_of_replicas': 1,
+            }
     })
     get_es().indices.open(index=get_es_index())
 
