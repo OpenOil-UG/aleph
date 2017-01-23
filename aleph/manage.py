@@ -124,7 +124,7 @@ def analyze(foreign_id=None):
 
 
 @manager.command
-def index(foreign_id=None):
+def index(foreign_id=None, immediate=False):
     """Index documents in the given source (or throughout)."""
     q = Document.all_ids()
     if foreign_id:
@@ -135,7 +135,10 @@ def index(foreign_id=None):
     for doc_id, in q:
         #import time; time.sleep(10) #let's not get banned
         print('indexing %s' % doc_id)
-        index_document.delay(doc_id)
+        if immediate: #bypass the queue
+            index_document(doc_id)
+        else:
+            index_document.delay(doc_id)
     if foreign_id is None:
         reindex_entities()
 
@@ -146,7 +149,7 @@ def resetindex():
     delete_index()
     init_search()
     upgrade_search()
-    install_analyzers()
+    #install_analyzers()
 
 @manager.command
 def indexentities(foreign_id=None):
