@@ -9,7 +9,6 @@ import lxml.html
 import requests
 import unicodecsv as csv
 import langid
-import pprint
 
 
 API_KEY = 'oo_u1gvq1vzrckpomv5r' # key for daniel+resourceprojects@openoil.net
@@ -39,8 +38,6 @@ blueprint = Blueprint('clients', __name__)
 def frame():
     project_name = request.args.get('project_name', 'nothing supplied')
     project_query = _query_from_project(project_name)
-    pprint.pprint('project query')
-    pprint.pprint(project_query)
     jsondata = _api_request(project_query) # XXX this should be done async
     topmatches = postfilter_results(jsondata, project_name)
 
@@ -127,7 +124,6 @@ def _api_request(query):
         }
     url = '%s/aleph_api/1/query' % BASE_URL
     result = requests.get(url, params=params)
-    pprint.pprint([result,params])
     return result.json()
 
 def _sheet_for_project(project_name):
