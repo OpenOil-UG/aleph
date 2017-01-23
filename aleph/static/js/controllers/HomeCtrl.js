@@ -12,7 +12,7 @@ aleph.controller('HomeCtrl', ['$scope', '$location', '$route', 'Source', 'Collec
       href: 'http://aleph.openoil.net/#/search?q="financial statement"'
     },
     {
-      label: 'climate change policy'
+      label: 'climate change policy',
       href: 'http://aleph.openoil.net/#/search?q="our climate change policy"~20'
     }
   ];

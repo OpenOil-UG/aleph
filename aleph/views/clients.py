@@ -9,10 +9,10 @@ import lxml.html
 import requests
 import unicodecsv as csv
 import langid
+from aleph.core import get_config
 
 
 API_KEY = 'oo_u1gvq1vzrckpomv5r' # key for daniel+resourceprojects@openoil.net
-BASE_URL = 'https://aleph.openoil.net/'
 CSV_URL = 'https://docs.google.com/spreadsheets/d/1nYDM9PXiNLV5SkUeR4vS-MVfIbFEIKNBzsRzTN-kPoY/export?format=csv&amp;usp=sharing'
 
 RESULTS_TO_SHOW=3
@@ -122,7 +122,7 @@ def _api_request(query):
         'limit': 40,
         'sort': 'newest_filed',
         }
-    url = '%s/aleph_api/1/query' % BASE_URL
+    url = '%s/aleph_api/1/query' % get_config('APP_BASEURL')
     result = requests.get(url, params=params)
     return result.json()
 
