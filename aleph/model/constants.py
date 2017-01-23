@@ -39,7 +39,12 @@ COUNTRY_NAMES = {
 }
 
 for country in countries:
-    COUNTRY_NAMES[country.alpha2.lower()] = country.name
+    # pycountry 16.10.23 renamed alpha2 to alpha_2
+    # work with any version -- see https://pypi.python.org/pypi/pycountry
+    if hasattr(country, 'alpha_2'):
+        COUNTRY_NAMES[country.alpha_2.lower()] = country.name
+    else:
+        COUNTRY_NAMES[country.alpha2.lower()] = country.name
 
 
 LANGUAGE_NAMES = dict(Locale('en').languages.items())
