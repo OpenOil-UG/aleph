@@ -98,19 +98,21 @@ aleph.controller('SearchCtrl', ['$scope', '$route', '$location', '$anchorScroll'
       facets.push(facet);  
     }
       $scope.facets = facets;
-
-      var sizes = result.facets['file_size'].values.map(function(el){ return parseInt(el.id) })
-      var file_size_min = Math.min.apply(null,sizes);
-      var file_size_max = Math.max.apply(null,sizes);
+      // XXX the slider control still needs proper implementation
+      if(result.facets['file_size']){
+	  var sizes = result.facets['file_size'].values.map(function(el){ return parseInt(el.id) })
+	  var file_size_min = Math.min.apply(null,sizes);
+	  var file_size_max = Math.max.apply(null,sizes);
       
-      $scope.slider = {
-    minValue: file_size_min,
-    maxValue: file_size_max,
-    options: {
-        floor: file_size_min,
-        ceil: file_size_max,
-        step: Math.ceil(file_size_max / 100)
-    }
+	  $scope.slider = {
+	      minValue: file_size_min,
+	      maxValue: file_size_max,
+	      options: {
+		  floor: file_size_min,
+		  ceil: file_size_max,
+		  step: Math.ceil(file_size_max / 100)
+	      }
+      }
 };
       
   };

@@ -107,11 +107,11 @@
           No documents with {{facet.label}} metadata.
         </li>
 	<li>
-	  <div id="slider">
+	  <div id="slider" ng-if="facet.label=='File Size'">
 <rzslider rz-slider-model="slider.minValue"
           rz-slider-high="slider.maxValue"
           rz-slider-options="slider.options"></rzslider>
-	  YOUR FILTER HERE</li>
+	  </li>
         <li class="list-group-item facet animate toggle"
           ng-repeat="val in facet.values | orderBy:'label' track by val.id"
           ng-class="{'active': query.hasFilter(facet.field, val.id)}"

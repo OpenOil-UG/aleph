@@ -1,0 +1,56 @@
+<style>
+  .rp_results_frame {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #373a3c;
+  font-size: 13.5px;
+  overflow: hidden;
+  overflow-y: hidden;
+  padding-top: 10px;
+  }
+  .rp_result {
+  padding-left: 5px;
+  }
+  a {
+  color: #0275d8;
+  text-decoration: none;
+  }
+  .rp_link {
+  line-height: 1.5;
+  }
+  .rp_extract {
+  padding-bottom: 2px;
+  }
+
+  .rp_title{
+  font-weight: bold;
+  font-size: 14px;
+  display: block;
+  border-bottom: 2px solid #eceeef;
+  color: #557288 !important;
+  
+     }
+   .rp_subhead {
+  font-style: italic;
+  padding: 4px 2px;
+  }
+  .rp_fromoo {
+  float: right;
+  }
+
+</style>
+<div class="rp_results_frame">
+  <div class="rp_fromoo"><a href="https://aleph.openoil.net" target="_blank">Aleph Search</a>, powered by <a href="https://openoil.net" target="_blank">OpenOil</a></div>
+  {% for result in results %}
+  <div class="rp_result">
+    <span class="rp_title"> {{result.title}}</span>
+    <div class="rp_subhead">Filed by <span class="rp_company">{{ result.attributes.company_name}}</span> on {{result.attributes.date}}</div>
+    {% for e in result.extract_textonly %}
+    <div class="rp_extract"> {% if loop.index == 1 %} <i>Extract</i>: {% endif %} {{e|safe}}</div>
+    {% endfor %}
+    <div class="rp_link">    <a href="{{result.viewer_url}}" target="_blank">see more</a></div>
+    <br/>
+    </div>
+  {% endfor %}
+
+<a href="https://aleph.openoil.net/search?q={{query}}" target="_blank">See more results from Aleph</a>  
+</div>
