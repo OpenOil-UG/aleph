@@ -56,3 +56,6 @@ coverage
 BeautifulSoup
 flask-security
 click
+oauthlib
+botocore
+kombu<3.1
