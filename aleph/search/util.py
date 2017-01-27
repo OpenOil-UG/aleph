@@ -82,3 +82,14 @@ def next_params(args, result):
                 continue
             params[k] = v
         return params
+
+def escape_query_string(text):
+    """
+    In ES query string syntax, reserved characters must be escaped to avoid
+    conflicting with the search syntax.
+    documented at https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_reserved_characters
+    """
+    reserved_chars='+-=&&||><!(){}[]^"~*?:z/'
+    for ch in reserved_chars:
+        text = text.replace(ch, "\\"+ch)
+    return text

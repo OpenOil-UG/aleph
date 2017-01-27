@@ -7,7 +7,7 @@ from aleph.core import get_es, get_es_index, url_for
 from aleph.model import Source
 from aleph.index import TYPE_RECORD, TYPE_DOCUMENT
 from aleph.search.util import add_filter, authz_sources_filter, clean_highlight
-from aleph.search.util import execute_basic, parse_filters, FACET_SIZE
+from aleph.search.util import execute_basic, parse_filters, escape_query_string, FACET_SIZE
 from aleph.search.fragments import text_query_string, meta_query_string
 from aleph.search.fragments import match_all, child_record, aggregate
 from aleph.search.fragments import filter_query
@@ -27,11 +27,15 @@ DEFAULT_FIELDS = ['source_id', 'title', 'file_name', 'extension', 'languages',
 OR_FIELDS = ['source_id']
 
 
-def documents_query(args, fields=None, facets=True):
-    """Parse a user query string, compose and execute a query."""
+def documents_query(args, fields=None, facets=True, escape=True):
+    """Parse a user query string, compose and execute a query.
+    Escape -- filter input so it can be safely used in an ES query string
+    """
     if not isinstance(args, MultiDict):
         args = MultiDict(args)
     text = args.get('q', '').strip()
+    if escape:
+        text = escape_query_string(text)
     q = text_query(text)
     q = authz_sources_filter(q)
     # Sorting -- should this be passed into search directly, instead of
