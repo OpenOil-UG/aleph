@@ -36,7 +36,7 @@ def _query():
     '''
     creds = authz.collections(authz.READ), authz.sources(authz.READ)
     enable_cache(vary_user=True, vary=creds)
-    query = documents_query(request.args, escape=true)
+    query = documents_query(request.args, escape=True)
     query['size'] = get_limit(default=100)
     query['from'] = get_offset()
     result = execute_documents_query(request.args, query)
