@@ -63,7 +63,6 @@ def _query_from_project(project_name):
     project_name = project_name.lower()
     if project_name not in allprojects:
         print('did not find name in project list')
-        print(allprojects)
         return project_name # fall back to just the string
     metadata = allprojects[project_name]
     query = make_query(metadata)
@@ -86,7 +85,6 @@ def notrepetition(candidate, accepted):
     return True
 
 def containsname(result, project_name):
-    print(project_name)
     for e in result['extract_textonly']:
         if project_name.lower() in e.lower():
             return True
@@ -131,7 +129,6 @@ def _sheet_for_project(project_name):
 
 def _dl_csv(refresh=False):
     if refresh or not hasattr(_dl_csv, 'projects'):
-        print('getting fresh')
         response = requests.get(CSV_URL)
         response_text = requests.utils.get_unicode_from_response(response).encode('ascii', 'ignore')
         csvfile = csv.reader(response_text.splitlines(), encoding='utf-8')
