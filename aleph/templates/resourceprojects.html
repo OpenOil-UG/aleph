@@ -43,7 +43,7 @@
   {% for result in results %}
   <div class="rp_result">
     <span class="rp_title"> {{result.title}}</span>
-    <div class="rp_subhead">Filed by <span class="rp_company">{{ result.attributes.company_name}}</span> on {{result.attributes.date}}</div>
+    <div class="rp_subhead">Filed by <span class="rp_company">{{ result.attributes.company_name}}</span> to <span class="rp_source">{{result.source}}</span> on {{result.attributes.date}}</div>
     {% for e in result.extract_textonly %}
     <div class="rp_extract"> {% if loop.index == 1 %} <i>Extract</i>: {% endif %} {{e|safe}}</div>
     {% endfor %}

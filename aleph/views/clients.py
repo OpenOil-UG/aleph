@@ -40,7 +40,6 @@ def frame():
     project_query = _query_from_project(project_name)
     jsondata = _api_request(project_query) # XXX this should be done async
     topmatches = postfilter_results(jsondata, project_name)
-
     return Response(render_template("resourceprojects.html", results=topmatches, query=project_query)) # XXX this template should live somewhere else
 
 def make_query(metadata):

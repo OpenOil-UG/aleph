@@ -3,7 +3,7 @@ from apikit import obj_or_404, request_data, jsonify
 
 from aleph import authz
 from aleph.core import db
-from aleph.model import Alert
+from aleph.model import Alert, Source
 from aleph.views.cache import enable_cache
 from aleph.views import search_api
 from aleph.search.util import execute_basic
@@ -13,7 +13,14 @@ from six.moves import urllib
 
 blueprint = Blueprint('openoil_api', __name__)
 
+SRCS = {}
 
+def get_source(sid):
+    if sid not in SRCS:
+        src = Source.by_id(sid)
+        SRCS[sid] = src and src.label or ''
+    return SRCS[sid]
+    
 @blueprint.route('/api/1/new_doc_count', methods=['GET'])
 def new_doc_count():
     #XXX this needs to be cached
@@ -78,6 +85,8 @@ def result_filter(rs):
         newr['id'] = str(newr['id']) # keep backwards consistency
         if newr['source_url']:
             newr['redirect_url'] = make_redirect_url(newr['source_url'])
+        # sources
+        newr['source'] = get_source(result.get('source_id', None))
         newr['viewer_url'] = 'https://aleph.openoil.net/text/%s' % newr['id']
         newlist.append(newr)
     return newlist
@@ -89,6 +98,7 @@ def public_process_v1(data):
     #data = flatten_attributes(data)
     data.pop('facets')
     data.pop('sources')
+    # XXX this is incorrect -- it flips people from the public to the intern
     data['next_url'] = data.pop('next')
     data.pop('entities')
     data['results'] = result_filter(data['results'])
