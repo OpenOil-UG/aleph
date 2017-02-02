@@ -10,7 +10,7 @@ from aleph.views.util import get_document
 from aleph.search import documents_query, execute_documents_query
 from aleph.search import records_query, execute_records_query
 from aleph.search.util import next_params
-
+from elasticsearch import TransportError
 
 blueprint = Blueprint('search_api', __name__)
 
@@ -18,25 +18,21 @@ blueprint = Blueprint('search_api', __name__)
 @blueprint.route('/api/1/query')
 def query():
     # XXX this should be just _query wrapped in jsonify
-    creds = authz.collections(authz.READ), authz.sources(authz.READ)
-    enable_cache(vary_user=True, vary=creds)
-    query = documents_query(request.args, escape=True)
-    query['size'] = get_limit(default=100)
-    query['from'] = get_offset()
-    result = execute_documents_query(request.args, query)
-    params = next_params(request.args, result)
-    if params is not None:
-        result['next'] = url_for('search_api.query', **params)
+    try:
+        result = _query(escape=False)
+    except TransportError:
+        # Try it again, but filter special characters away from ES
+        result = _query(escape=True)
     return jsonify(result)
 
-def _query():
+def _query(escape=False):
     '''
     everything here should be applicable both to the internal and to the
     public api
     '''
     creds = authz.collections(authz.READ), authz.sources(authz.READ)
     enable_cache(vary_user=True, vary=creds)
-    query = documents_query(request.args, escape=True)
+    query = documents_query(request.args, escape=escape)
     query['size'] = get_limit(default=100)
     query['from'] = get_offset()
     result = execute_documents_query(request.args, query)
