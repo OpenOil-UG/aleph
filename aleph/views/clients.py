@@ -67,6 +67,9 @@ def _query_from_project(project_name):
     query = make_query(metadata)
     return query
 
+def not_full_edgar(result):
+    return 'submission text file' not in result['title'].lower()
+
 def notjunk(result):
     # XXX: should detect if this lacks english words
     text = ' '.join(result['extract'])
@@ -103,9 +106,10 @@ def postfilter_results(jsondata, project_name):
             containsname(result, project_name),
             ))
         if (
-            True # notjunk(result)
+            notjunk(result)
             and notrepetition(result, accepted)
             and containsname(result, project_name)
+            and not_full_edgar(result)
         ):
             accepted.append(result)
         if len(accepted) >= RESULTS_TO_SHOW:
